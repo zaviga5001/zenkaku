@@ -1,0 +1,44 @@
+// 特殊記号
+// tXXX		XXXミリ秒間隔で1文字ずつ自動表示
+// cXY		色指定 文字=X 背景=Y
+// ccc		色指定 デフォルト色に戻す
+// k		キー入力待ちをする
+// p		改ページする
+// n		改行する
+
+
+// ウィンドゥ構成文字
+{ "win_tate",		"│"			},		// MY_MSG_WIN_TATE
+{ "win_yoko",		"─"			},		// MY_MSG_WIN_YOKO
+{ "win_7",		"┌"			},		// MY_MSG_WIN_7
+{ "win_9",		"┐"			},		// MY_MSG_WIN_9
+{ "win_1",		"└"			},		// MY_MSG_WIN_1
+{ "win_3",		"┘"			},		// MY_MSG_WIN_3
+{ "win_8",		"┬"			},		// MY_MSG_WIN_8
+{ "win_4",		"├"			},		// MY_MSG_WIN_4
+{ "win_6",		"┤"			},		// MY_MSG_WIN_6
+{ "win_2",		"┴"			},		// MY_MSG_WIN_2
+{ "win_5",		"┼"			},		// MY_MSG_WIN_5
+
+// システムメッセージ
+{ "sys_yes",		"はい"		},			// MY_MSG_SYS_YES
+{ "sys_no",		"いいえ"	},			// MY_MSG_SYS_NO
+{ "sys_ok",		"決定"		},			// MY_MSG_SYS_OK
+{ "sys_cansel",		"キャンセル"	},			// MY_MSG_SYS_CANSEL
+{ "sys_sel_scenario",	"シナリオを選択してください"	},	// MY_MSG_SYS_SEL_SCENARIO
+{ "sys_inp_path",	"ファイルパスを入力してください"},	// MY_MSG_SYS_INP_PATH
+{ "sys_inp_mapno",	"マップ番号を入力してください"},	// MY_MSG_SYS_INP_MAPNO
+{ "sys_inp_spos",	"スペシャルポジション番号を入れてください（０−２５５）"},	// MY_MSG_SYS_INP_SPOS
+{ "sys_save_yn",	"セーブ終了します"},			// MY_MSG_SYS_SAVE_YN
+{ "sys_no_map",		"t100マップがc24読み込まれてc56いません"},	// MY_MSG_SYS_NO_MAP
+{ "sys_add_tile",	"タイルを追加しました"},		// MY_MSG_SYS_ADD_TILE
+
+
+
+
+
+
+
+// ダミー
+{ "", 			""			 }		// MY_MSG_DUMMY
+
