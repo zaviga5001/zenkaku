@@ -27,13 +27,14 @@ CWinShowMessage::~CWinShowMessage()
 
 int CWinShowMessage::drawwin()
 {
+	int i;
 	m_split = m_winh - 3;
 	m_drawarea.x = m_winw - 2;
 	m_drawarea.y = m_winh - 4;
 	splitwin(m_split);
 
 	int dpos = 0, len = 0;
-	for (int i = 0; i < m_msg.Len(); )
+	for (i = 0; i < m_msg.Len(); )
 	{
 		if (m_msg[i] == 'k')
 		{	// キー入力待ち記号
@@ -46,7 +47,7 @@ int CWinShowMessage::drawwin()
 			m_msgvct.push_back(m_msg.Sub(dpos, i));
 			dpos = i;
 			len = 0;
-			continue
+			continue;
 		}
 		if (len >= m_drawarea.x)
 		{	// 表示エリアの右端まで到達
@@ -54,7 +55,7 @@ int CWinShowMessage::drawwin()
 			m_msgvct.push_back(m_msg.Sub(dpos, i));
 			dpos = i;
 			len = 0;
-			continue
+			continue;
 		}
 		if (m_msg[i] == 't')
 		{	// ウェイトタイム記号
@@ -76,7 +77,7 @@ int CWinShowMessage::drawwin()
 	return true;
 }
 
-void CWinShowMessage::drawmsg()
+int CWinShowMessage::drawmsg()
 {
 	int dpos = 0;
 	for (int i = 0; i < m_msgvct.size(); i++)
@@ -147,9 +148,10 @@ void CWinShowMessage::drawmsg()
 	return true;
 }
 
-void CWinShowMessage::drawitem()
+int CWinShowMessage::drawitem()
 {
 	setselect(m_wpos.x, m_wpos.y, &m_cur.x, &m_dpos.x, m_list, m_cp);
+	return true;
 }
 
 void CWinShowMessage::push(const CString str, const int id)

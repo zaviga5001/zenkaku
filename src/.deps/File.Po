@@ -128,7 +128,7 @@ File.o: File.cpp /usr/include/stdc-predef.h File.h /usr/include/stdio.h \
  WinEditValue_Pos.h WinEditValue_Cmask.h WinGetPath.h WinMapEditor.h \
  WinMsg.h WinMycharEditor.h WinEnemyEditor.h WinPartyEditor.h \
  WinPGEditor.h WinScenarioEditor.h WinEventEditor.h WinItemEditor.h \
- WinShopEditor.h WinMessageEditor.h
+ WinShopEditor.h WinMessageEditor.h WinShowMessage.h
 
 /usr/include/stdc-predef.h:
 
@@ -515,3 +515,5 @@ WinItemEditor.h:
 WinShopEditor.h:
 
 WinMessageEditor.h:
+
+WinShowMessage.h:

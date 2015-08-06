@@ -130,7 +130,8 @@ WinItemEditor.o: WinItemEditor.cpp /usr/include/stdc-predef.h win.h \
  /usr/include/c++/4.8/bits/stl_tree.h /usr/include/c++/4.8/bits/stl_map.h \
  /usr/include/c++/4.8/bits/stl_multimap.h WinMsg.h WinMycharEditor.h \
  WinEnemyEditor.h WinPartyEditor.h WinPGEditor.h WinScenarioEditor.h \
- WinEventEditor.h WinItemEditor.h WinShopEditor.h WinMessageEditor.h
+ WinEventEditor.h WinItemEditor.h WinShopEditor.h WinMessageEditor.h \
+ WinShowMessage.h
 
 /usr/include/stdc-predef.h:
 
@@ -517,3 +518,5 @@ WinItemEditor.h:
 WinShopEditor.h:
 
 WinMessageEditor.h:
+
+WinShowMessage.h:

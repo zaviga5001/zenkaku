@@ -131,8 +131,8 @@ main.o: main.cpp /usr/include/stdc-predef.h /usr/include/stdio.h \
  WinEditValue_Pos.h WinEditValue_Cmask.h WinGetPath.h WinMapEditor.h \
  WinMsg.h WinMycharEditor.h WinEnemyEditor.h WinPartyEditor.h \
  WinPGEditor.h WinScenarioEditor.h WinEventEditor.h WinItemEditor.h \
- WinShopEditor.h WinMessageEditor.h Title.h /usr/include/dirent.h \
- /usr/include/i386-linux-gnu/bits/dirent.h \
+ WinShopEditor.h WinMessageEditor.h WinShowMessage.h Title.h \
+ /usr/include/dirent.h /usr/include/i386-linux-gnu/bits/dirent.h \
  /usr/include/i386-linux-gnu/bits/posix1_lim.h \
  /usr/include/i386-linux-gnu/bits/local_lim.h /usr/include/linux/limits.h \
  Game.h
@@ -536,6 +536,8 @@ WinItemEditor.h:
 WinShopEditor.h:
 
 WinMessageEditor.h:
+
+WinShowMessage.h:
 
 Title.h:
 

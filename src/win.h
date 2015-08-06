@@ -20,5 +20,6 @@
 #include "WinItemEditor.h"
 #include "WinShopEditor.h"
 #include "WinMessageEditor.h"
+#include "WinShowMessage.h"
 
 
