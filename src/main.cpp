@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
+#include <locale.h>
 #include <ncurses.h>
 #include "CString.h"
 
@@ -13,6 +14,8 @@
 
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, "");
+
 	// パス取得
 	get_zenkaku_home();
 	get_user_home();
