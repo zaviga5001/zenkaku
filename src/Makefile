@@ -107,6 +107,8 @@ am_zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) CString.$(OBJEXT) \
 	WinShowMessage.$(OBJEXT) WinTitle.$(OBJEXT) Windows.$(OBJEXT)
 zenkaku_OBJECTS = $(am_zenkaku_OBJECTS)
 zenkaku_LDADD = $(LDADD)
+zenkaku_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(zenkaku_LDFLAGS) \
+	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -206,7 +208,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = 
+LIBS = -lncursesw 
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/sasagawa/src/zenkaku/zaurus.project/zenkaku/missing makeinfo
 MKDIR_P = /bin/mkdir -p
@@ -286,6 +288,7 @@ zenkaku_SOURCES = main.cpp CDate.cpp CString.cpp CString_st.cpp \
 	WinSelect1Item.h WinSelect1Line.h WinShopEditor.h \
 	WinShowMessage.h WinTitle.h Windows.h common.h main.h msg.h \
 	win.h
+zenkaku_LDFLAGS = -lncursesw
 all: all-am
 
 .SUFFIXES:
@@ -365,7 +368,7 @@ clean-binPROGRAMS:
 
 zenkaku$(EXEEXT): $(zenkaku_OBJECTS) $(zenkaku_DEPENDENCIES) $(EXTRA_zenkaku_DEPENDENCIES) 
 	@rm -f zenkaku$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(zenkaku_OBJECTS) $(zenkaku_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(zenkaku_LINK) $(zenkaku_OBJECTS) $(zenkaku_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

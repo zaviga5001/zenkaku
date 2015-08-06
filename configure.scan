@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
-AC_CONFIG_SRCDIR([src/WinMycharEditor.cpp])
+AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
@@ -11,6 +11,8 @@ AC_PROG_CXX
 AC_PROG_CC
 
 # Checks for libraries.
+# FIXME: Replace `main' with a function in `-lncursesw':
+AC_CHECK_LIB([ncursesw], [main])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h unistd.h])

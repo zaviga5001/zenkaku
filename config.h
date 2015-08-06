@@ -7,6 +7,9 @@
 /* Define to 1 if you have the `isascii' function. */
 #define HAVE_ISASCII 1
 
+/* Define to 1 if you have the `ncursesw' library (-lncursesw). */
+#define HAVE_LIBNCURSESW 1
+
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
