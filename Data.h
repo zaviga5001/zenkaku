@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <signal.h>
-#include "include/curses.h"
+#include <ncurses.h>
 #include "common.h"
 
 #define	FLG_NUM_BY_INT	512

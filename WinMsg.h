@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <signal.h>
-#include "include/curses.h"
+#include <ncurses.h>
 #include "Windows.h"
 
 class CWinMsg : public CWindows

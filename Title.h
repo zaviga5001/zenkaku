@@ -8,7 +8,7 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include "include/curses.h"
+#include <ncurses.h>
 #include "common.h"
 #include "win.h"
 #include "Config.h"

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
-#include "include/curses.h"
+#include <ncurses.h>
 #include "CString.h"
 
 #include "main.h"

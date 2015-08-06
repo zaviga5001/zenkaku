@@ -7,7 +7,7 @@
 #include "CString.h"
 
 
-#define	ZENKAKURC	"/home/zaurus/.zenkaku/zenkakurc"
+#define	ZENKAKURC	"/home/randy/.zenkaku/zenkakurc"
 
 
 int		main(int argc, char *argv[]);

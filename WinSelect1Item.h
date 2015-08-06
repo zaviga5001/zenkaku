@@ -7,7 +7,7 @@
 #include <time.h>
 #include <signal.h>
 #include <vector>
-#include "include/curses.h"
+#include <ncurses.h>
 #include "Windows.h"
 #include "CString.h"
 
