@@ -78,7 +78,7 @@ int CWinShowMessage::drawwin()
 
 void CWinShowMessage::drawmsg()
 {
-	int dpos = 0, 
+	int dpos = 0;
 	for (int i = 0; i < m_msgvct.size(); i++)
 	{
 		// スクロールポジション調整
