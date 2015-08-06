@@ -2,33 +2,33 @@
 
 CWinItemEditor::CWinItemEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_dpos.x = 0;
 	m_dpos.y = 0;
 	m_cur.y  = 0;
 	m_wpos.x = 1;
 	m_wpos.y = 1;
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
-	m_maxwidth = 0;		// Ê¸»úÎó¤ÎºÇÂçÉı
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
+	m_maxwidth = 0;		// æ–‡å­—åˆ—ã®æœ€å¤§å¹…
 
 	m_data = new CData;
 
 	m_data->m_itemnum = 0;
 
-	// ¤³¤³¤Ç¥·¥Ê¥ê¥ª¤òÆÉ¤ß¹ş¤á
+	// ã“ã“ã§ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚
 
-	// Å¨¥­¥ã¥éÆÉ¤ß¹ş¤ß
+	// æ•µã‚­ãƒ£ãƒ©èª­ã¿è¾¼ã¿
 	read_item();
 
 	for (int i = 0; i < m_data->m_itemnum; i++)
 	{
 		push(m_data->m_item[i].name, i);
 	}
-	push("¿·µ¬ºîÀ®", m_data->m_itemnum);
+	push("æ–°è¦ä½œæˆ", m_data->m_itemnum);
 }
 
 CWinItemEditor::~CWinItemEditor()
@@ -69,7 +69,7 @@ void CWinItemEditor::change(const CString str, const int id, const int index)
 }
 
 
-// ¥¢¥¤¥Æ¥à¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// ã‚¢ã‚¤ãƒ†ãƒ ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 void CWinItemEditor::read_item()
 {
 	CFile*	fp;
@@ -80,7 +80,7 @@ void CWinItemEditor::read_item()
 	delete(fp);
 }
 
-// ¥¢¥¤¥Æ¥à¥Õ¥¡¥¤¥ë½ñ¤­¹ş¤ß
+// ã‚¢ã‚¤ãƒ†ãƒ ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 void CWinItemEditor::write_item()
 {
 	CFile*	fp;
@@ -93,7 +93,7 @@ void CWinItemEditor::write_item()
 
 void CWinItemEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	for( ; ; )
 	{
@@ -129,28 +129,28 @@ bool CWinItemEditor::onkeypress_left()
 {
 	if (m_dpos.x > 0)	m_dpos.x--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinItemEditor::onkeypress_down()
 {
 	if (m_cur.y < m_index.size() - 1)	m_cur.y++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinItemEditor::onkeypress_up()
 {
 	if (m_cur.y > 0)	m_cur.y--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinItemEditor::onkeypress_right()
 {
-	// ¸Ä¡¹¤Î¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// å€‹ã€…ã®ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	//if (m_list[m_cur.y].Len() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
-	// ºÇÂçÄ¹¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// æœ€å¤§é•·ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	if (m_winw - m_wpos.x - 1 + m_dpos.x < m_maxwidth)	m_dpos.x++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinItemEditor::onkeypress_ok()
 {
@@ -159,9 +159,9 @@ bool CWinItemEditor::onkeypress_ok()
 
 	CWinEditValue*	nw_editvalue;
 
-	// ¥«¡¼¥½¥ë°ÌÃÖ¤Î¥¢¥¤¥Æ¥à¾ğÊóÆÉ¤ß¹ş¤ß
+	// ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®ã®ã‚¢ã‚¤ãƒ†ãƒ æƒ…å ±èª­ã¿è¾¼ã¿
 	if (m_cur.y == m_data->m_itemnum)
-	{ // ¿·µ¬ÄÉ²Ã
+	{ // æ–°è¦è¿½åŠ 
 		tmp_it = &tmp_ito;
 	}
 	else
@@ -172,21 +172,21 @@ bool CWinItemEditor::onkeypress_ok()
 	for ( ; ; )
 	{
 		nw_editvalue = new CWinEditValue;
-		// ¥İ¥¤¥ó¥¿¥»¥Ã¥È
-		nw_editvalue->push("Ì¾Á°",	&tmp_it->name,		TT_CST, 1);
-		nw_editvalue->push("¼ïÎà",	&tmp_it->type,		TT_INT, 1);
-		nw_editvalue->push("²Á³Ê",	&tmp_it->price,		TT_INT, 1);
+		// ãƒã‚¤ãƒ³ã‚¿ã‚»ãƒƒãƒˆ
+		nw_editvalue->push("åå‰",	&tmp_it->name,		TT_CST, 1);
+		nw_editvalue->push("ç¨®é¡",	&tmp_it->type,		TT_INT, 1);
+		nw_editvalue->push("ä¾¡æ ¼",	&tmp_it->price,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£°",	&tmp_it->elm[0],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£±",	&tmp_it->elm[1],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£²",	&tmp_it->elm[2],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£³",	&tmp_it->elm[3],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£´",	&tmp_it->elm[4],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼",	&tmp_it->elm[0],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼‘",	&tmp_it->elm[1],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼’",	&tmp_it->elm[2],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼“",	&tmp_it->elm[3],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼”",	&tmp_it->elm[4],	TT_INT, 1);
 
 		nw_editvalue->startwin(true);
 		delete(nw_editvalue);
 		
-		// ¥¢¥¤¥Æ¥à½ñ¤­½Ğ¤·
+		// ã‚¢ã‚¤ãƒ†ãƒ æ›¸ãå‡ºã—
 		CWinSelect1Item* nw_select1item;
 		nw_select1item = new CWinSelect1Item;
 		nw_select1item->setsize(20, 5);
@@ -206,9 +206,9 @@ bool CWinItemEditor::onkeypress_ok()
 		{
 			change(tmp_it->name, m_cur.y, m_cur.y);
 			if (m_cur.y == m_data->m_itemnum)
-			{ // ¿·µ¬ÄÉ²Ã¤À¤Ã¤¿
+			{ // æ–°è¦è¿½åŠ ã ã£ãŸ
 				m_data->m_itemnum++;
-				push("¿·µ¬ºîÀ®", m_data->m_itemnum);
+				push("æ–°è¦ä½œæˆ", m_data->m_itemnum);
 
 				m_data->m_item.push_back(*tmp_it);
 			}
@@ -217,12 +217,12 @@ bool CWinItemEditor::onkeypress_ok()
 		drawwin();
 		touchwin(m_this);
 		wrefresh(m_this);
-		return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+		return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 	}
 }
 bool CWinItemEditor::onkeypress_cancel()
 {
-	return false;	// ½ªÎ»
+	return false;	// çµ‚äº†
 }
 
 

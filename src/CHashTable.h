@@ -9,7 +9,7 @@
 
 #include "CList.h"
 
-//Î¬µ­ÍÑ¥Ş¥¯¥í
+//ç•¥è¨˜ç”¨ãƒã‚¯ãƒ­
 #define _TEMPLATE   template <class T_Key, class T_Item >
 #define _HASH       CHashTable<T_Key, T_Item >
 #define _ENTRY      CHashEntry<T_Key, T_Item >
@@ -72,12 +72,12 @@ protected:
 
 /* construction ------------------------------------------------------------- */
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 _TEMPLATE inline CHashTable<T_Key, T_Item >::CHashTable()
 : m_pfnHash(NULL), m_nSize(0), m_lpaList(NULL), m_nCount(0) {
 }
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 _TEMPLATE CHashTable<T_Key, T_Item >::CHashTable(const _HASH& h){
 
 	if (h.m_pfnHash){
@@ -105,7 +105,7 @@ _TEMPLATE CHashTable<T_Key, T_Item >::CHashTable(const _HASH& h){
 	return;
 }
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 _TEMPLATE CHashTable<T_Key, T_Item >::CHashTable(int (*pfnHash)(const T_Key&), int nSize){
 	assert(pfnHash && nSize > 0);
 
@@ -121,12 +121,12 @@ _TEMPLATE CHashTable<T_Key, T_Item >::CHashTable(int (*pfnHash)(const T_Key&), i
 
 /* destruction -------------------------------------------------------------- */
 
-//¥Ç¥¹¥È¥é¥¯¥¿
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 _TEMPLATE CHashTable<T_Key, T_Item >::~CHashTable(){
 	Destroy();
 }
 
-//¥ª¥Ö¥¸¥§¥¯¥È¤Îºï½ü
+//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‰Šé™¤
 _TEMPLATE void CHashTable<T_Key, T_Item >::Delete(){
 
 	Destroy();
@@ -139,7 +139,7 @@ _TEMPLATE void CHashTable<T_Key, T_Item >::Delete(){
 	return;
 }
 
-//¥ª¥Ö¥¸¥§¥¯¥È¤ÎÇË´ş [for internal use]
+//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„ [for internal use]
 _TEMPLATE void CHashTable<T_Key, T_Item >::Destroy(){
 
 	delete [] m_lpaList;
@@ -150,7 +150,7 @@ _TEMPLATE void CHashTable<T_Key, T_Item >::Destroy(){
 
 /* initialization ----------------------------------------------------------- */
 
-//ºîÀ®
+//ä½œæˆ
 _TEMPLATE bool CHashTable<T_Key, T_Item >::Create(int (*pfnHash)(KEY), int nSize){
 
 	if (!pfnHash || nSize <= 0) return false;
@@ -171,22 +171,22 @@ _TEMPLATE bool CHashTable<T_Key, T_Item >::Create(int (*pfnHash)(KEY), int nSize
 
 /* member access (getting) -------------------------------------------------- */
 
-//¥Ï¥Ã¥·¥å´Ø¿ô¤Î¼èÆÀ
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•°ã®å–å¾—
 _TEMPLATE inline int (* CHashTable<T_Key, T_Item>::Hash() const)(KEY){
 	return m_pfnHash;
 }
 
-//¥Ï¥Ã¥·¥å¥µ¥¤¥º¤Î¼èÆÀ
+//ãƒãƒƒã‚·ãƒ¥ã‚µã‚¤ã‚ºã®å–å¾—
 _TEMPLATE inline int CHashTable<T_Key, T_Item>::Size() const {
 	return m_nSize;
 }
 
-//Í×ÁÇ¿ô¤Î¼èÆÀ
+//è¦ç´ æ•°ã®å–å¾—
 _TEMPLATE inline int CHashTable<T_Key, T_Item>::Count() const {
 	return m_nCount;
 }
 
-//¥Æ¡¼¥Ö¥ë¤Î¶õÈ½Äê
+//ãƒ†ãƒ¼ãƒ–ãƒ«ã®ç©ºåˆ¤å®š
 _TEMPLATE inline bool CHashTable<T_Key, T_Item>::IsEmpty() const {
 	return !m_nCount;
 }
@@ -194,7 +194,7 @@ _TEMPLATE inline bool CHashTable<T_Key, T_Item>::IsEmpty() const {
 
 /* operator ----------------------------------------------------------------- */
 
-//ÂåÆş
+//ä»£å…¥
 _TEMPLATE _HASH& CHashTable<T_Key, T_Item >::operator = (const _HASH& h){
 
 	Destroy();
@@ -227,7 +227,7 @@ _TEMPLATE _HASH& CHashTable<T_Key, T_Item >::operator = (const _HASH& h){
 
 /* operation ---------------------------------------------------------------- */
 
-//¥¢¥¤¥Æ¥à¤Î¼èÆÀ (1)
+//ã‚¢ã‚¤ãƒ†ãƒ ã®å–å¾— (1)
 _TEMPLATE T_Item CHashTable<T_Key, T_Item >::Get(KEY key) const {
 
 	T_Item* lpItem =Retrieve(key);
@@ -235,7 +235,7 @@ _TEMPLATE T_Item CHashTable<T_Key, T_Item >::Get(KEY key) const {
 	return (lpItem) ? *lpItem : T_Item(0);
 }
 
-//¥¢¥¤¥Æ¥à¤Î¼èÆÀ (2)
+//ã‚¢ã‚¤ãƒ†ãƒ ã®å–å¾— (2)
 _TEMPLATE bool CHashTable<T_Key, T_Item >::Get(T_Item* lpRes, KEY key) const {
 
 	T_Item* lpItem =Retrieve(key);
@@ -246,7 +246,7 @@ _TEMPLATE bool CHashTable<T_Key, T_Item >::Get(T_Item* lpRes, KEY key) const {
 	return true;
 }
 
-//¥¢¥¤¥Æ¥à¤Î¸¡º÷ [for internal use]
+//ã‚¢ã‚¤ãƒ†ãƒ ã®æ¤œç´¢ [for internal use]
 _TEMPLATE T_Item* CHashTable<T_Key, T_Item >::Retrieve(KEY key) const {
 
 	int nHash =(*m_pfnHash)(key);
@@ -267,7 +267,7 @@ _TEMPLATE T_Item* CHashTable<T_Key, T_Item >::Retrieve(KEY key) const {
 	return NULL;
 }
 
-//¥¨¥ó¥È¥ê¤ÎÄÉ²Ã
+//ã‚¨ãƒ³ãƒˆãƒªã®è¿½åŠ 
 _TEMPLATE bool CHashTable<T_Key, T_Item >::Put(KEY key, ITEM item){
 
 	int nHash =(*m_pfnHash)(key);
@@ -301,7 +301,7 @@ _TEMPLATE bool CHashTable<T_Key, T_Item >::Put(KEY key, ITEM item){
 	return true;
 }
 
-//¥¨¥ó¥È¥ê¤Îºï½ü
+//ã‚¨ãƒ³ãƒˆãƒªã®å‰Šé™¤
 _TEMPLATE bool CHashTable<T_Key, T_Item >::Remove(KEY key){
 
 	if (!m_pfnHash) return false;
@@ -336,7 +336,7 @@ _TEMPLATE bool CHashTable<T_Key, T_Item >::Remove(KEY key){
 	return false;
 }
 
-//¥İ¥Ã¥× (1)
+//ãƒãƒƒãƒ— (1)
 _TEMPLATE bool CHashTable<T_Key, T_Item >::Pop(T_Item* lpRes, KEY key){
 
 	if (!m_pfnHash) return false;
@@ -371,7 +371,7 @@ _TEMPLATE bool CHashTable<T_Key, T_Item >::Pop(T_Item* lpRes, KEY key){
 	return false;
 }
 
-//¥İ¥Ã¥× (2)
+//ãƒãƒƒãƒ— (2)
 _TEMPLATE T_Item CHashTable<T_Key, T_Item >::Pop(KEY key){
 
 	if (!m_pfnHash) return false;
@@ -408,7 +408,7 @@ _TEMPLATE T_Item CHashTable<T_Key, T_Item >::Pop(KEY key){
 
 
 
-//¥¨¥ó¥È¥ê¤ÎÎóµó
+//ã‚¨ãƒ³ãƒˆãƒªã®åˆ—æŒ™
 _TEMPLATE bool CHashTable<T_Key, T_Item >::List(CList<_ENTRY*>* lpList){
 
 	if (!lpList) return false;
@@ -431,7 +431,7 @@ _TEMPLATE bool CHashTable<T_Key, T_Item >::List(CList<_ENTRY*>* lpList){
 	return true;
 }
 
-//¥¨¥ó¥È¥ê¤ÎÎóµó (const)
+//ã‚¨ãƒ³ãƒˆãƒªã®åˆ—æŒ™ (const)
 _TEMPLATE bool CHashTable<T_Key, T_Item >::List(CList<const _ENTRY*>* lpList) const {
 
 	if (!lpList) return false;
@@ -481,12 +481,12 @@ private:
 
 /* construction ------------------------------------------------------------- */
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 _TEMPLATE inline CHashEntry<T_Key, T_Item >::CHashEntry(const _ENTRY& entry)
 : m_key(entry.m_key), m_item(entry.m_item) {
 }
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 _TEMPLATE inline CHashEntry<T_Key, T_Item >::CHashEntry(KEY key, ITEM item)
 : m_key(key), m_item(item) {
 }
@@ -494,23 +494,23 @@ _TEMPLATE inline CHashEntry<T_Key, T_Item >::CHashEntry(KEY key, ITEM item)
 
 /* member access (getting) -------------------------------------------------- */
 
-//¥­¡¼¤Î»²¾È (const)
+//ã‚­ãƒ¼ã®å‚ç…§ (const)
 _TEMPLATE inline KEY CHashEntry<T_Key, T_Item >::Key() const {
 	return m_key;
 }
 
-//¥¢¥¤¥Æ¥à¤Î»²¾È
+//ã‚¢ã‚¤ãƒ†ãƒ ã®å‚ç…§
 _TEMPLATE inline T_Item& CHashEntry<T_Key, T_Item >::Item(){
 	return m_item;
 }
 
-//¥¢¥¤¥Æ¥à¤Î»²¾È (const)
+//ã‚¢ã‚¤ãƒ†ãƒ ã®å‚ç…§ (const)
 _TEMPLATE inline ITEM CHashEntry<T_Key, T_Item >::Item() const {
 	return m_item;
 }
 
 
-//Î¬µ­ÍÑ¥Ş¥¯¥í²ò½ü
+//ç•¥è¨˜ç”¨ãƒã‚¯ãƒ­è§£é™¤
 #undef _TEMPLATE
 #undef _HASH
 #undef _ENTRY

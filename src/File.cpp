@@ -27,7 +27,7 @@ void CFile::read_cfg(const CString fname, CConfig* config)
 		data[key] = value;
 	}
 
-	// ÀßÄêÃÍ¤Î¼è¤ê½Ğ¤·
+	// è¨­å®šå€¤ã®å–ã‚Šå‡ºã—
 	std::string &value = data["title"];
 	std::istringstream iss(value);
 	iss >> config->m_title;
@@ -56,7 +56,7 @@ ScnList CFile::read_scenario_list(const CString fname)
 		data[key] = value;
 	}
 
-	// ÀßÄêÃÍ¤Î¼è¤ê½Ğ¤·
+	// è¨­å®šå€¤ã®å–ã‚Šå‡ºã—
 	tmp_scn.name = data["scenario"].c_str();
 	tmp_scn.doc = data["doc"].c_str();
 
@@ -589,7 +589,7 @@ MapData CFile::get_map_size(const CString fname)
 	fp = fopen(fname_t, "r");
 	if (fp == NULL)	return(size);
 	while(1)
-        {       // ¹ÔÃ±°Ì¥ë¡¼¥×
+        {       // è¡Œå˜ä½ãƒ«ãƒ¼ãƒ—
 		if(tmp_cs.ReadLine(fp) == EOF)        break;
 		size.height++;
 		if (tmp_cs.Len() > size.width)		size.width = tmp_cs.Len();
@@ -612,27 +612,27 @@ int CFile::read_map(const CString fname, MapData* mapdata, PosData* posdata, Pos
 
 	fp = fopen(fname_b, "r");
 	if (fp == NULL)
-	{ // ¥¿¥¤¥ë¥Õ¥¡¥¤¥ë¤Ê¤· ¥Ş¥Ã¥×¤«¤é¿·µ¬ºîÀ®
+	{ // ã‚¿ã‚¤ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ãªã— ãƒãƒƒãƒ—ã‹ã‚‰æ–°è¦ä½œæˆ
 		fp = fopen(fname_t, "r");
-		if (fp == NULL)	return 0;	// ¥¿¥¤¥ë¤â¥Ş¥Ã¥×¤â¤Ê¤·
+		if (fp == NULL)	return 0;	// ã‚¿ã‚¤ãƒ«ã‚‚ãƒãƒƒãƒ—ã‚‚ãªã—
 		for (k = 0; ; k++)
-        	{ // ¹ÔÃ±°Ì¥ë¡¼¥×
+        	{ // è¡Œå˜ä½ãƒ«ãƒ¼ãƒ—
 			if(tmp_cs.ReadLine(fp) == EOF)        break;
 			for(i = 0; i < tmp_cs.Len(); i = i + 2)
-			{ // Ê¸»úÃ±°Ì¥ë¡¼¥×
+			{ // æ–‡å­—å˜ä½ãƒ«ãƒ¼ãƒ—
 				flg = false;
 				for(j = 0; j < num; j++)
-				{ // ´û¤ËÆÉ¤ó¤ÀÊ¸»ú¤ÈÈæ³Ó
+				{ // æ—¢ã«èª­ã‚“ã æ–‡å­—ã¨æ¯”è¼ƒ
 					if (tmp_cs[i]     == tiledata[j].tile[0] &&
 					    tmp_cs[i + 1] == tiledata[j].tile[1]   )
-					{ // ´û¤ËÅĞÏ¿¤¬¤¢¤Ã¤¿
+					{ // æ—¢ã«ç™»éŒ²ãŒã‚ã£ãŸ
 						posdata[k * mapdata->width + (i / 2)].falseid = (char)j;
 						flg = true;
 						break;
 					}
 				}
 				if (!flg)
-				{	// ÅĞÏ¿¤¬¤Ê¤«¤Ã¤¿
+				{	// ç™»éŒ²ãŒãªã‹ã£ãŸ
 					tiledata[num].tile[0]	= tmp_cs[i];
 					tiledata[num].tile[1]	= tmp_cs[i + 1];
 					tiledata[num].ch	= 7;
@@ -641,7 +641,7 @@ int CFile::read_map(const CString fname, MapData* mapdata, PosData* posdata, Pos
 					tiledata[num].height	= 50;
 					tiledata[num].move	= 0;
 
-					// ¥İ¥¸¥·¥ç¥ó¥Ç¡¼¥¿ÊİÂ¸
+					// ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ä¿å­˜
 					posdata[k * mapdata->width + (i / 2)].falseid = (char)num;
 					num++;
 				}
@@ -651,19 +651,19 @@ int CFile::read_map(const CString fname, MapData* mapdata, PosData* posdata, Pos
 				posdata[k * mapdata->width + (i / 2)].enemy   = 0;
 				posdata[k * mapdata->width + (i / 2)].encount = 10;
 
-				// PAD¤ËÉÁ²è
+				// PADã«æç”»
 				//wattrset(map, COLOR_PAIR(0));
 				//mvwaddstr(map, k, i, (LPCSTR)tmp_cs.Sub(i, i + 2));
 			}
 		}
-		// NextMap½é´ü²½
+		// NextMapåˆæœŸåŒ–
 		mapdata->nextmap_u = 0;
 		mapdata->nextmap_d = 0;
 		mapdata->nextmap_l = 0;
 		mapdata->nextmap_r = 0;
 
 		for (k = 0; k < MAX_SPPOS; k++)
-        	{ // ¥¹¥Ú¥·¥ã¥ë¥İ¥¸¥·¥ç¥ó½é´ü²½
+        	{ // ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³åˆæœŸåŒ–
 			spposdata[k].flg     = 0;
 			spposdata[k].trueid  = 0;
 			spposdata[k].falseid = 0;
@@ -673,7 +673,7 @@ int CFile::read_map(const CString fname, MapData* mapdata, PosData* posdata, Pos
 		}
 	}
 	else
-	{ // ¥¿¥¤¥ë¥Õ¥¡¥¤¥ë¤¢¤ê ÆÉ¤ß¹ş¤ß
+	{ // ã‚¿ã‚¤ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ã‚ã‚Š èª­ã¿è¾¼ã¿
 		fread(mapdata,   sizeof(MapData), 1, fp);
 		fread(posdata,   sizeof(struct typePosData), mapdata->height * mapdata->width, fp);
 		fread(spposdata, sizeof(PosData), MAX_SPPOS, fp);
@@ -704,7 +704,7 @@ int CFile::read_map(const CString fname, MapData* mapdata, PosData* posdata, Pos
 	}
 	fclose(fp);
 
-	return(num);	// ¥¿¥¤¥ë¤Î¿ô¤òÊÖ¤¹
+	return(num);	// ã‚¿ã‚¤ãƒ«ã®æ•°ã‚’è¿”ã™
 }
 
 bool CFile::write_map(const CString fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, CString* fieldname, int tilenum)
@@ -716,7 +716,7 @@ bool CFile::write_map(const CString fname, MapData* mapdata, PosData* posdata, P
 	fp = fopen(fname_b, "w");
 	if (fp != NULL)
 	{
-		// ½ñ¤­½Ğ¤·
+		// æ›¸ãå‡ºã—
 		fwrite(mapdata,   sizeof(MapData), 1, fp);
 		fwrite(posdata,   sizeof(struct typePosData), mapdata->height * mapdata->width, fp);
 		fwrite(spposdata, sizeof(PosData), MAX_SPPOS, fp);
@@ -729,7 +729,7 @@ bool CFile::write_map(const CString fname, MapData* mapdata, PosData* posdata, P
 		fwrite(sevent,    sizeof(PosEvent), MAX_MAPEVENT, fp);
 		for (int i = 0; i < MAX_FNAME; i++)
 		{
-			if (fieldname[i] == "¡¡")	break;
+			if (fieldname[i] == "ã€€")	break;
 			fwrite((LPCSTR)fieldname[i], sizeof(char), fieldname[i].Len(), fp);
 			fwrite( ":", sizeof(char), 1, fp);
 		}
@@ -738,7 +738,7 @@ bool CFile::write_map(const CString fname, MapData* mapdata, PosData* posdata, P
 		ret = true;
 	}
 	else
-	{ // ¥Õ¥¡¥¤¥ëºîÀ®¤Ç¤­¤º
+	{ // ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆã§ããš
 		ret = false;
 	}
 
@@ -760,7 +760,7 @@ CString CFile::input_path_dialog()
 
 void CFile::mychop(CString& cs)
 {
-	// ¥¹¥Ú¡¼¥¹¡¢¥¿¥Ö¡¢'#'°Ê¹ß¤ò¼è¤ê½ü¤¯
+	// ã‚¹ãƒšãƒ¼ã‚¹ã€ã‚¿ãƒ–ã€'#'ä»¥é™ã‚’å–ã‚Šé™¤ã
 	int i;
 	i = cs.Find("#");
 	if (i > NOT_FOUND)	cs = cs.Left(i);
@@ -777,11 +777,11 @@ void CFile::readcsv(const CString cs, CList<int>* cl)
 
 	while (1)
 	{
-		tmp_num = tmp_cs.Find(",");			// Ãµ¤¹
+		tmp_num = tmp_cs.Find(",");			// æ¢ã™
 		if (tmp_num == NOT_FOUND)
 		{
-			tmp_num = tmp_cs.Len();			// ¤Ê¤«¤Ã¤¿¤é¡¢Ê¸»úÎóÁ´Éô¤òÂĞ¾İ¤Ë¤¹¤ë
-			flg = true;				// ¤Ê¤«¤Ã¤¿¤é¡¢½èÍı¸å½ªÎ»¤¹¤ë
+			tmp_num = tmp_cs.Len();			// ãªã‹ã£ãŸã‚‰ã€æ–‡å­—åˆ—å…¨éƒ¨ã‚’å¯¾è±¡ã«ã™ã‚‹
+			flg = true;				// ãªã‹ã£ãŸã‚‰ã€å‡¦ç†å¾Œçµ‚äº†ã™ã‚‹
 		}
 
 		if (tmp_num == 0)		cl->Append(0);
@@ -790,7 +790,7 @@ void CFile::readcsv(const CString cs, CList<int>* cl)
 
 		if (flg)	break;
 
-		tmp_cs = tmp_cs.Sub(tmp_num + 1);		// ¥«¥ó¥Ş¤Î¼¡¤ÎÊ¸»ú¤Ë¿Ê¤à
+		tmp_cs = tmp_cs.Sub(tmp_num + 1);		// ã‚«ãƒ³ãƒã®æ¬¡ã®æ–‡å­—ã«é€²ã‚€
 	}
 }
 */

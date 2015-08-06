@@ -6,7 +6,7 @@ CWinGetPath::CWinGetPath()
 	m_winy = 1;
 	m_winw = 30;
 	m_winh = 3;
-	movewin(5, 1);		// Window°ÌÃÖ¡Ê¥Ç¥Õ¥©¥ë¥È¡Ë¡ÊÃæ±û¡¢¥Ş¡¼¥¸¥ó£±¡Ë
+	movewin(5, 1);		// Windowä½ç½®ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼‰ï¼ˆä¸­å¤®ã€ãƒãƒ¼ã‚¸ãƒ³ï¼‘ï¼‰
 }
 
 CWinGetPath::~CWinGetPath()

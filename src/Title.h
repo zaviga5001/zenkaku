@@ -22,7 +22,7 @@ public:
 	bool	disp_title(CConfig* config);
 	bool	select_game(CConfig* config);
 
-	std::vector<ScnList>	m_scnlist;	// ƒVƒiƒŠƒIƒŠƒXƒg
+	std::vector<ScnList>	m_scnlist;	// ã‚·ãƒŠãƒªã‚ªãƒªã‚¹ãƒˆ
 
 protected:
 

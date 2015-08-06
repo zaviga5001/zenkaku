@@ -2,12 +2,12 @@
 
 CWinScenarioEditor::CWinScenarioEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
 
 	m_data = new CData;
 }
@@ -19,7 +19,7 @@ CWinScenarioEditor::~CWinScenarioEditor()
 
 int CWinScenarioEditor::drawwin()
 {
-	// ²èÌÌºÆÉÁ²è
+	// ç”»é¢å†æç”»
 	wrefresh(m_this);
 	return true;
 }
@@ -27,7 +27,7 @@ int CWinScenarioEditor::drawwin()
 
 void CWinScenarioEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	CWinMsg*		nw_msg;
 	CWinGetPath*		nw_getpath;
@@ -60,7 +60,7 @@ void CWinScenarioEditor::keyloop()
 	}
 }
 
-// ¥Ş¥¤¥­¥ã¥é¥Õ¥¡¥¤¥ë¤«¤éÆÉ¤ß¹ş¤ß
+// ãƒã‚¤ã‚­ãƒ£ãƒ©ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã¿
 int CWinScenarioEditor::read_mychar()
 {
 	CFile*	mycharfp;
@@ -92,22 +92,22 @@ void CWinScenarioEditor::warn(enum msg_id tmp_msg)
 bool CWinScenarioEditor::onkeypress_left()
 {
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinScenarioEditor::onkeypress_down()
 {
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinScenarioEditor::onkeypress_up()
 {
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinScenarioEditor::onkeypress_right()
 {
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 
 

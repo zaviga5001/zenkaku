@@ -26,33 +26,33 @@ public:
 	void		push(const CString str, const int id);
 	void		push(const CString str, const int id, const int cpair);
 
-	Pos	m_wpos;			// ƒEƒBƒ“ƒhƒEã‚Ì•\¦ˆÊ’u
+	Pos	m_wpos;			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä¸Šã®è¡¨ç¤ºä½ç½®
 
-	bool	onkeypress_left();	// ¶ƒL[‰Ÿ‰º
-	bool	onkeypress_down();	// ‰ºƒL[‰Ÿ‰º
-	bool	onkeypress_up();	// ãƒL[‰Ÿ‰º
-	bool	onkeypress_right();	// ‰EƒL[‰Ÿ‰º
-	bool	onkeypress_ok();	// ‚n‚jƒL[‰Ÿ‰º
-	bool	onkeypress_cancel();	// ƒLƒƒƒ“ƒZƒ‹ƒL[‰Ÿ‰º
+	bool	onkeypress_left();	// å·¦ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_down();	// ä¸‹ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_up();	// ä¸Šã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_right();	// å³ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_ok();	// ï¼¯ï¼«ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_cancel();	// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚­ãƒ¼æŠ¼ä¸‹
 
-	int	m_disable_cansel;	// ƒLƒƒƒ“ƒZƒ‹ƒ{ƒ^ƒ“‚ªŒø‚­‚©‚Ç‚¤‚©
-	int	m_type;			// •\¦ƒ^ƒCƒv
-					// 0:©“®•\¦ƒ^ƒCƒv
-					// 1:ƒXƒNƒ[ƒ‹ƒ^ƒCƒv
+	int	m_disable_cansel;	// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒœã‚¿ãƒ³ãŒåŠ¹ãã‹ã©ã†ã‹
+	int	m_type;			// è¡¨ç¤ºã‚¿ã‚¤ãƒ—
+					// 0:è‡ªå‹•è¡¨ç¤ºã‚¿ã‚¤ãƒ—
+					// 1:ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ—
 
-	CString	m_msg;			// ƒƒbƒZ[ƒW
-	int	m_split;		// ƒXƒvƒŠƒbƒ^‚ÌˆÊ’u
+	CString	m_msg;			// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+	int	m_split;		// ã‚¹ãƒ—ãƒªãƒƒã‚¿ã®ä½ç½®
 
 protected:
-	std::vector<CString>	m_list;		// —v‘f
-	std::vector<CString>	m_pause;	// ƒƒbƒZ[ƒWˆê’â~—p
-	std::vector<int>	m_cp;		// F
-	std::vector<int>	m_index;	// ’l
-	std::vector<CString>	m_msgvct;	// ƒƒbƒZ[ƒW
-	int	m_maxwidth;		// ƒŠƒXƒg•¶š—ñ‚ÌÅ‘å•
-	Pos	m_cur;			// ƒJ[ƒ\ƒ‹‚ÌˆÊ’u
-	Pos	m_dpos;			// ƒŠƒXƒg‚Ì•\¦ŠJnˆÊ’ui‰¡’·‘Î‰j
-	Pos	m_drawarea;		// •`‰æƒGƒŠƒA‚ÌL‚³
+	std::vector<CString>	m_list;		// è¦ç´ 
+	std::vector<CString>	m_pause;	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ä¸€æ™‚åœæ­¢ç”¨
+	std::vector<int>	m_cp;		// è‰²
+	std::vector<int>	m_index;	// å€¤
+	std::vector<CString>	m_msgvct;	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+	int	m_maxwidth;		// ãƒªã‚¹ãƒˆæ–‡å­—åˆ—ã®æœ€å¤§å¹…
+	Pos	m_cur;			// ã‚«ãƒ¼ã‚½ãƒ«ã®ä½ç½®
+	Pos	m_dpos;			// ãƒªã‚¹ãƒˆã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆæ¨ªé•·å¯¾å¿œï¼‰
+	Pos	m_drawarea;		// æç”»ã‚¨ãƒªã‚¢ã®åºƒã•
 
 private:
 };

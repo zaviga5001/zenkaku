@@ -2,26 +2,26 @@
 
 CWinEventEditor::CWinEventEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_dpos.x = 0;
 	m_dpos.y = 0;
 	m_cur.y  = 0;
 	m_wpos.x = 1;
 	m_wpos.y = 1;
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
-	m_maxwidth = 0;		// Ê¸»úÎó¤ÎºÇÂçÉı
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
+	m_maxwidth = 0;		// æ–‡å­—åˆ—ã®æœ€å¤§å¹…
 
 	m_data = new CData;
 
 	m_data->m_eventnum = 0;
 
-	// ¤³¤³¤Ç¥·¥Ê¥ê¥ª¤òÆÉ¤ß¹ş¤á
+	// ã“ã“ã§ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚
 
-	// ¥¤¥Ù¥ó¥ÈÆÉ¤ß¹ş¤ß
+	// ã‚¤ãƒ™ãƒ³ãƒˆèª­ã¿è¾¼ã¿
 	read_event();
 
 	for (int i = 0; i < m_data->m_eventnum; i++)
@@ -30,7 +30,7 @@ CWinEventEditor::CWinEventEditor(CConfig* config)
 		sprintf(tmp_buf, "%05d", i);
 		push(CString(tmp_buf), i);
 	}
-	push("¿·µ¬ºîÀ®", m_data->m_eventnum);
+	push("æ–°è¦ä½œæˆ", m_data->m_eventnum);
 }
 
 CWinEventEditor::~CWinEventEditor()
@@ -71,7 +71,7 @@ void CWinEventEditor::change(const CString str, const int id, const int index)
 }
 
 
-// ¥¤¥Ù¥ó¥È¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 void CWinEventEditor::read_event()
 {
 	CFile*	fp;
@@ -82,7 +82,7 @@ void CWinEventEditor::read_event()
 	delete(fp);
 }
 
-// ¥¤¥Ù¥ó¥È¥Õ¥¡¥¤¥ë½ñ¤­¹ş¤ß
+// ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 void CWinEventEditor::write_event(int index)
 {
 	CFile*	fp;
@@ -95,7 +95,7 @@ void CWinEventEditor::write_event(int index)
 
 void CWinEventEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	for( ; ; )
 	{
@@ -131,28 +131,28 @@ bool CWinEventEditor::onkeypress_left()
 {
 	if (m_dpos.x > 0)	m_dpos.x--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEventEditor::onkeypress_down()
 {
 	if (m_cur.y < m_index.size() - 1)	m_cur.y++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEventEditor::onkeypress_up()
 {
 	if (m_cur.y > 0)	m_cur.y--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEventEditor::onkeypress_right()
 {
-	// ¸Ä¡¹¤Î¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// å€‹ã€…ã®ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	//if (m_list[m_cur.y].Len() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
-	// ºÇÂçÄ¹¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// æœ€å¤§é•·ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	if (m_winw - m_wpos.x - 1 + m_dpos.x < m_maxwidth)	m_dpos.x++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEventEditor::onkeypress_ok()
 {
@@ -160,9 +160,9 @@ bool CWinEventEditor::onkeypress_ok()
 	EventData	tmp_evo;
 	CWinEditValue*	nw_editvalue;
 
-	// ¥«¡¼¥½¥ë°ÌÃÖ¤Î¥¤¥Ù¥ó¥È¾ğÊóÆÉ¤ß¹ş¤ß
+	// ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®ã®ã‚¤ãƒ™ãƒ³ãƒˆæƒ…å ±èª­ã¿è¾¼ã¿
 	if (m_cur.y == m_data->m_eventnum)
-	{ // ¿·µ¬ÄÉ²Ã
+	{ // æ–°è¦è¿½åŠ 
 		tmp_ev = &tmp_evo;
 	}
 	else
@@ -173,23 +173,23 @@ bool CWinEventEditor::onkeypress_ok()
 	for ( ; ; )
 	{
 		nw_editvalue = new CWinEditValue;
-		// ¥İ¥¤¥ó¥¿¥»¥Ã¥È
-		nw_editvalue->push("¥¢¥¯¥·¥ç¥ó",	&tmp_ev->action,	TT_INT, 1);
+		// ãƒã‚¤ãƒ³ã‚¿ã‚»ãƒƒãƒˆ
+		nw_editvalue->push("ã‚¢ã‚¯ã‚·ãƒ§ãƒ³",	&tmp_ev->action,	TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£°",		&tmp_ev->elm[0],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£±",		&tmp_ev->elm[1],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£²",		&tmp_ev->elm[2],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£³",		&tmp_ev->elm[3],	TT_INT, 1);
-		nw_editvalue->push("ÆâÍÆ¡§£´",		&tmp_ev->elm[4],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼",		&tmp_ev->elm[0],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼‘",		&tmp_ev->elm[1],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼’",		&tmp_ev->elm[2],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼“",		&tmp_ev->elm[3],	TT_INT, 1);
+		nw_editvalue->push("å†…å®¹ï¼šï¼”",		&tmp_ev->elm[4],	TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("¥Õ¥é¥°",		&tmp_ev->flg,		TT_INT, 1);
-		nw_editvalue->push("False ¥¤¥Ù¥ó¥È",	&tmp_ev->falseid,	TT_INT, 1);
-		nw_editvalue->push("True  ¥¤¥Ù¥ó¥È",	&tmp_ev->trueid,	TT_INT, 1);
+		nw_editvalue->push("ãƒ•ãƒ©ã‚°",		&tmp_ev->flg,		TT_INT, 1);
+		nw_editvalue->push("False ã‚¤ãƒ™ãƒ³ãƒˆ",	&tmp_ev->falseid,	TT_INT, 1);
+		nw_editvalue->push("True  ã‚¤ãƒ™ãƒ³ãƒˆ",	&tmp_ev->trueid,	TT_INT, 1);
 
 		nw_editvalue->startwin(true);
 		delete(nw_editvalue);
 		
-		// ¥¤¥Ù¥ó¥È½ñ¤­½Ğ¤·
+		// ã‚¤ãƒ™ãƒ³ãƒˆæ›¸ãå‡ºã—
 		CWinSelect1Item* nw_select1item;
 		nw_select1item = new CWinSelect1Item;
 		nw_select1item->setsize(20, 5);
@@ -208,12 +208,12 @@ bool CWinEventEditor::onkeypress_ok()
 		else if (tmp_ret == 1)
 		{
 			if (m_cur.y == m_data->m_eventnum)
-			{ // ¿·µ¬ÄÉ²Ã¤À¤Ã¤¿
+			{ // æ–°è¦è¿½åŠ ã ã£ãŸ
 				char tmp_buf[6];
 				sprintf(tmp_buf, "%05d", m_cur.y);
 				change(tmp_buf, m_cur.y, m_cur.y);
 				m_data->m_eventnum++;
-				push("¿·µ¬ºîÀ®", m_data->m_eventnum);
+				push("æ–°è¦ä½œæˆ", m_data->m_eventnum);
 
 				m_data->m_event.push_back(*tmp_ev);
 			}
@@ -222,12 +222,12 @@ bool CWinEventEditor::onkeypress_ok()
 		drawwin();
 		touchwin(m_this);
 		wrefresh(m_this);
-		return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+		return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 	}
 }
 bool CWinEventEditor::onkeypress_cancel()
 {
-	return false;	// ½ªÎ»
+	return false;	// çµ‚äº†
 }
 
 

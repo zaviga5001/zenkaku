@@ -15,8 +15,8 @@ public:
 	CConfig();
 	virtual ~CConfig();
 
-	bool	m_title;		// ╔©╔╓╔х╔К╡Хлли╫╪╗м╜л╣
-	int	m_scenario;		// ╔в╔Л╔╓╓╧╓К╔╥╔й╔Й╔╙
+	bool	m_title;		// Ц┌©Ц┌╓Ц┐┬Ц┐╚Г■╩И²╒Х║╗Г╓╨Ф°┴Г└║
+	int	m_scenario;		// Ц┐≈Ц┐╛Ц┌╓Ц│≥Ц┌▀Ц┌╥Ц┐┼Ц┐╙Ц┌╙
 
 protected:
 

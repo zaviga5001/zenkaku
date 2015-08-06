@@ -6,10 +6,10 @@ CWindows::CWindows()
 	noecho();
 	curs_set(0); 
 
-	// ¥Ç¥Õ¥©¥ë¥È¥«¥é¡¼½é´ü²½
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ©ãƒ¼åˆæœŸåŒ–
 	setdefcpair(0);
 
-	// Â°À­¥Æ¡¼¥Ö¥ë
+	// å±æ€§ãƒ†ãƒ¼ãƒ–ãƒ«
 	for(long j = 0; j < ATTR_NUM; j++)
 	{
 		m_attrs[j] = A_NORMAL + j;
@@ -24,7 +24,7 @@ CWindows::~CWindows()
 	delwin(m_this);
 }
 
-// É½¼¨³«»Ï
+// è¡¨ç¤ºé–‹å§‹
 //
 int CWindows::startwin(bool frame)
 {
@@ -38,7 +38,7 @@ int CWindows::startwin(bool frame)
 	return (m_return);
 }
 
-// É½¼¨³«»Ï
+// è¡¨ç¤ºé–‹å§‹
 //
 CString CWindows::startdialog(bool frame)
 {
@@ -52,14 +52,14 @@ CString CWindows::startdialog(bool frame)
 	return (m_returnstr);
 }
 
-// ¥¦¥£¥ó¥É¥¥¥¿¥¤¥È¥ë¤ò¥»¥Ã¥È¤¹¤ë
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã‚¿ã‚¤ãƒˆãƒ«ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 //
 void CWindows::settitle(const CString title)
 {
 	m_title = title;
 }
 
-// ¥¦¥£¥ó¥É¥¥¤Î¥µ¥¤¥º¤ò·è¤á¤ë
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã®ã‚µã‚¤ã‚ºã‚’æ±ºã‚ã‚‹
 //
 void CWindows::setsize(int max_w, int max_h)
 {
@@ -72,27 +72,27 @@ void CWindows::setsize(int max_w, int max_h)
 	m_winy = (LINES    - m_winh) / 2;
 }
 
-// ¥¦¥£¥ó¥É¥¥¤ÎÉ½¼¨°ÌÃÖ¤òÄ´À°¤¹¤ë
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã®è¡¨ç¤ºä½ç½®ã‚’èª¿æ•´ã™ã‚‹
 //
 void CWindows::movewin(int pos, int from)
 {
 	switch(pos)
 	{
-		case 1:		// º¸²¼
+		case 1:		// å·¦ä¸‹
 			if (m_winx > from)	m_winx = from;
 			if (m_winy > from)	m_winy = LINES    - from - m_winh;
 			break;
-		case 2:		// ²¼
+		case 2:		// ä¸‹
 			if (m_winy > from)	m_winy = LINES    - from - m_winh;
 			break;
-		case 3:		// ±¦²¼
+		case 3:		// å³ä¸‹
 			if (m_winx > from)	m_winx = COLS / 2 - from - m_winw;
 			if (m_winy > from)	m_winy = LINES    - from - m_winh;
 			break;
-		case 4:		// º¸
+		case 4:		// å·¦
 			if (m_winx > from)	m_winx = from;
 			break;
-		case 5:		// Ãæ±û
+		case 5:		// ä¸­å¤®
 			m_winx = (COLS/2 - m_winw) / 2;
 			if (m_winx < from)	m_winx = from;
 			if (m_winw + m_winx > COLS/2 - from)	m_winw = COLS/2 - from - m_winx;
@@ -100,17 +100,17 @@ void CWindows::movewin(int pos, int from)
 			if (m_winy < from)	m_winy = from;
 			if (m_winh + m_winy > LINES - from)	m_winh = LINES - from - m_winy;
 			break;
-		case 6:		// ±¦
+		case 6:		// å³
 			if (m_winx > from)	m_winx = COLS / 2 - from - m_winw;
 			break;
-		case 7:		// º¸¾å
+		case 7:		// å·¦ä¸Š
 			if (m_winx > from)	m_winx = from;
 			if (m_winy > from)	m_winy = from;
 			break;
-		case 8:		// ¾å
+		case 8:		// ä¸Š
 			if (m_winy > from)	m_winy = from;
 			break;
-		case 9:		// ±¦¾å
+		case 9:		// å³ä¸Š
 			if (m_winx > from)	m_winx = COLS / 2 - from - m_winw;
 			if (m_winy > from)	m_winy = from;
 			break;
@@ -119,45 +119,45 @@ void CWindows::movewin(int pos, int from)
 	};
 }
 
-// ¥«¥é¡¼¥Ú¥¢ÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+// ã‚«ãƒ©ãƒ¼ãƒšã‚¢ç•ªå·ã‚’å–å¾—ã™ã‚‹
 //
 int CWindows::getcpair(int ch, int bg)
 {
 	return ((COLOR_NUM - ch - 1) + (bg * COLOR_NUM));
 }
 
-// ¥Ç¥Õ¥©¥ë¥È¥«¥é¡¼¤ò¥»¥Ã¥È¤¹¤ë
+// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ©ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 //
 void CWindows::setdefcpair(int ch, int bg)
 {
 	setdefcpair(getcpair(ch, bg));
 }
-// ¥Ç¥Õ¥©¥ë¥È¥«¥é¡¼¤ò¥»¥Ã¥È¤¹¤ë
+// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ©ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 //
 void CWindows::setdefcpair(int cpair)
 {
 	m_cpair = cpair;
 }
 
-// ¥«¥é¡¼¥Ú¥¢ÈÖ¹æ¤òÊ¬²ò¤¹¤ë
+// ã‚«ãƒ©ãƒ¼ãƒšã‚¢ç•ªå·ã‚’åˆ†è§£ã™ã‚‹
 //
 int CWindows::getchcolor(int cpair)
 {
 	return (COLOR_NUM - (cpair % COLOR_NUM) - 1);
 }
 
-// ¥«¥é¡¼¥Ú¥¢ÈÖ¹æ¤òÊ¬²ò¤¹¤ë
+// ã‚«ãƒ©ãƒ¼ãƒšã‚¢ç•ªå·ã‚’åˆ†è§£ã™ã‚‹
 //
 int CWindows::getbgcolor(int cpair)
 {
 	return (cpair / COLOR_NUM);
 }
 
-// ¥Õ¥ì¡¼¥àÉÁ²è
+// ãƒ•ãƒ¬ãƒ¼ãƒ æç”»
 //
 void CWindows::drawframe()
 {
-	// ¥Ç¥Õ¥©¥ë¥È¥«¥é¡¼¤ÇÉÁ²è
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ©ãƒ¼ã§æç”»
 	wattrset(m_this, COLOR_PAIR(m_cpair));
 
 	for (int i = 2; i < adjx(m_winw - 1); i = i + 2)
@@ -176,18 +176,18 @@ void CWindows::drawframe()
 	mvwprintw(m_this, m_winh-1, adjx(m_winw - 1), "%s", msg[MY_MSG_WIN_3].msg);
 
 	if (m_title != "" && m_title != NULL)
-	{	// ¥¦¥£¥ó¥É¥¦¥¿¥¤¥È¥ëÉ½¼¨
+	{	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒˆãƒ«è¡¨ç¤º
 		mvwprintw(m_this, 0, 2,   "%s", LPCSTR(m_title.Sub(0, adjx(m_winw - 2))));
 	}
 
 	wrefresh(m_this);
 }
 
-// ¥¦¥£¥ó¥É¥¥¤ò·ÓÀş¤Ë¤è¤êÊ¬³ä¤¹¤ë
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã‚’ç½«ç·šã«ã‚ˆã‚Šåˆ†å‰²ã™ã‚‹
 //
 void CWindows::splitwin(int pos)
 {
-	// ¥·¥¹¥Æ¥à¥«¥é¡¼¤ÇÉÁ²è
+	// ã‚·ã‚¹ãƒ†ãƒ ã‚«ãƒ©ãƒ¼ã§æç”»
 	wattrset(m_this, COLOR_PAIR(m_cpair));
 
 	mvwprintw(m_this, pos, 0,   "%s", msg[MY_MSG_WIN_4].msg);
@@ -199,22 +199,22 @@ void CWindows::splitwin(int pos)
 	wrefresh(m_this);
 }
 
-// ¥á¥Ã¥»¡¼¥¸É½¼¨
-// ²ş¹ÔÂĞ±ş¤Ê¤·¡Ê¿§»ØÄê¤Ê¤·¡Ë
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
+// æ”¹è¡Œå¯¾å¿œãªã—ï¼ˆè‰²æŒ‡å®šãªã—ï¼‰
 //
 void CWindows::setmessage(int x, int y, CString message)
 {
 	setmessage(x, y, message, m_cpair);
 }
-// ¥á¥Ã¥»¡¼¥¸É½¼¨
-// ²ş¹ÔÂĞ±ş¤Ê¤·¡Ê¿§»ØÄê¤¢¤ê¡Ë
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
+// æ”¹è¡Œå¯¾å¿œãªã—ï¼ˆè‰²æŒ‡å®šã‚ã‚Šï¼‰
 //
 void CWindows::setmessage(int x, int y, CString message, int ch, int bg)
 {
 	setmessage(x, y, message, getcpair(ch, bg));
 }
-// ¥á¥Ã¥»¡¼¥¸É½¼¨
-// ²ş¹ÔÂĞ±ş¤Ê¤·
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
+// æ”¹è¡Œå¯¾å¿œãªã—
 //
 void CWindows::setmessage(int x, int y, CString message, int cpair)
 {
@@ -224,22 +224,22 @@ void CWindows::setmessage(int x, int y, CString message, int cpair)
 	wrefresh(m_this);
 }
 
-// ¥á¥Ã¥»¡¼¥¸É½¼¨
-// ²ş¹ÔÂĞ±ş¡Ê¿§»ØÄê¤Ê¤·¡Ë
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
+// æ”¹è¡Œå¯¾å¿œï¼ˆè‰²æŒ‡å®šãªã—ï¼‰
 //
 int CWindows::setmessage_n(int x, int y, CString message)
 {
 	return (setmessage_n(x, y, message, m_cpair));
 }
-// ¥á¥Ã¥»¡¼¥¸É½¼¨
-// ²ş¹ÔÂĞ±ş
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
+// æ”¹è¡Œå¯¾å¿œ
 //
 int CWindows::setmessage_n(int x, int y, CString message, int ch, int bg)
 {
 	return (setmessage_n(x, y, message, getcpair(ch, bg)));
 }
-// ¥á¥Ã¥»¡¼¥¸É½¼¨
-// ²ş¹ÔÂĞ±ş¡Ê¿§»ØÄê¤¢¤ê¡Ë
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
+// æ”¹è¡Œå¯¾å¿œï¼ˆè‰²æŒ‡å®šã‚ã‚Šï¼‰
 //
 int CWindows::setmessage_n(int x, int y, CString message, int cpair)
 {
@@ -250,58 +250,58 @@ int CWindows::setmessage_n(int x, int y, CString message, int cpair)
 	for (i = 0; i < message.Len(); i++)
 	{
 		if (message[i] == 'k')
-		{	// ¥­¡¼ÆşÎÏÂÔ¤Áµ­¹æ
+		{	// ã‚­ãƒ¼å…¥åŠ›å¾…ã¡è¨˜å·
 
 			keyloop();
 			continue;
 		}
 		if (message[i] == 'p')
-		{	// ²ş¥Ú¡¼¥¸µ­¹æ
+		{	// æ”¹ãƒšãƒ¼ã‚¸è¨˜å·
 			keyloop();
 			i++;
 			break;
 		}
 		if (message[i] == 'n')
-		{	// ²ş¹Ôµ­¹æ
-			// ²ş¹Ô
+		{	// æ”¹è¡Œè¨˜å·
+			// æ”¹è¡Œ
 			i++;
 			dposx = 0;
 			y++;
 		}
 		if (adjx(x) + dposx >= adjx(m_winw - 1))
-		{	// ¥¦¥£¥ó¥É¥¥¤Î±¦Ã¼¤Ş¤ÇÅşÃ£
-			// ²ş¹Ô
+		{	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã®å³ç«¯ã¾ã§åˆ°é”
+			// æ”¹è¡Œ
 			dposx = 0;
 			y++;
 		}
 		if (y >= m_winh - 1)
 		{
 			keyloop();
-			break;	// ¥¦¥£¥ó¥É¥¥¤Î½ª¤ï¤ê¤ËÅşÃ£
+			break;	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã®çµ‚ã‚ã‚Šã«åˆ°é”
 		}
 		if (message[i] == 't')
-		{	// ¥¦¥§¥¤¥È¥¿¥¤¥àµ­¹æ
+		{	// ã‚¦ã‚§ã‚¤ãƒˆã‚¿ã‚¤ãƒ è¨˜å·
 			waittime = atoi(LPCSTR(message.Sub(i + 1, i + 4)));
 			i += 3;
 			continue;
 		}
 		if (message[i] == 'c')
-		{	// ¿§»ØÄêµ­¹æ
+		{	// è‰²æŒ‡å®šè¨˜å·
 			int tmp_ch, tmp_bg;
 			if (message[i + 1] == 'c')
-			{	// ¿§Ìá¤¹
+			{	// è‰²æˆ»ã™
 				tmp_ch = getchcolor(m_cpair);
 			}
 			else
-			{	// ¿§ÉÕ¤±¤ë
+			{	// è‰²ä»˜ã‘ã‚‹
 				tmp_ch = atoi(LPCSTR(message.Sub(i + 1, i + 2)));
 			}
 			if (message[i + 2] == 'c')
-			{	// ¿§Ìá¤¹
+			{	// è‰²æˆ»ã™
 				tmp_bg = getbgcolor(m_cpair);
 			}
 			else
-			{	// ¿§ÉÕ¤±¤ë
+			{	// è‰²ä»˜ã‘ã‚‹
 				tmp_bg = atoi(LPCSTR(message.Sub(i + 2, i + 3)));
 			}
 			wattrset(m_this, COLOR_PAIR(getcpair(tmp_ch, tmp_bg)));
@@ -311,12 +311,12 @@ int CWindows::setmessage_n(int x, int y, CString message, int cpair)
 
 		mvwprintw(m_this, y, adjx(x) + dposx, "%s", LPCSTR(message.Sub(i, i + 2)));
 		dposx += 2;
-		i++;	// Á´³ÑÄ´À°
+		i++;	// å…¨è§’èª¿æ•´
 
 		if (waittime > 0)
 		{
 			wrefresh(m_this);
-			usleep(waittime * 1000);	// 1000 = 1¥ß¥êÉÃ
+			usleep(waittime * 1000);	// 1000 = 1ãƒŸãƒªç§’
 		}
 	}
 	wattrset(m_this, COLOR_PAIR(m_cpair));
@@ -324,11 +324,11 @@ int CWindows::setmessage_n(int x, int y, CString message, int cpair)
 	return(i);
 }
 
-// ¾å²¼º¸±¦¤Ë°ÜÆ°¤Ç¤­¤ë¥á¥Ë¥å¡¼¤òÉ½¼¨
+// ä¸Šä¸‹å·¦å³ã«ç§»å‹•ã§ãã‚‹ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¡¨ç¤º
 // 
 void CWindows::seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, std::vector<int> cpair, int col)
 {
-	int	num = list.size();		// ¥¢¥¤¥Æ¥à¤Î¸Ä¿ô
+	int	num = list.size();		// ã‚¢ã‚¤ãƒ†ãƒ ã®å€‹æ•°
 	int	x, y;
 
 	if (cur->x < dpos->x)	dpos->x = cur->x;
@@ -345,7 +345,7 @@ void CWindows::seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, 
 		if (y < dpos->y)	continue;
 		if (x - dpos->x + pos.x >= m_winw - 1)	continue;
 		if (y - dpos->y + pos.y >= m_winh - 1)	continue;
-		// É½¼¨¤¹¤ë
+		// è¡¨ç¤ºã™ã‚‹
 		if (x == cur->x && y == cur->y)	wattrset(m_this, WA_REVERSE | COLOR_PAIR(cpair[i]));
 		else				wattrset(m_this, WA_NORMAL  | COLOR_PAIR(cpair[i]));
 		mvwprintw(m_this, y - dpos->y + pos.y, adjx(x - dpos->x + pos.x), "%s", LPCSTR(list[i]));
@@ -354,38 +354,38 @@ void CWindows::seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, 
 	wrefresh(m_this);
 }
 
-// º¸±¦¤Ë¥«¡¼¥½¥ë°ÜÆ°¤Ç¤­¤ë¥á¥Ë¥å¡¼¤òÉ½¼¨
-// ¿§ÅÉ¤êÌ¤ÂĞ±ş
+// å·¦å³ã«ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•ã§ãã‚‹ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¡¨ç¤º
+// è‰²å¡—ã‚Šæœªå¯¾å¿œ
 // 
 void CWindows::setselect(int x, int y, int* posx, int* dposx, std::vector<CString> list, std::vector<int> cpair)
 {
-	CString	str;			// ¥¢¥¤¥Æ¥à¤òÁ´¤ÆÏ¢·ë¤·¤¿Ê¸»úÎó
-	int	num = list.size();	// ¥¢¥¤¥Æ¥à¤Î¸Ä¿ô
-	int 	pos_l = 0, pos_r = 0;	// ¥«¡¼¥½¥ë¤¬¹ç¤Ã¤Æ¤¤¤ë¥á¥Ë¥å¡¼Ê¸»úÎó¤Îº¸±¦Ã¼ºÂÉ¸
-	int	width;			// É½¼¨ÎÎ°è¤ÎÉı
+	CString	str;			// ã‚¢ã‚¤ãƒ†ãƒ ã‚’å…¨ã¦é€£çµã—ãŸæ–‡å­—åˆ—
+	int	num = list.size();	// ã‚¢ã‚¤ãƒ†ãƒ ã®å€‹æ•°
+	int 	pos_l = 0, pos_r = 0;	// ã‚«ãƒ¼ã‚½ãƒ«ãŒåˆã£ã¦ã„ã‚‹ãƒ¡ãƒ‹ãƒ¥ãƒ¼æ–‡å­—åˆ—ã®å·¦å³ç«¯åº§æ¨™
+	int	width;			// è¡¨ç¤ºé ˜åŸŸã®å¹…
 	width = m_winw - x - 1;
 
 	for (int i = 0; i < num; i++)
 	{
-		if (i != 0)	str += "¡¡";
-		if (i == *posx)	pos_l = str.Len() / 2;	// º¸Ã¼ºÂÉ¸¼èÆÀ
+		if (i != 0)	str += "ã€€";
+		if (i == *posx)	pos_l = str.Len() / 2;	// å·¦ç«¯åº§æ¨™å–å¾—
 		str += list[i];
-		if (i == *posx)	pos_r = str.Len() / 2;	// ±¦Ã¼ºÂÉ¸¼èÆÀ
+		if (i == *posx)	pos_r = str.Len() / 2;	// å³ç«¯åº§æ¨™å–å¾—
 	}
 
-	if (pos_l < *dposx)		*dposx = pos_l;		// º¸¤Ë¥·¥Õ¥È
-	if (pos_r > *dposx + width)	*dposx = pos_r - width;	// ±¦¤Ë¥·¥Õ¥È
+	if (pos_l < *dposx)		*dposx = pos_l;		// å·¦ã«ã‚·ãƒ•ãƒˆ
+	if (pos_r > *dposx + width)	*dposx = pos_r - width;	// å³ã«ã‚·ãƒ•ãƒˆ
 
-	// É½¼¨¤¹¤ë
+	// è¡¨ç¤ºã™ã‚‹
 	mvwaddstrtoeol(x, y, str.Sub(adjx(*dposx)));
 
-	// ÁªÂòÃæ¥¢¥¤¥Æ¥àÈ¿Å¾
+	// é¸æŠä¸­ã‚¢ã‚¤ãƒ†ãƒ åè»¢
 	mvwchgat(m_this, y, adjx(pos_l - *dposx + x), list[*posx].Len(), WA_REVERSE, 0, NULL);
 
 	wrefresh(m_this);
 }
 
-// ¾å²¼¤ËÁªÂò¤Ç¤­¤ë¥ê¥¹¥È¤òÉ½¼¨
+// ä¸Šä¸‹ã«é¸æŠã§ãã‚‹ãƒªã‚¹ãƒˆã‚’è¡¨ç¤º
 // 
 void CWindows::setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vector<CString> list, std::vector<int> cpair)
 {
@@ -410,7 +410,7 @@ void CWindows::setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vec
 	wrefresh(m_this);
 }
 
-// ¾å²¼¤ËÁªÂò¤Ç¤­¤ë¥¨¥Ç¥£¥Ã¥È¥Õ¥£¡¼¥ë¥É¤òÉ½¼¨
+// ä¸Šä¸‹ã«é¸æŠã§ãã‚‹ã‚¨ãƒ‡ã‚£ãƒƒãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è¡¨ç¤º
 // 
 void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<CString> name, std::vector<CString> value, std::vector<int> cpair)
 {
@@ -442,7 +442,7 @@ void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<CString>
 		tmp_str = name[i + *dposy];
 		for (j = 0; j < (max_size - name[i + *dposy].Len()) / 2; j++)
 		{
-			tmp_str = tmp_str + "¡¡";
+			tmp_str = tmp_str + "ã€€";
 		}
 		mvwaddstrtoeol(x, y + i, tmp_str);
 
@@ -454,7 +454,7 @@ void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<CString>
 	wrefresh(m_this);
 }
 
-// ¥«¡¼¥½¥ë°Ê¹ß¹ÔËö¤Ş¤Çºï½ü¤·¤¿¸å¡¢±¦Ã¼¤ËÁ´³Ñ·ÓÀş¤òÉ½¼¨¤¹¤ë
+// ã‚«ãƒ¼ã‚½ãƒ«ä»¥é™è¡Œæœ«ã¾ã§å‰Šé™¤ã—ãŸå¾Œã€å³ç«¯ã«å…¨è§’ç½«ç·šã‚’è¡¨ç¤ºã™ã‚‹
 // 
 void CWindows::wclrtorborder()
 {
@@ -466,7 +466,7 @@ void CWindows::wclrtorborder()
 	mvwprintw(m_this, y, adjx(m_winw - 1), "%s", msg[MY_MSG_WIN_TATE].msg);
 }
 
-// ¥¦¥£¥ó¥É¥¥ÆâÉô¤ò¥¯¥ê¥¢¤¹¤ë¡Ê·ÓÀş¤Ï»Ä¤¹¡Ë
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥å†…éƒ¨ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹ï¼ˆç½«ç·šã¯æ®‹ã™ï¼‰
 // 
 void CWindows::clearwin()
 {
@@ -474,7 +474,7 @@ void CWindows::clearwin()
 	drawframe();
 }
 
-// ¹ÔËö¤Ş¤ÇÊ¸»úÎó¤òÉ½¼¨¡Ê·ÓÀş¤Ï»Ä¤¹¡Ë
+// è¡Œæœ«ã¾ã§æ–‡å­—åˆ—ã‚’è¡¨ç¤ºï¼ˆç½«ç·šã¯æ®‹ã™ï¼‰
 // 
 bool CWindows::mvwaddstrtoeol(int cur_x, int cur_y, const CString str)
 {
@@ -490,7 +490,7 @@ bool CWindows::mvwaddstrtoeol(int cur_x, int cur_y, const CString str)
 	}
 }
 
-// ¿§¤ÏÊÑ¤¨¤º¤ËÂ°À­¤òÊÑ¤¨¤ë
+// è‰²ã¯å¤‰ãˆãšã«å±æ€§ã‚’å¤‰ãˆã‚‹
 //
 void CWindows::chg_attr(int x, int y, long attr)
 {
@@ -504,13 +504,13 @@ void CWindows::chg_attr(int x, int y, long attr)
 	mvwaddch(m_this, y, adjx(x) + 1, ch2);
 }
 
-// Â°À­¤ÏÊÑ¤¨¤º¤Ë¿§¤òÊÑ¤¨¤ë
+// å±æ€§ã¯å¤‰ãˆãšã«è‰²ã‚’å¤‰ãˆã‚‹
 //
 void CWindows::chg_color(int x, int y, int ch, int bg)
 {
 	chg_color(x, y, getcpair(ch, bg));
 }
-// Â°À­¤ÏÊÑ¤¨¤º¤Ë¿§¤òÊÑ¤¨¤ë
+// å±æ€§ã¯å¤‰ãˆãšã«è‰²ã‚’å¤‰ãˆã‚‹
 //
 void CWindows::chg_color(int x, int y, int cpair)
 {
@@ -524,13 +524,13 @@ void CWindows::chg_color(int x, int y, int cpair)
 	mvwaddch(m_this, y, adjx(x) + 1, ch2);
 }
 
-// Â°À­¤È¿§¤òÊÑ¤¨¤ë
+// å±æ€§ã¨è‰²ã‚’å¤‰ãˆã‚‹
 //
 void CWindows::chg_attr_color(int x, int y, long attr, int ch, int bg)
 {
 	chg_attr_color(x, y, attr, getcpair(ch, bg));
 }
-// Â°À­¤È¿§¤òÊÑ¤¨¤ë
+// å±æ€§ã¨è‰²ã‚’å¤‰ãˆã‚‹
 //
 void CWindows::chg_attr_color(int x, int y, long attr, int cpair)
 {
@@ -543,12 +543,12 @@ void CWindows::chg_attr_color(int x, int y, long attr, int cpair)
 	mvwaddch(m_this, y, adjx(x) + 1, ch2);
 }
 
-// ¥­¡¼ÆşÎÏ¥ë¡¼¥×
+// ã‚­ãƒ¼å…¥åŠ›ãƒ«ãƒ¼ãƒ—
 // 
 void CWindows::keyloop()
 {
 	flushinp();
-	timeout(-1);	// ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);	// ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	for( ; ; )
 	{
@@ -580,24 +580,24 @@ void CWindows::keyloop()
 	}
 }
 
-bool CWindows::onkeypress_left()	{ return true; }	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
-bool CWindows::onkeypress_down()	{ return true; }	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
-bool CWindows::onkeypress_up()		{ return true; }	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
-bool CWindows::onkeypress_right()	{ return true; }	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
-bool CWindows::onkeypress_ok()		{ return true; }	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
-bool CWindows::onkeypress_cancel()	{ return false; }	// ¥­¡¼¥ë¡¼¥×½ªÎ»
+bool CWindows::onkeypress_left()	{ return true; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
+bool CWindows::onkeypress_down()	{ return true; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
+bool CWindows::onkeypress_up()		{ return true; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
+bool CWindows::onkeypress_right()	{ return true; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
+bool CWindows::onkeypress_ok()		{ return true; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
+bool CWindows::onkeypress_cancel()	{ return false; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—çµ‚äº†
 
-// Á´³ÑXºÂÉ¸¤ò¼Âºİ¤ÎXºÂÉ¸¤ËÊÑ´¹¤¹¤ë
+// å…¨è§’Xåº§æ¨™ã‚’å®Ÿéš›ã®Xåº§æ¨™ã«å¤‰æ›ã™ã‚‹
 int CWindows::adjx(int x){
 	return x * 2;
 }
 
-// Æó¼¡¸µ¤ÎºÂÉ¸¤ò°ì¼¡¸µ¤ÎÇÛÎóÍ×ÁÇ¤ËÊÑ´¹¤¹¤ë
+// äºŒæ¬¡å…ƒã®åº§æ¨™ã‚’ä¸€æ¬¡å…ƒã®é…åˆ—è¦ç´ ã«å¤‰æ›ã™ã‚‹
 int CWindows::xyton(int x, int y){
 	return (y * m_winw + x);
 }
 
-// ¶¯À©½ªÎ»¥·¥°¥Ê¥ë
+// å¼·åˆ¶çµ‚äº†ã‚·ã‚°ãƒŠãƒ«
 void CWindows::signal_handler(int sig){
 	endwin();
 	//exit(EXIT_FAILURE);

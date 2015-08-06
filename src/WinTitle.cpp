@@ -14,13 +14,13 @@ CWinTitle::~CWinTitle()
 
 int CWinTitle::drawwin()
 {
-	setmessage(1, 1, "¥¿¥¤¥È¥ë²èÌÌ", 1, 2);
-	setmessage(2, 2, "¥¿¥¤¥È¥ë²èÌÌ", 3, 4);
-	setmessage(3, 3, "¥¿¥¤¥È¥ë²èÌÌ", 5, 6);
+	setmessage(1, 1, "ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢", 1, 2);
+	setmessage(2, 2, "ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢", 3, 4);
+	setmessage(3, 3, "ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢", 5, 6);
 
 	return true;
 }
 
-bool CWinTitle::onkeypress_ok()		{ return false; }	// ¥­¡¼¥ë¡¼¥×½ªÎ»
-bool CWinTitle::onkeypress_cancel()	{ return false; }	// ¥­¡¼¥ë¡¼¥×½ªÎ»
+bool CWinTitle::onkeypress_ok()		{ return false; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—çµ‚äº†
+bool CWinTitle::onkeypress_cancel()	{ return false; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—çµ‚äº†
 

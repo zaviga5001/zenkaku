@@ -11,35 +11,35 @@ CWinEditValue_Flg::~CWinEditValue_Flg()
 
 bool CWinEditValue_Flg::onkeypress_down()
 {
-	if (m_cur.y < m_name.size() - 1)	m_cur.y++;	// ¥«¡¼¥½¥ë²¼¤²¤ë
+	if (m_cur.y < m_name.size() - 1)	m_cur.y++;	// ã‚«ãƒ¼ã‚½ãƒ«ä¸‹ã’ã‚‹
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue_Flg::onkeypress_up()
 {
-	if (m_cur.y > 0)			m_cur.y--;	// ¥«¡¼¥½¥ë¾å¤²¤ë
+	if (m_cur.y > 0)			m_cur.y--;	// ã‚«ãƒ¼ã‚½ãƒ«ä¸Šã’ã‚‹
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue_Flg::onkeypress_right()
 {
 	if (m_cur.y == 0)
-	{       // IDÆş¤ì´¹¤¨
-		*(int*)m_ptr[m_cur.y] = *(int*)m_ptr[m_cur.y] + 1;      // ID¡Êº¸±¦¤Ï¥ë¡¼¥×¤¹¤ë¡Ë
-		m_return = false;       // ¤³¤ì¤¬false¤Ê¤éµ¢¤Ã¤Æ¤¯¤ë
-		return false;           // ¥­¡¼¥ë¡¼¥×°ìÃ¶½ªÎ»
+	{       // IDå…¥ã‚Œæ›ãˆ
+		*(int*)m_ptr[m_cur.y] = *(int*)m_ptr[m_cur.y] + 1;      // IDï¼ˆå·¦å³ã¯ãƒ«ãƒ¼ãƒ—ã™ã‚‹ï¼‰
+		m_return = false;       // ã“ã‚ŒãŒfalseãªã‚‰å¸°ã£ã¦ãã‚‹
+		return false;           // ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ä¸€æ—¦çµ‚äº†
 	}
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue_Flg::onkeypress_left()
 {
 	if (m_cur.y == 0)
-	{       // IDÆş¤ì´¹¤¨
-		*(int*)m_ptr[m_cur.y] = *(int*)m_ptr[m_cur.y] - 1;      // ID¡Êº¸±¦¤Ï¥ë¡¼¥×¤¹¤ë¡Ë
-		m_return = false;       // ¤³¤ì¤¬false¤Ê¤éµ¢¤Ã¤Æ¤¯¤ë
-		return false;           // ¥­¡¼¥ë¡¼¥×°ìÃ¶½ªÎ»
+	{       // IDå…¥ã‚Œæ›ãˆ
+		*(int*)m_ptr[m_cur.y] = *(int*)m_ptr[m_cur.y] - 1;      // IDï¼ˆå·¦å³ã¯ãƒ«ãƒ¼ãƒ—ã™ã‚‹ï¼‰
+		m_return = false;       // ã“ã‚ŒãŒfalseãªã‚‰å¸°ã£ã¦ãã‚‹
+		return false;           // ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ä¸€æ—¦çµ‚äº†
 	}
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue_Flg::onkeypress_ok()
 {
@@ -56,13 +56,13 @@ bool CWinEditValue_Flg::onkeypress_ok()
 		touchwin(m_this);
 		wrefresh(m_this);
 	}
-	m_return = false;       // ¤³¤ì¤¬false¤Ê¤éµ¢¤Ã¤Æ¤¯¤ë
-	return false;           // ¥­¡¼¥ë¡¼¥×°ìÃ¶½ªÎ»
+	m_return = false;       // ã“ã‚ŒãŒfalseãªã‚‰å¸°ã£ã¦ãã‚‹
+	return false;           // ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ä¸€æ—¦çµ‚äº†
 }
 
 bool CWinEditValue_Flg::onkeypress_cancel()
 {
-	m_return = true;	// ÆóÅÙ¤È¤³¤³¤Ø¤Ïµ¢¤é¤Ê¤¤¡£¡£¡£
-	return false;		// ¥­¡¼¥ë¡¼¥×½ªÎ»
+	m_return = true;	// äºŒåº¦ã¨ã“ã“ã¸ã¯å¸°ã‚‰ãªã„ã€‚ã€‚ã€‚
+	return false;		// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—çµ‚äº†
 }
 

@@ -11,22 +11,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 //integer
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (char)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (char)
 int Hash(const char& cKey){
 	return cKey;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (short)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (short)
 int Hash(const short& sKey){
 	return sKey;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (long)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (long)
 int Hash(const long& lKey){
 	return (lKey >= 0) ? lKey : lKey^0xFFFFFFFF;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (int)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (int)
 int Hash(const int& nKey){
 	return (nKey >= 0) ? nKey : nKey^0xFFFFFFFF;
 }
@@ -35,22 +35,22 @@ int Hash(const int& nKey){
 ////////////////////////////////////////////////////////////////////////////////
 //integer (unsigned)
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (unsigned char)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (unsigned char)
 int Hash(const unsigned char& byKey){
 	return byKey;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (unsigned short)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (unsigned short)
 int Hash(const unsigned short& usKey){
 	return usKey;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (unsigned long)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (unsigned long)
 int Hash(const unsigned long& lKey){
 	return (lKey & 0x80000000) ? lKey^0xFFFFFFFF : lKey;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (unsigned int)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (unsigned int)
 int Hash(const unsigned int& uKey){
 	return (uKey & 0x80000000) ? uKey^0xFFFFFFFF : uKey;
 }
@@ -59,7 +59,7 @@ int Hash(const unsigned int& uKey){
 ////////////////////////////////////////////////////////////////////////////////
 //boolean
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (bool)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (bool)
 int Hash(const bool& bKey){
 	return (bKey) ? 1 : 0;
 }
@@ -68,7 +68,7 @@ int Hash(const bool& bKey){
 ////////////////////////////////////////////////////////////////////////////////
 //floating point
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (float)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (float)
 int Hash(const float& fKey){
 
 	unsigned long ul =*(unsigned long*)&fKey;
@@ -77,7 +77,7 @@ int Hash(const float& fKey){
 	return (int)ul;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (double)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (double)
 int Hash(const double& dKey){
 
 	unsigned long aul[2];
@@ -93,7 +93,7 @@ int Hash(const double& dKey){
 ////////////////////////////////////////////////////////////////////////////////
 //pointer
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (void*)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (void*)
 int Hash(void * const & lpvKey){
 
 	unsigned long ul =(unsigned long)lpvKey;
@@ -101,7 +101,7 @@ int Hash(void * const & lpvKey){
 	return ul & 0x80000000 ? ul^0xFFFFFFFF : ul;
 }
 
-//¥Ï¥Ã¥·¥å´Ø¿ô (const void*)
+//ãƒãƒƒã‚·ãƒ¥é–¢æ•° (const void*)
 int Hash(const void * const & lpvKey){
 
 	unsigned long ul =(unsigned long)lpvKey;

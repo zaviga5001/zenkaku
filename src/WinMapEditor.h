@@ -33,35 +33,35 @@ public:
 	void		refreshpos(int x, int y);
 	int		gettile(int x, int y);
 
-	void		keyloop();		// ƒL[“ü—Íƒ‹[ƒv
-	bool		onkeypress_left();	// ¶ƒL[‰Ÿ‰º
-	bool		onkeypress_down();	// ‰ºƒL[‰Ÿ‰º
-	bool		onkeypress_up();	// ãƒL[‰Ÿ‰º
-	bool		onkeypress_right();	// ‰EƒL[‰Ÿ‰º
+	void		keyloop();		// ã‚­ãƒ¼å…¥åŠ›ãƒ«ãƒ¼ãƒ—
+	bool		onkeypress_left();	// å·¦ã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_down();	// ä¸‹ã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_up();	// ä¸Šã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_right();	// å³ã‚­ãƒ¼æŠ¼ä¸‹
 
-	// ƒ}ƒbƒvƒf[ƒ^
-	Pos		m_dpos;			// ƒpƒbƒhã‚Ì•\¦—Ìˆæ¶ã
-	Pos		m_cur;			// ƒJ[ƒ\ƒ‹ˆÊ’u
-	CString		m_path;			// ƒtƒ@ƒCƒ‹–¼
-	MapData		m_mapdata;		// ƒ}ƒbƒv‚É•t‚·‚éƒf[ƒ^
-	PosData*	m_posdata;		// ƒ|ƒWƒVƒ‡ƒ“‚É•t‚·‚éƒf[ƒ^
-	PosData		m_spposdata[MAX_SPPOS];	// ƒXƒyƒVƒƒƒ‹ƒ|ƒWƒVƒ‡ƒ“‚É•t‚·‚éƒf[ƒ^
-	TileData	m_tiledata[MAX_TILE];	// ƒ^ƒCƒ‹‚É•t‚·‚éƒf[ƒ^
-	int		m_tilenum;		// ƒ^ƒCƒ‹‚Ìí—Ş
-	PosEvent	m_pevent[MAX_MAPEVENT];	// ƒ|ƒCƒ“ƒgƒCƒxƒ“ƒgƒf[ƒ^ƒx[ƒX
-	PosEvent	m_sevent[MAX_MAPEVENT];	// ƒXƒgƒbƒvƒCƒxƒ“ƒgƒf[ƒ^ƒx[ƒX
-	CString		m_fieldname[MAX_FNAME];	// ’n–¼
+	// ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
+	Pos		m_dpos;			// ãƒ‘ãƒƒãƒ‰ä¸Šã®è¡¨ç¤ºé ˜åŸŸå·¦ä¸Š
+	Pos		m_cur;			// ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®
+	CString		m_path;			// ãƒ•ã‚¡ã‚¤ãƒ«å
+	MapData		m_mapdata;		// ãƒãƒƒãƒ—ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	PosData*	m_posdata;		// ãƒã‚¸ã‚·ãƒ§ãƒ³ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	PosData		m_spposdata[MAX_SPPOS];	// ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	TileData	m_tiledata[MAX_TILE];	// ã‚¿ã‚¤ãƒ«ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	int		m_tilenum;		// ã‚¿ã‚¤ãƒ«ã®ç¨®é¡
+	PosEvent	m_pevent[MAX_MAPEVENT];	// ãƒã‚¤ãƒ³ãƒˆã‚¤ãƒ™ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹
+	PosEvent	m_sevent[MAX_MAPEVENT];	// ã‚¹ãƒˆãƒƒãƒ—ã‚¤ãƒ™ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹
+	CString		m_fieldname[MAX_FNAME];	// åœ°å
 
-	PosData		m_posbuf;		// ƒ|ƒWƒVƒ‡ƒ“ƒf[ƒ^ƒRƒs[—pƒoƒbƒtƒ@
-	PosData		m_posundobuf;		// ƒ|ƒWƒVƒ‡ƒ“ƒf[ƒ^UNDO—pƒoƒbƒtƒ@
-	PosData		m_posmsk;		// ƒ|ƒWƒVƒ‡ƒ“ƒf[ƒ^ƒRƒs[—pƒ}ƒXƒN
+	PosData		m_posbuf;		// ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ”ãƒ¼ç”¨ãƒãƒƒãƒ•ã‚¡
+	PosData		m_posundobuf;		// ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿UNDOç”¨ãƒãƒƒãƒ•ã‚¡
+	PosData		m_posmsk;		// ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ”ãƒ¼ç”¨ãƒã‚¹ã‚¯
 
-	CData*		m_data;			// ƒQ[ƒ€“à‚Ì‚ ‚ç‚ä‚éî•ñ
+	CData*		m_data;			// ã‚²ãƒ¼ãƒ å†…ã®ã‚ã‚‰ã‚†ã‚‹æƒ…å ±
 
 protected:
-	void		warn_no_map();		// ƒ}ƒbƒv‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚È‚¢Œx
+	void		warn_no_map();		// ãƒãƒƒãƒ—ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã„è­¦å‘Š
 
-	int	xyton(int x, int y);	// “ñŸŒ³‚ÌÀ•W‚ğˆêŸŒ³‚Ì”z—ñ—v‘f‚É•ÏŠ·‚·‚é
+	int	xyton(int x, int y);	// äºŒæ¬¡å…ƒã®åº§æ¨™ã‚’ä¸€æ¬¡å…ƒã®é…åˆ—è¦ç´ ã«å¤‰æ›ã™ã‚‹
 
 private:
 };

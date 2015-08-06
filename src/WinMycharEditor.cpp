@@ -2,82 +2,82 @@
 
 CWinMycharEditor::CWinMycharEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_dpos.x = 0;
 	m_dpos.y = 0;
 	m_cur.y  = 0;
 	m_wpos.x = 1;
 	m_wpos.y = 1;
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
 
 	m_data = new CData;
 
-	// ¤³¤³¤Ç¥·¥Ê¥ê¥ª¤òÆÉ¤ß¹ş¤á
+	// ã“ã“ã§ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚
 
-	// ¥Ş¥¤¥­¥ã¥éÆÉ¤ß¹ş¤ß
+	// ãƒã‚¤ã‚­ãƒ£ãƒ©èª­ã¿è¾¼ã¿
 	read_mychar();
 
-	// É½¼¨
-	push("¥·¥Ê¥ê¥ªID",		&m_data->m_mychar[0].id,	TT_INT,	1);
-	push("¼ïÂ²",			&m_data->m_mychar[0].race,	TT_INT,	1);
-	push("¿¦¶È",			&m_data->m_mychar[0].job,	TT_INT,	1);
-	push("Â°À­",			&m_data->m_mychar[0].type,	TT_BYT,	1);
-	push("À­ÊÌ",			&m_data->m_mychar[0].gender,	TT_INT,	1);
-	push("Ì¾Á°",			&m_data->m_mychar[0].name,	TT_CST,	1);
-	push("¥¿¥¤¥ë",			&m_data->m_mychar[0].tile,	TT_CHR,	2);
-	push("Ê¸»ú¿§",			&m_data->m_mychar[0].ch,	TT_CHR,	1);
-	push("ÇØ·Ê¿§",			&m_data->m_mychar[0].bg,	TT_CHR,	1);
+	// è¡¨ç¤º
+	push("ã‚·ãƒŠãƒªã‚ªID",		&m_data->m_mychar[0].id,	TT_INT,	1);
+	push("ç¨®æ—",			&m_data->m_mychar[0].race,	TT_INT,	1);
+	push("è·æ¥­",			&m_data->m_mychar[0].job,	TT_INT,	1);
+	push("å±æ€§",			&m_data->m_mychar[0].type,	TT_BYT,	1);
+	push("æ€§åˆ¥",			&m_data->m_mychar[0].gender,	TT_INT,	1);
+	push("åå‰",			&m_data->m_mychar[0].name,	TT_CST,	1);
+	push("ã‚¿ã‚¤ãƒ«",			&m_data->m_mychar[0].tile,	TT_CHR,	2);
+	push("æ–‡å­—è‰²",			&m_data->m_mychar[0].ch,	TT_CHR,	1);
+	push("èƒŒæ™¯è‰²",			&m_data->m_mychar[0].bg,	TT_CHR,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
-	push("¥¹¥Æ¡¼¥¿¥¹",		&m_data->m_mychar[0].status,	TT_INT,	1);
-	push("¥ì¥Ù¥ë",			&m_data->m_mychar[0].level,	TT_CHR,	1);
-	push("·Ğ¸³ÃÍ",			&m_data->m_mychar[0].exp,	TT_INT,	1);
-	push("ÂÎÎÏ¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].hp.p,	TT_INT,	1);
-	push("ÂÎÎÏ¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].hp.t,	TT_INT,	1);
-	push("ÂÎÎÏ¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].hp.m,	TT_INT,	1);
-	push("¥¹¥­¥ë¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].sp.p,	TT_INT,	1);
-	push("¥¹¥­¥ë¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].sp.t,	TT_INT,	1);
-	push("¥¹¥­¥ë¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].sp.m,	TT_INT,	1);
-	push("¹¶·âÎÏ¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].ap.p,	TT_INT,	1);
-	push("¹¶·âÎÏ¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].ap.t,	TT_INT,	1);
-	push("¹¶·âÎÏ¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].ap.m,	TT_INT,	1);
-	push("ËÉ¸æÎÏ¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].gp.p,	TT_INT,	1);
-	push("ËÉ¸æÎÏ¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].gp.t,	TT_INT,	1);
-	push("ËÉ¸æÎÏ¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].gp.m,	TT_INT,	1);
-	push("ËâË¡ÎÏ¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].mp.p,	TT_INT,	1);
-	push("ËâË¡ÎÏ¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].mp.t,	TT_INT,	1);
-	push("ËâË¡ÎÏ¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].mp.m,	TT_INT,	1);
-	push("²óÈòÎÏ¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].ep.p,	TT_INT,	1);
-	push("²óÈòÎÏ¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].ep.t,	TT_INT,	1);
-	push("²óÈòÎÏ¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].ep.m,	TT_INT,	1);
-	push("ÁÇÁá¤µ¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].fp.p,	TT_INT,	1);
-	push("ÁÇÁá¤µ¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].fp.t,	TT_INT,	1);
-	push("ÁÇÁá¤µ¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].fp.m,	TT_INT,	1);
-	push("´ïÍÑ¤µ¡Ê¸½ºß¡Ë",		&m_data->m_mychar[0].dp.p,	TT_INT,	1);
-	push("´ïÍÑ¤µ¡Ê°ì»şÅªºÇÂç¡Ë",	&m_data->m_mychar[0].dp.t,	TT_INT,	1);
-	push("´ïÍÑ¤µ¡ÊºÇÂç¡Ë",		&m_data->m_mychar[0].dp.m,	TT_INT,	1);
-	push("ËşÊ¢ÅÙ",			&m_data->m_mychar[0].food,	TT_BYT,	1);
+	push("ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹",		&m_data->m_mychar[0].status,	TT_INT,	1);
+	push("ãƒ¬ãƒ™ãƒ«",			&m_data->m_mychar[0].level,	TT_CHR,	1);
+	push("çµŒé¨“å€¤",			&m_data->m_mychar[0].exp,	TT_INT,	1);
+	push("ä½“åŠ›ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].hp.p,	TT_INT,	1);
+	push("ä½“åŠ›ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].hp.t,	TT_INT,	1);
+	push("ä½“åŠ›ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].hp.m,	TT_INT,	1);
+	push("ã‚¹ã‚­ãƒ«ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].sp.p,	TT_INT,	1);
+	push("ã‚¹ã‚­ãƒ«ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].sp.t,	TT_INT,	1);
+	push("ã‚¹ã‚­ãƒ«ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].sp.m,	TT_INT,	1);
+	push("æ”»æ’ƒåŠ›ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].ap.p,	TT_INT,	1);
+	push("æ”»æ’ƒåŠ›ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].ap.t,	TT_INT,	1);
+	push("æ”»æ’ƒåŠ›ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].ap.m,	TT_INT,	1);
+	push("é˜²å¾¡åŠ›ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].gp.p,	TT_INT,	1);
+	push("é˜²å¾¡åŠ›ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].gp.t,	TT_INT,	1);
+	push("é˜²å¾¡åŠ›ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].gp.m,	TT_INT,	1);
+	push("é­”æ³•åŠ›ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].mp.p,	TT_INT,	1);
+	push("é­”æ³•åŠ›ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].mp.t,	TT_INT,	1);
+	push("é­”æ³•åŠ›ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].mp.m,	TT_INT,	1);
+	push("å›é¿åŠ›ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].ep.p,	TT_INT,	1);
+	push("å›é¿åŠ›ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].ep.t,	TT_INT,	1);
+	push("å›é¿åŠ›ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].ep.m,	TT_INT,	1);
+	push("ç´ æ—©ã•ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].fp.p,	TT_INT,	1);
+	push("ç´ æ—©ã•ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].fp.t,	TT_INT,	1);
+	push("ç´ æ—©ã•ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].fp.m,	TT_INT,	1);
+	push("å™¨ç”¨ã•ï¼ˆç¾åœ¨ï¼‰",		&m_data->m_mychar[0].dp.p,	TT_INT,	1);
+	push("å™¨ç”¨ã•ï¼ˆä¸€æ™‚çš„æœ€å¤§ï¼‰",	&m_data->m_mychar[0].dp.t,	TT_INT,	1);
+	push("å™¨ç”¨ã•ï¼ˆæœ€å¤§ï¼‰",		&m_data->m_mychar[0].dp.m,	TT_INT,	1);
+	push("æº€è…¹åº¦",			&m_data->m_mychar[0].food,	TT_BYT,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
-	push("±¦¼êÉğ´ï",		&m_data->m_mychar[0].rweapon,	TT_SHT,	1);
-	push("º¸¼êÉğ´ï",		&m_data->m_mychar[0].lweapon,	TT_SHT,	1);
-	push("³õ",			&m_data->m_mychar[0].helm,	TT_SHT,	1);
-	push("ËÉ¶ñ",			&m_data->m_mychar[0].armor,	TT_SHT,	1);
-	push("¥Ş¥ó¥È",			&m_data->m_mychar[0].mant,	TT_SHT,	1);
-	push("·¤",			&m_data->m_mychar[0].boots,	TT_SHT,	1);
-	push("Áõ¾şÉÊ",			&m_data->m_mychar[0].equip,	TT_SHT,	1);
+	push("å³æ‰‹æ­¦å™¨",		&m_data->m_mychar[0].rweapon,	TT_SHT,	1);
+	push("å·¦æ‰‹æ­¦å™¨",		&m_data->m_mychar[0].lweapon,	TT_SHT,	1);
+	push("å…œ",			&m_data->m_mychar[0].helm,	TT_SHT,	1);
+	push("é˜²å…·",			&m_data->m_mychar[0].armor,	TT_SHT,	1);
+	push("ãƒãƒ³ãƒˆ",			&m_data->m_mychar[0].mant,	TT_SHT,	1);
+	push("é´",			&m_data->m_mychar[0].boots,	TT_SHT,	1);
+	push("è£…é£¾å“",			&m_data->m_mychar[0].equip,	TT_SHT,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
-	push("½¬ÆÀËâË¡",		&m_data->m_mychar[0].magic,	TT_BYT,	1);
-	push("ËâË¡·Ğ¸³ÃÍ",		&m_data->m_mychar[0].magicexp,	TT_BYT,	1);
-	push("Â°À­±üµÁ",		&m_data->m_mychar[0].fight,	TT_BYT,	1);
-	push("Â°À­·Ğ¸³ÃÍ",		&m_data->m_mychar[0].fightexp,	TT_BYT,	1);
-	push("½¬ÆÀ¥¹¥­¥ë",		&m_data->m_mychar[0].skill,	TT_BYT,	1);
-	push("¥¹¥­¥ë·Ğ¸³ÃÍ",		&m_data->m_mychar[0].skillexp,	TT_BYT,	1);
-	push("¼ö¤¤",			&m_data->m_mychar[0].curse,	TT_BYT,	1);
+	push("ç¿’å¾—é­”æ³•",		&m_data->m_mychar[0].magic,	TT_BYT,	1);
+	push("é­”æ³•çµŒé¨“å€¤",		&m_data->m_mychar[0].magicexp,	TT_BYT,	1);
+	push("å±æ€§å¥¥ç¾©",		&m_data->m_mychar[0].fight,	TT_BYT,	1);
+	push("å±æ€§çµŒé¨“å€¤",		&m_data->m_mychar[0].fightexp,	TT_BYT,	1);
+	push("ç¿’å¾—ã‚¹ã‚­ãƒ«",		&m_data->m_mychar[0].skill,	TT_BYT,	1);
+	push("ã‚¹ã‚­ãƒ«çµŒé¨“å€¤",		&m_data->m_mychar[0].skillexp,	TT_BYT,	1);
+	push("å‘ªã„",			&m_data->m_mychar[0].curse,	TT_BYT,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
-	push("¥×¥í¥Õ¥£¡¼¥ë",		&m_data->m_mychar[0].prof,	TT_CST,	1);
+	push("ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«",		&m_data->m_mychar[0].prof,	TT_CST,	1);
 
 }
 
@@ -179,7 +179,7 @@ void CWinMycharEditor::decode(CString* str, void *ptr, const int chr)
 }
 
 
-// ¥Ş¥¤¥­¥ã¥é¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// ãƒã‚¤ã‚­ãƒ£ãƒ©ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 void CWinMycharEditor::read_mychar()
 {
 	CFile*	mycharfp;
@@ -191,7 +191,7 @@ void CWinMycharEditor::read_mychar()
 	delete(mycharfp);
 }
 
-// ¥Ş¥¤¥­¥ã¥é¥Õ¥¡¥¤¥ë½ñ¤­¹ş¤ß
+// ãƒã‚¤ã‚­ãƒ£ãƒ©ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 void CWinMycharEditor::write_mychar()
 {
 	CFile*	mycharfp;
@@ -205,7 +205,7 @@ void CWinMycharEditor::write_mychar()
 
 void CWinMycharEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	for( ; ; )
 	{
@@ -240,26 +240,26 @@ void CWinMycharEditor::keyloop()
 bool CWinMycharEditor::onkeypress_left()
 {
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMycharEditor::onkeypress_down()
 {
 	if (m_cur.y < m_name.size() - 1)	m_cur.y++;
 	if (m_my_tt[m_cur.y] == TT_SPC)	m_cur.y++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMycharEditor::onkeypress_up()
 {
 	if (m_cur.y > 0)	m_cur.y--;
 	if (m_my_tt[m_cur.y] == TT_SPC)	m_cur.y--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMycharEditor::onkeypress_right()
 {
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMycharEditor::onkeypress_ok()
 {
@@ -276,11 +276,11 @@ bool CWinMycharEditor::onkeypress_ok()
 		touchwin(m_this);
 		wrefresh(m_this);
 	}
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMycharEditor::onkeypress_cancel()
 {
-	// ¥Ş¥¤¥­¥ã¥é½ñ¤­½Ğ¤·
+	// ãƒã‚¤ã‚­ãƒ£ãƒ©æ›¸ãå‡ºã—
 	CWinSelect1Item* nw_select1item;
 	nw_select1item = new CWinSelect1Item;
 	nw_select1item->setsize(20, 5);

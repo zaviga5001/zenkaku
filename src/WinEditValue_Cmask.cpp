@@ -10,23 +10,23 @@ CWinEditValue_Cmask::~CWinEditValue_Cmask()
 
 bool CWinEditValue_Cmask::onkeypress_down()
 {
-	if (m_cur.y < m_name.size() - 1)	m_cur.y++;	// ¥«¡¼¥½¥ë²¼¤²¤ë
-	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y++;	// ¥¹¥Ú¡¼¥µ¤Ê¤é¤â¤¦¤¤¤Ã¤Á¤ç²¼¤²¤ë
-								// ¥¹¥Ú¡¼¥µ¤Ç½ª¤ï¤ë¥ê¥¹¥È¤À¤ÈÍî¤Á¤ë¤Î¤ÇÃí°Õ
+	if (m_cur.y < m_name.size() - 1)	m_cur.y++;	// ã‚«ãƒ¼ã‚½ãƒ«ä¸‹ã’ã‚‹
+	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y++;	// ã‚¹ãƒšãƒ¼ã‚µãªã‚‰ã‚‚ã†ã„ã£ã¡ã‚‡ä¸‹ã’ã‚‹
+								// ã‚¹ãƒšãƒ¼ã‚µã§çµ‚ã‚ã‚‹ãƒªã‚¹ãƒˆã ã¨è½ã¡ã‚‹ã®ã§æ³¨æ„
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue_Cmask::onkeypress_up()
 {
-	if (m_cur.y > 0)			m_cur.y--;	// ¥«¡¼¥½¥ë¾å¤²¤ë
-	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y--;	// ¥¹¥Ú¡¼¥µ¤Ê¤é¤â¤¦¤¤¤Ã¤Á¤ç¾å¤²¤ë
-								// ¥¹¥Ú¡¼¥µ¤Ç»Ï¤Ş¤ë¥ê¥¹¥È¤À¤ÈÍî¤Á¤ë¤Î¤ÇÃí°Õ
+	if (m_cur.y > 0)			m_cur.y--;	// ã‚«ãƒ¼ã‚½ãƒ«ä¸Šã’ã‚‹
+	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y--;	// ã‚¹ãƒšãƒ¼ã‚µãªã‚‰ã‚‚ã†ã„ã£ã¡ã‚‡ä¸Šã’ã‚‹
+								// ã‚¹ãƒšãƒ¼ã‚µã§å§‹ã¾ã‚‹ãƒªã‚¹ãƒˆã ã¨è½ã¡ã‚‹ã®ã§æ³¨æ„
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue_Cmask::onkeypress_right()
 {
-	// ¥Ş¥¹¥¯È¿Å¾
+	// ãƒã‚¹ã‚¯åè»¢
 	if (m_cur.y == 0 ||
 	    m_cur.y == 1 ||
 	    m_cur.y == 2 ||
@@ -38,12 +38,12 @@ bool CWinEditValue_Cmask::onkeypress_right()
 	{
 		*(char*)m_ptr[m_cur.y] = ~ *(char*)m_ptr[m_cur.y];
 	}
-	m_return = true;	// µ¢¤Ã¤Æ¤¯¤ë
-	return false;	// ¥­¡¼¥ë¡¼¥×¤ò½ªÎ»¤·¤Æ¡¢¼¡¤Î¥¿¥¤¥ë¤ÇºÆÉ½¼¨¤¹¤ë
+	m_return = true;	// å¸°ã£ã¦ãã‚‹
+	return false;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ã‚’çµ‚äº†ã—ã¦ã€æ¬¡ã®ã‚¿ã‚¤ãƒ«ã§å†è¡¨ç¤ºã™ã‚‹
 }
 bool CWinEditValue_Cmask::onkeypress_left()
 {
-	// ¥Ş¥¹¥¯È¿Å¾
+	// ãƒã‚¹ã‚¯åè»¢
 	if (m_cur.y == 0 ||
 	    m_cur.y == 1 ||
 	    m_cur.y == 2 ||
@@ -55,12 +55,12 @@ bool CWinEditValue_Cmask::onkeypress_left()
 	{
 		*(char*)m_ptr[m_cur.y] = ~ *(char*)m_ptr[m_cur.y];
 	}
-	m_return = true;	// µ¢¤Ã¤Æ¤¯¤ë
-	return false;	// ¥­¡¼¥ë¡¼¥×¤ò½ªÎ»¤·¤Æ¡¢¼¡¤Î¥¿¥¤¥ë¤ÇºÆÉ½¼¨¤¹¤ë
+	m_return = true;	// å¸°ã£ã¦ãã‚‹
+	return false;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ã‚’çµ‚äº†ã—ã¦ã€æ¬¡ã®ã‚¿ã‚¤ãƒ«ã§å†è¡¨ç¤ºã™ã‚‹
 }
 bool CWinEditValue_Cmask::onkeypress_ok()
 {
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue_Cmask::onkeypress_cancel()
 {

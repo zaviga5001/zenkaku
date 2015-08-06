@@ -6,7 +6,7 @@
 
 #include "CString.h"
 
-//Î¬µ­ÍÑ¥Ş¥¯¥í
+//ç•¥è¨˜ç”¨ãƒã‚¯ãƒ­
 #define STRING	    const CString&
 #define NULL_STRING CString()
 
@@ -14,7 +14,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //construction
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 CString::CString(STRING s){
 
 	if (s.m_lpsz){
@@ -34,7 +34,7 @@ CString::CString(STRING s){
 	}
 }
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 CString::CString(LPCSTR lpsz){
 
 	if (lpsz){
@@ -54,7 +54,7 @@ CString::CString(LPCSTR lpsz){
 	}
 }
 
-//¥Ç¥¹¥È¥é¥¯¥¿
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 CString::~CString(){
 	delete [] m_lpsz;
 }
@@ -63,7 +63,7 @@ CString::~CString(){
 ////////////////////////////////////////////////////////////////////////////////
 //operator
 
-//ÂåÆş (1)
+//ä»£å…¥ (1)
 CString& CString::operator = (STRING s){
 
 	LPSTR lpszPrev =m_lpsz;
@@ -89,7 +89,7 @@ CString& CString::operator = (STRING s){
 	return *this;
 }
 
-//ÂåÆş (2)
+//ä»£å…¥ (2)
 CString& CString::operator = (LPCSTR lpsz){
 
 	LPSTR lpszPrev =m_lpsz;
@@ -115,7 +115,7 @@ CString& CString::operator = (LPCSTR lpsz){
 	return *this;
 }
 
-//²Ã»»ÂåÆş (1)
+//åŠ ç®—ä»£å…¥ (1)
 CString& CString::operator += (STRING s){
 
 	LPSTR  lpsz1 =m_lpsz;
@@ -163,7 +163,7 @@ CString& CString::operator += (STRING s){
 	return *this;
 }
 
-//²Ã»»ÂåÆş (1)
+//åŠ ç®—ä»£å…¥ (1)
 CString& CString::operator += (LPCSTR lpsz2){
 
 	LPSTR lpsz1 =m_lpsz;
@@ -214,7 +214,7 @@ CString& CString::operator += (LPCSTR lpsz2){
 ////////////////////////////////////////////////////////////////////////////////
 //substring
 
-//ÉôÊ¬Ê¸»úÎó¤Î¼èÆÀ (1)
+//éƒ¨åˆ†æ–‡å­—åˆ—ã®å–å¾— (1)
 CString CString::Sub(int nBegin, int nEnd) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -229,7 +229,7 @@ CString CString::Sub(int nBegin, int nEnd) const {
 	return (nBegin <= nEnd) ? _sub(m_lpsz, nBegin, nEnd) : NULL_STRING;
 }
 
-//ÉôÊ¬Ê¸»úÎó¤Î¼èÆÀ (2)
+//éƒ¨åˆ†æ–‡å­—åˆ—ã®å–å¾— (2)
 CString CString::Sub(int nBegin) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -246,7 +246,7 @@ CString CString::Sub(int nBegin) const {
 	return (nBegin <= nEnd) ? _sub(m_lpsz, nBegin, nEnd) : NULL_STRING;
 }
 
-//º¸ÉôÊ¬Ê¸»úÎó¤Î¼èÆÀ
+//å·¦éƒ¨åˆ†æ–‡å­—åˆ—ã®å–å¾—
 CString CString::Left(int nLen) const {
 
 	if (!m_lpsz || nLen < 0) return NULL_STRING;
@@ -254,7 +254,7 @@ CString CString::Left(int nLen) const {
 	return _sub(m_lpsz, 0, (nLen <= m_nLen) ? nLen : m_nLen);
 }
 
-//±¦ÉôÊ¬Ê¸»úÎó¤Î¼èÆÀ
+//å³éƒ¨åˆ†æ–‡å­—åˆ—ã®å–å¾—
 CString CString::Right(int nLen) const {
 
 	if (!m_lpsz || nLen < 0) return NULL_STRING;
@@ -265,17 +265,17 @@ CString CString::Right(int nLen) const {
 
 /* search & replacement ----------------------------------------------------- */
 
-//¥Ñ¥¿¡¼¥ó¸¡º÷ (1)
+//ãƒ‘ã‚¿ãƒ¼ãƒ³æ¤œç´¢ (1)
 LPCSTR CString::Search(STRING s, UINT uFlags, Charset cs) const {
 	return (m_lpsz && s.m_lpsz) ? _search(m_nLen, m_lpsz, s.m_nLen, s.m_lpsz, uFlags, cs) : NULL;
 }
 
-//¥Ñ¥¿¡¼¥ó¸¡º÷ (2)
+//ãƒ‘ã‚¿ãƒ¼ãƒ³æ¤œç´¢ (2)
 LPCSTR CString::Search(LPCSTR lpsz, UINT uFlags, Charset cs) const {
 	return (m_lpsz && lpsz) ? _search(m_nLen, m_lpsz, ::strlen(lpsz), lpsz, uFlags, cs) : NULL;
 }
 
-//¥Ñ¥¿¡¼¥ó¸¡º÷ (¥¤¥ó¥Ç¥¯¥¹: 1)
+//ãƒ‘ã‚¿ãƒ¼ãƒ³æ¤œç´¢ (ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹: 1)
 int CString::Find(LPCSTR lpsz, UINT uFlags, Charset cs) const {
 
 	if (!m_lpsz || !lpsz) return NOT_FOUND;
@@ -285,7 +285,7 @@ int CString::Find(LPCSTR lpsz, UINT uFlags, Charset cs) const {
 	return (p) ? p - m_lpsz : NOT_FOUND;
 }
 
-//¥Ñ¥¿¡¼¥ó¸¡º÷ (¥¤¥ó¥Ç¥¯¥¹: 2)
+//ãƒ‘ã‚¿ãƒ¼ãƒ³æ¤œç´¢ (ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹: 2)
 int CString::Find(STRING s, UINT uFlags, Charset cs) const {
 
 	if (!m_lpsz || !s.m_lpsz) return NOT_FOUND;
@@ -295,7 +295,7 @@ int CString::Find(STRING s, UINT uFlags, Charset cs) const {
 	return (p) ? p - m_lpsz : NOT_FOUND;
 }
 
-//¥Ñ¥¿¡¼¥óÃÖ´¹
+//ãƒ‘ã‚¿ãƒ¼ãƒ³ç½®æ›
 CString CString::Replace(LPCSTR lpsz1, LPCSTR lpsz2, UINT uFlags, Charset cs) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -324,7 +324,7 @@ CString CString::Replace(LPCSTR lpsz1, LPCSTR lpsz2, UINT uFlags, Charset cs) co
 
 /* conversion --------------------------------------------------------------- */
 
-//ÂçÊ¸»úÊÑ´¹
+//å¤§æ–‡å­—å¤‰æ›
 CString CString::ToUpper(Charset cs) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -335,7 +335,7 @@ CString CString::ToUpper(Charset cs) const {
 	return CString(m_nLen, _toUpper(lpac, m_lpsz, cs));
 }
 
-//¾®Ê¸»úÊÑ´¹
+//å°æ–‡å­—å¤‰æ›
 CString CString::ToLower(Charset cs) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -346,7 +346,7 @@ CString CString::ToLower(Charset cs) const {
 	return CString(m_nLen, _toLower(lpac, m_lpsz, cs));
 }
 	
-//Å¾ÃÖ
+//è»¢ç½®
 CString CString::Invert(Charset cs) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -358,7 +358,7 @@ CString CString::Invert(Charset cs) const {
 	return CString(nLen, _invert(nLen, lpac, m_lpsz, cs));
 }
 
-//¥È¥ê¥ß¥ó¥°
+//ãƒˆãƒªãƒŸãƒ³ã‚°
 CString CString::Trim(Charset cs) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -369,7 +369,7 @@ CString CString::Trim(Charset cs) const {
 	return CString(nLen, lpsz);
 }
 
-//¥¿¥Ö²½
+//ã‚¿ãƒ–åŒ–
 CString CString::Entab(int nStep, Charset cs) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -380,7 +380,7 @@ CString CString::Entab(int nStep, Charset cs) const {
 	return CString(nLen, lpsz);
 }
 
-//¥¿¥Ö²ò½ü
+//ã‚¿ãƒ–è§£é™¤
 CString CString::Detab(int nStep, Charset cs) const {
 
 	if (!m_lpsz) return NULL_STRING;
@@ -395,7 +395,7 @@ CString CString::Detab(int nStep, Charset cs) const {
 ////////////////////////////////////////////////////////////////////////////////
 //I/O utility
 
-//¥Õ¥¡¥¤¥ëÆşÎÏ (£±¹Ô)
+//ãƒ•ã‚¡ã‚¤ãƒ«å…¥åŠ› (ï¼‘è¡Œ)
 int CString::ReadLine(FILE* fp, Charset cs){
 
 	if (fp){
@@ -429,7 +429,7 @@ int CString::ReadLine(FILE* fp, Charset cs){
 	}
 }
 
-//¥Õ¥¡¥¤¥ë½ĞÎÏ (1)
+//ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ› (1)
 int CString::Print(FILE* fp) const {
 
 	if (fp){
@@ -442,7 +442,7 @@ int CString::Print(FILE* fp) const {
 		return EOF;
 }
 
-//¥Õ¥¡¥¤¥ë½ĞÎÏ (2)
+//ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ› (2)
 int CString::Put(FILE* fp) const {
 
 	if (fp){
@@ -467,7 +467,7 @@ int CString::Put(FILE* fp) const {
 ////////////////////////////////////////////////////////////////////////////////
 //global function
 
-//Ï¢·ë (1)
+//é€£çµ (1)
 CString operator + (STRING s1, STRING s2){
 
 	if (s1.m_lpsz){
@@ -484,7 +484,7 @@ CString operator + (STRING s1, STRING s2){
 	}
 }
 
-//²Ã»» (2)
+//åŠ ç®— (2)
 CString operator + (STRING s1, LPCSTR lpsz2){
 
 	if (s1.m_lpsz){
@@ -501,7 +501,7 @@ CString operator + (STRING s1, LPCSTR lpsz2){
 	}
 }
 
-//²Ã»» (3)
+//åŠ ç®— (3)
 CString operator + (LPCSTR lpsz1, STRING s2){
 
 	if (lpsz1){

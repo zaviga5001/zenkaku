@@ -8,14 +8,14 @@
 #include <time.h>
 
 
-//Î¬µ­ÍÑ¥Þ¥¯¥í
+//ç•¥è¨˜ç”¨ãƒžã‚¯ãƒ­
 #define _DATE const CDate&
 
 
 ////////////////////////////////////////////////////////////////////////////////
 //operator
 
-//ÂåÆþ
+//ä»£å…¥
 CDate& CDate::operator = (_DATE d){
 
 	year  =d.year;
@@ -25,7 +25,7 @@ CDate& CDate::operator = (_DATE d){
 	return *this;
 }
 
-//²Ã»»ÂåÆþ
+//åŠ ç®—ä»£å…¥
 CDate& CDate::operator += (int n){
 	assert(CDate::IsDateValid(year, month, day));
 
@@ -79,7 +79,7 @@ CDate& CDate::operator += (int n){
 	return *this;
 }
 
-//¸º»»ÂåÆþ
+//æ¸›ç®—ä»£å…¥
 CDate& CDate::operator -= (int n){
 	assert(CDate::IsDateValid(year, month, day));
 
@@ -133,7 +133,7 @@ CDate& CDate::operator -= (int n){
 	return *this;
 }
 
-//¥¤¥ó¥¯¥ê¥á¥ó¥È (Á°ÃÖ)
+//ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ (å‰ç½®)
 CDate CDate::operator ++ (){
 	assert(IsDateValid(year, month, day));
 
@@ -157,7 +157,7 @@ CDate CDate::operator ++ (){
 	return CDate(year, month, day);
 }
 
-//¥¤¥ó¥¯¥ê¥á¥ó¥È (¸åÃÖ)
+//ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ (å¾Œç½®)
 CDate CDate::operator ++ (int){
 	assert(IsDateValid(year, month, day));
 
@@ -185,7 +185,7 @@ CDate CDate::operator ++ (int){
 	return CDate(nYear, nMonth, nDay);
 }
 
-//¥Ç¥¯¥ê¥á¥ó¥È (Á°ÃÖ)
+//ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ (å‰ç½®)
 CDate CDate::operator -- (){
 	assert(IsDateValid(year, month, day));
 
@@ -211,7 +211,7 @@ CDate CDate::operator -- (){
 	return CDate(year, month, day);
 }
 
-//¥Ç¥¯¥ê¥á¥ó¥È (¸åÃÖ)
+//ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ (å¾Œç½®)
 CDate CDate::operator -- (int){
 	assert(IsDateValid(year, month, day));
 
@@ -245,17 +245,17 @@ CDate CDate::operator -- (int){
 ////////////////////////////////////////////////////////////////////////////////
 //static members
 
-//±¼Ç¯¤ÎÈ½Äê
+//é–å¹´ã®åˆ¤å®š
 bool CDate::IsYearBissextile(int nYear){
 	return !(nYear % 4) && (nYear % 100 || !(nYear % 400));
 }
 
-//ÆüÉÕ¥Ç¡¼¥¿¤ÎÍ­¸úÀ­È½Äê
+//æ—¥ä»˜ãƒ‡ãƒ¼ã‚¿ã®æœ‰åŠ¹æ€§åˆ¤å®š
 bool CDate::IsDateValid(int nYear, int nMonth, int nDay){
 	return (nYear && nMonth >= JAN && nMonth <= DEC && nDay >= 1 && nDay <= LenOfMonth(nYear, nMonth));
 }
 
-//µ¯»»Æü (1/ 1/ 1) ¤«¤é¤Î·Ð²áÆü¿ô¤Î»»½Ð [for internal use]
+//èµ·ç®—æ—¥ (1/ 1/ 1) ã‹ã‚‰ã®çµŒéŽæ—¥æ•°ã®ç®—å‡º [for internal use]
 int CDate::toInt(int nYear, int nMonth, int nDay){
 	assert(IsDateValid(nYear, nMonth, nDay));
 
@@ -285,7 +285,7 @@ int CDate::toInt(int nYear, int nMonth, int nDay){
 	return n + (nDay - 1);
 }
 
-//¡Ö·î¤ÎÆü¿ô¡×¤Î¼èÆÀ
+//ã€Œæœˆã®æ—¥æ•°ã€ã®å–å¾—
 int CDate::LenOfMonth(int nYear, int nMonth){
 	assert(nYear && nMonth >= JAN && nMonth <= DEC);
 
@@ -298,7 +298,7 @@ int CDate::LenOfMonth(int nYear, int nMonth){
 		: anLen[nMonth - 1];
 }
 
-//¡ÖÍË¡×¤Î¼èÆÀ
+//ã€Œæ›œã€ã®å–å¾—
 int CDate::DayOfWeek(int nYear, int nMonth, int nDay){
 	assert(IsDateValid(nYear, nMonth, nDay));
 
@@ -309,7 +309,7 @@ int CDate::DayOfWeek(int nYear, int nMonth, int nDay){
 		: 6 + n % 7;
 }
 
-//Èæ³Ó
+//æ¯”è¼ƒ
 int CDate::Compare(const CDate& d1, const CDate& d2){
 	assert(IsDateValid(d1.year, d1.month, d1.day));
 	assert(IsDateValid(d2.year, d2.month, d2.day));
@@ -326,7 +326,7 @@ int CDate::Compare(const CDate& d1, const CDate& d2){
 	return 0;
 }
 
-//¡Öº£Æü¤ÎÆüÉÕ¡×¤Î¼èÆÀ
+//ã€Œä»Šæ—¥ã®æ—¥ä»˜ã€ã®å–å¾—
 CDate CDate::Today(){
 
 	time_t t;
@@ -341,7 +341,7 @@ CDate CDate::Today(){
 ////////////////////////////////////////////////////////////////////////////////
 //external operator
 
-//²Ã»»
+//åŠ ç®—
 CDate operator + (const CDate& d, int n){
 	assert(CDate::IsDateValid(d.year, d.month, d.day));
 
@@ -397,7 +397,7 @@ CDate operator + (const CDate& d, int n){
 	return CDate(nYear, nMonth, nDay);
 }
 
-//¸º»» (1)
+//æ¸›ç®— (1)
 CDate operator - (const CDate& d, int n){
 	assert(CDate::IsDateValid(d.year, d.month, d.day));
 
@@ -454,7 +454,7 @@ CDate operator - (const CDate& d, int n){
 	return CDate(nYear, nMonth, nDay);
 }
 
-//¸º»» (2)
+//æ¸›ç®— (2)
 int operator - (_DATE d1, _DATE d2){
 	return CDate::toInt(d1.year, d1.month, d1.day) - CDate::toInt(d2.year, d2.month, d2.day);
 }

@@ -7,13 +7,13 @@
 #include "CString.h"
 #include <ctype.h>
 
-//Æş½Ğ¥Ğ¥Ã¥Õ¥¡¡¦¥¹¥ï¥Ã¥×Ã±°Ì
+//å…¥å‡ºãƒãƒƒãƒ•ã‚¡ãƒ»ã‚¹ãƒ¯ãƒƒãƒ—å˜ä½
 #define BUFFER_SWAP 256
 
 
 /* operator base ------------------------------------------------------------ */
 
-//Ê¸»úÎó¤ÎÏ¢·ë [for internal use]
+//æ–‡å­—åˆ—ã®é€£çµ [for internal use]
 CString CString::_add(int nLen1, LPCSTR lpsz1, int nLen2, LPCSTR lpsz2){
 	assert(nLen1 >= 0 && lpsz1);
 	assert(nLen2 >= 0 && lpsz2);
@@ -31,7 +31,7 @@ CString CString::_add(int nLen1, LPCSTR lpsz1, int nLen2, LPCSTR lpsz2){
 
 /* substring ---------------------------------------------------------------- */
 
-//ÉôÊ¬Ê¸»úÎó¤Î¼èÆÀ [for internal use]
+//éƒ¨åˆ†æ–‡å­—åˆ—ã®å–å¾— [for internal use]
 CString CString::_sub(LPCSTR lpsz, int nBegin, int nEnd){
 	assert(lpsz);
 	assert(0 <= nBegin && nBegin <= nEnd);
@@ -49,7 +49,7 @@ CString CString::_sub(LPCSTR lpsz, int nBegin, int nEnd){
 
 /* search & replace --------------------------------------------------------- */
 
-//¥Ñ¥¿¡¼¥ó¸¡º÷ [fot internal use]
+//ãƒ‘ã‚¿ãƒ¼ãƒ³æ¤œç´¢ [fot internal use]
 LPCSTR CString::_search(int nLen1, LPCSTR lpsz1, int nLen2, LPCSTR lpsz2, UINT uFlags, Charset cs){
 	assert(nLen1 >= 0 && lpsz1);
 	assert(nLen2 >= 0 && lpsz2);
@@ -105,7 +105,7 @@ LPCSTR CString::_search(int nLen1, LPCSTR lpsz1, int nLen2, LPCSTR lpsz2, UINT u
 	return NULL;
 }
 
-//¥Ñ¥¿¡¼¥óÃÖ´¹ [for internal use]
+//ãƒ‘ã‚¿ãƒ¼ãƒ³ç½®æ› [for internal use]
 LPSTR CString::_replace(int* lpnLen, int nLenSrc, LPCSTR lpszSrc, int nLen1, LPCSTR lpsz1, int nLen2, LPCSTR lpsz2, UINT uFlags, Charset cs){
 	assert(lpnLen);
 	assert(nLen1 >= 0 && lpsz1 && lpsz1[0]);
@@ -231,7 +231,7 @@ LPSTR CString::_replace(int* lpnLen, int nLenSrc, LPCSTR lpszSrc, int nLen1, LPC
 
 /* conversion --------------------------------------------------------------- */
 
-//Å¾ÃÖ [for internal use]
+//è»¢ç½® [for internal use]
 LPSTR CString::_invert(int nLen, char* lpac, LPCSTR lpsz, Charset cs){
 	assert(nLen >= 0 && lpac && lpsz);
 
@@ -252,7 +252,7 @@ LPSTR CString::_invert(int nLen, char* lpac, LPCSTR lpsz, Charset cs){
 	return lpac;
 }
 
-//¥±¡¼¥¹ÊÑ´¹ (ÂçÊ¸»ú) [for internal use]
+//ã‚±ãƒ¼ã‚¹å¤‰æ› (å¤§æ–‡å­—) [for internal use]
 LPSTR CString::_toUpper(char* lpac, LPCSTR lpsz, Charset cs){
 	assert(lpac && lpsz);
 
@@ -278,7 +278,7 @@ LPSTR CString::_toUpper(char* lpac, LPCSTR lpsz, Charset cs){
 	return lpac;
 }
 
-//¥±¡¼¥¹ÊÑ´¹ (¾®Ê¸»ú) [for internal use]
+//ã‚±ãƒ¼ã‚¹å¤‰æ› (å°æ–‡å­—) [for internal use]
 LPSTR CString::_toLower(char* lpac, LPCSTR lpsz, Charset cs){
 	assert(lpac && lpsz);
 
@@ -304,7 +304,7 @@ LPSTR CString::_toLower(char* lpac, LPCSTR lpsz, Charset cs){
 	return lpac;
 }
 
-//¥È¥ê¥ß¥ó¥° [for internal use]
+//ãƒˆãƒªãƒŸãƒ³ã‚° [for internal use]
 LPSTR CString::_trim(int* lpnLen, LPCSTR lpsz, Charset cs){
 	assert(lpnLen && lpsz);
 
@@ -339,7 +339,7 @@ LPSTR CString::_trim(int* lpnLen, LPCSTR lpsz, Charset cs){
 	return lpac;
 }
 
-//¥¿¥Ö²½ [for internal use]
+//ã‚¿ãƒ–åŒ– [for internal use]
 LPSTR CString::_entab(int* lpnLen, LPCSTR lpsz, int nStep, Charset cs){
 	assert(lpnLen && lpsz && nStep >= 0);
 
@@ -399,7 +399,7 @@ LPSTR CString::_entab(int* lpnLen, LPCSTR lpsz, int nStep, Charset cs){
 	return lpac;
 }
 
-//¥¿¥Ö²ò½ü [for internal use]
+//ã‚¿ãƒ–è§£é™¤ [for internal use]
 LPSTR CString::_detab(int* lpnLen, LPCSTR lpsz, int nStep, Charset cs){
 	assert(lpnLen && lpsz && nStep >= 0);
 
@@ -455,7 +455,7 @@ LPSTR CString::_detab(int* lpnLen, LPCSTR lpsz, int nStep, Charset cs){
 
 /* I/O utility -------------------------------------------------------------- */
 
-//¥Õ¥¡¥¤¥ëÆşÎÏ (£±¹Ô) [for internal use]
+//ãƒ•ã‚¡ã‚¤ãƒ«å…¥åŠ› (ï¼‘è¡Œ) [for internal use]
 LPSTR CString::_readLine(int* lpnLen, int* lpnExitCode, FILE* fp, Charset cs){
 	assert(lpnLen && lpnExitCode && fp);
 

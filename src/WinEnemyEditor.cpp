@@ -2,33 +2,33 @@
 
 CWinEnemyEditor::CWinEnemyEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_dpos.x = 0;
 	m_dpos.y = 0;
 	m_cur.y  = 0;
 	m_wpos.x = 1;
 	m_wpos.y = 1;
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
-	m_maxwidth = 0;		// Ê¸»úÎó¤ÎºÇÂçÉı
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
+	m_maxwidth = 0;		// æ–‡å­—åˆ—ã®æœ€å¤§å¹…
 	m_enemynum = 0;
 
 
 	m_data = new CData;
 
-	// ¤³¤³¤Ç¥·¥Ê¥ê¥ª¤òÆÉ¤ß¹ş¤á
+	// ã“ã“ã§ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚
 
-	// Å¨¥­¥ã¥éÆÉ¤ß¹ş¤ß
+	// æ•µã‚­ãƒ£ãƒ©èª­ã¿è¾¼ã¿
 	read_enemy();
 
 	for (int i = 0; i < m_enemynum; i++)
 	{
 		push(m_data->m_enemy[i].name, i);
 	}
-	push("¿·µ¬ºîÀ®", m_enemynum);
+	push("æ–°è¦ä½œæˆ", m_enemynum);
 }
 
 CWinEnemyEditor::~CWinEnemyEditor()
@@ -69,7 +69,7 @@ void CWinEnemyEditor::change(const CString str, const int id, const int index)
 }
 
 
-// Å¨¥­¥ã¥é¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// æ•µã‚­ãƒ£ãƒ©ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 void CWinEnemyEditor::read_enemy()
 {
 	CFile*	fp;
@@ -83,7 +83,7 @@ void CWinEnemyEditor::read_enemy()
 	delete(fp);
 }
 
-// Å¨¥­¥ã¥é¥Õ¥¡¥¤¥ë½ñ¤­¹ş¤ß
+// æ•µã‚­ãƒ£ãƒ©ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 void CWinEnemyEditor::write_enemy(int index)
 {
 	CFile*	fp;
@@ -96,7 +96,7 @@ void CWinEnemyEditor::write_enemy(int index)
 
 void CWinEnemyEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	for( ; ; )
 	{
@@ -132,28 +132,28 @@ bool CWinEnemyEditor::onkeypress_left()
 {
 	if (m_dpos.x > 0)	m_dpos.x--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEnemyEditor::onkeypress_down()
 {
 	if (m_cur.y < m_index.size() - 1)	m_cur.y++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEnemyEditor::onkeypress_up()
 {
 	if (m_cur.y > 0)	m_cur.y--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEnemyEditor::onkeypress_right()
 {
-	// ¸Ä¡¹¤Î¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// å€‹ã€…ã®ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	//if (m_list[m_cur.y].Len() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
-	// ºÇÂçÄ¹¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// æœ€å¤§é•·ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	if (m_winw - m_wpos.x - 1 + m_dpos.x < m_maxwidth)	m_dpos.x++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEnemyEditor::onkeypress_ok()
 {
@@ -162,78 +162,78 @@ bool CWinEnemyEditor::onkeypress_ok()
 	for ( ; ; )
 	{
 		nw_editvalue = new CWinEditValue;
-		// ¥İ¥¤¥ó¥¿¥»¥Ã¥È
-		nw_editvalue->push("Ì¾Á°",		&m_data->m_enemy[m_cur.y].name,		TT_CST, 1);
-		nw_editvalue->push("Â°À­",		&m_data->m_enemy[m_cur.y].type,		TT_BYT, 1);
-		nw_editvalue->push("¥¹¥Æ¡¼¥¿¥¹",	&m_data->m_enemy[m_cur.y].status,	TT_INT, 1);
+		// ãƒã‚¤ãƒ³ã‚¿ã‚»ãƒƒãƒˆ
+		nw_editvalue->push("åå‰",		&m_data->m_enemy[m_cur.y].name,		TT_CST, 1);
+		nw_editvalue->push("å±æ€§",		&m_data->m_enemy[m_cur.y].type,		TT_BYT, 1);
+		nw_editvalue->push("ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹",	&m_data->m_enemy[m_cur.y].status,	TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("ÂÎÎÏ¡Ê¸½ºß¡Ë",	&m_data->m_enemy[m_cur.y].hp.p,		TT_INT, 1);
-		nw_editvalue->push("ÂÎÎÏ¡ÊºÇÂç¡Ë",	&m_data->m_enemy[m_cur.y].hp.m,		TT_INT, 1);
-		nw_editvalue->push("¹¶·âÎÏ¡Ê¸½ºß¡Ë",	&m_data->m_enemy[m_cur.y].ap.p,		TT_INT, 1);
-		nw_editvalue->push("¹¶·âÎÏ¡ÊºÇÂç¡Ë",	&m_data->m_enemy[m_cur.y].ap.m,		TT_INT, 1);
-		nw_editvalue->push("ËÉ¸æÎÏ¡Ê¸½ºß¡Ë",	&m_data->m_enemy[m_cur.y].gp.p,		TT_INT, 1);
-		nw_editvalue->push("ËÉ¸æÎÏ¡ÊºÇÂç¡Ë",	&m_data->m_enemy[m_cur.y].gp.m,		TT_INT, 1);
-		nw_editvalue->push("ËâË¡ÎÏ¡Ê¸½ºß¡Ë",	&m_data->m_enemy[m_cur.y].mp.p,		TT_INT, 1);
-		nw_editvalue->push("ËâË¡ÎÏ¡ÊºÇÂç¡Ë",	&m_data->m_enemy[m_cur.y].mp.m,		TT_INT, 1);
-		nw_editvalue->push("²óÈòÎÏ¡Ê¸½ºß¡Ë",	&m_data->m_enemy[m_cur.y].ep.p,		TT_INT, 1);
-		nw_editvalue->push("²óÈòÎÏ¡ÊºÇÂç¡Ë",	&m_data->m_enemy[m_cur.y].ep.m,		TT_INT, 1);
-		nw_editvalue->push("ÁÇÁá¤µ¡Ê¸½ºß¡Ë",	&m_data->m_enemy[m_cur.y].fp.p,		TT_INT, 1);
-		nw_editvalue->push("ÁÇÁá¤µ¡ÊºÇÂç¡Ë",	&m_data->m_enemy[m_cur.y].fp.m,		TT_INT, 1);
+		nw_editvalue->push("ä½“åŠ›ï¼ˆç¾åœ¨ï¼‰",	&m_data->m_enemy[m_cur.y].hp.p,		TT_INT, 1);
+		nw_editvalue->push("ä½“åŠ›ï¼ˆæœ€å¤§ï¼‰",	&m_data->m_enemy[m_cur.y].hp.m,		TT_INT, 1);
+		nw_editvalue->push("æ”»æ’ƒåŠ›ï¼ˆç¾åœ¨ï¼‰",	&m_data->m_enemy[m_cur.y].ap.p,		TT_INT, 1);
+		nw_editvalue->push("æ”»æ’ƒåŠ›ï¼ˆæœ€å¤§ï¼‰",	&m_data->m_enemy[m_cur.y].ap.m,		TT_INT, 1);
+		nw_editvalue->push("é˜²å¾¡åŠ›ï¼ˆç¾åœ¨ï¼‰",	&m_data->m_enemy[m_cur.y].gp.p,		TT_INT, 1);
+		nw_editvalue->push("é˜²å¾¡åŠ›ï¼ˆæœ€å¤§ï¼‰",	&m_data->m_enemy[m_cur.y].gp.m,		TT_INT, 1);
+		nw_editvalue->push("é­”æ³•åŠ›ï¼ˆç¾åœ¨ï¼‰",	&m_data->m_enemy[m_cur.y].mp.p,		TT_INT, 1);
+		nw_editvalue->push("é­”æ³•åŠ›ï¼ˆæœ€å¤§ï¼‰",	&m_data->m_enemy[m_cur.y].mp.m,		TT_INT, 1);
+		nw_editvalue->push("å›é¿åŠ›ï¼ˆç¾åœ¨ï¼‰",	&m_data->m_enemy[m_cur.y].ep.p,		TT_INT, 1);
+		nw_editvalue->push("å›é¿åŠ›ï¼ˆæœ€å¤§ï¼‰",	&m_data->m_enemy[m_cur.y].ep.m,		TT_INT, 1);
+		nw_editvalue->push("ç´ æ—©ã•ï¼ˆç¾åœ¨ï¼‰",	&m_data->m_enemy[m_cur.y].fp.p,		TT_INT, 1);
+		nw_editvalue->push("ç´ æ—©ã•ï¼ˆæœ€å¤§ï¼‰",	&m_data->m_enemy[m_cur.y].fp.m,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("·Ğ¸³ÃÍ",		&m_data->m_enemy[m_cur.y].exp,		TT_INT, 1);
-		nw_editvalue->push("½ê»ı¶â",		&m_data->m_enemy[m_cur.y].gold,		TT_INT, 1);
+		nw_editvalue->push("çµŒé¨“å€¤",		&m_data->m_enemy[m_cur.y].exp,		TT_INT, 1);
+		nw_editvalue->push("æ‰€æŒé‡‘",		&m_data->m_enemy[m_cur.y].gold,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àID¡§£°",&m_data->m_enemy[m_cur.y].item[0].id,	TT_SHT, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥à¿ô¡§£°",&m_data->m_enemy[m_cur.y].item[0].num,	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àÎ¨¡§£°",&m_data->m_enemy[m_cur.y].item_r[0],	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àID¡§£±",&m_data->m_enemy[m_cur.y].item[1].id,	TT_SHT, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥à¿ô¡§£±",&m_data->m_enemy[m_cur.y].item[1].num,	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àÎ¨¡§£±",&m_data->m_enemy[m_cur.y].item_r[1],	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àID¡§£²",&m_data->m_enemy[m_cur.y].item[2].id,	TT_SHT, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥à¿ô¡§£²",&m_data->m_enemy[m_cur.y].item[2].num,	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àÎ¨¡§£²",&m_data->m_enemy[m_cur.y].item_r[2],	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àID¡§£³",&m_data->m_enemy[m_cur.y].item[3].id,	TT_SHT, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥à¿ô¡§£³",&m_data->m_enemy[m_cur.y].item[3].num,	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àÎ¨¡§£³",&m_data->m_enemy[m_cur.y].item_r[3],	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àID¡§£´",&m_data->m_enemy[m_cur.y].item[4].id,	TT_SHT, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥à¿ô¡§£´",&m_data->m_enemy[m_cur.y].item[4].num,	TT_CHR, 1);
-		nw_editvalue->push("½ê»ı¥¢¥¤¥Æ¥àÎ¨¡§£´",&m_data->m_enemy[m_cur.y].item_r[4],	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ IDï¼šï¼",&m_data->m_enemy[m_cur.y].item[0].id,	TT_SHT, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ æ•°ï¼šï¼",&m_data->m_enemy[m_cur.y].item[0].num,	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼",&m_data->m_enemy[m_cur.y].item_r[0],	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ IDï¼šï¼‘",&m_data->m_enemy[m_cur.y].item[1].id,	TT_SHT, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ æ•°ï¼šï¼‘",&m_data->m_enemy[m_cur.y].item[1].num,	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼‘",&m_data->m_enemy[m_cur.y].item_r[1],	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ IDï¼šï¼’",&m_data->m_enemy[m_cur.y].item[2].id,	TT_SHT, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ æ•°ï¼šï¼’",&m_data->m_enemy[m_cur.y].item[2].num,	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼’",&m_data->m_enemy[m_cur.y].item_r[2],	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ IDï¼šï¼“",&m_data->m_enemy[m_cur.y].item[3].id,	TT_SHT, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ æ•°ï¼šï¼“",&m_data->m_enemy[m_cur.y].item[3].num,	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼“",&m_data->m_enemy[m_cur.y].item_r[3],	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ IDï¼šï¼”",&m_data->m_enemy[m_cur.y].item[4].id,	TT_SHT, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ æ•°ï¼šï¼”",&m_data->m_enemy[m_cur.y].item[4].num,	TT_CHR, 1);
+		nw_editvalue->push("æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼”",&m_data->m_enemy[m_cur.y].item_r[4],	TT_CHR, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("¹¶·âID¡§£°",	&m_data->m_enemy[m_cur.y].fight[0],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£°",	&m_data->m_enemy[m_cur.y].fight_r[0],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£±",	&m_data->m_enemy[m_cur.y].fight[1],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£±",	&m_data->m_enemy[m_cur.y].fight_r[1],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£²",	&m_data->m_enemy[m_cur.y].fight[2],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£²",	&m_data->m_enemy[m_cur.y].fight_r[2],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£³",	&m_data->m_enemy[m_cur.y].fight[3],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£³",	&m_data->m_enemy[m_cur.y].fight_r[3],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£´",	&m_data->m_enemy[m_cur.y].fight[4],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£´",	&m_data->m_enemy[m_cur.y].fight_r[4],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£µ",	&m_data->m_enemy[m_cur.y].fight[5],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£µ",	&m_data->m_enemy[m_cur.y].fight_r[5],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£¶",	&m_data->m_enemy[m_cur.y].fight[6],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£¶",	&m_data->m_enemy[m_cur.y].fight_r[6],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£·",	&m_data->m_enemy[m_cur.y].fight[7],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£·",	&m_data->m_enemy[m_cur.y].fight_r[7],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£¸",	&m_data->m_enemy[m_cur.y].fight[8],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£¸",	&m_data->m_enemy[m_cur.y].fight_r[8],	TT_CHR, 1);
-		nw_editvalue->push("¹¶·âID¡§£¹",	&m_data->m_enemy[m_cur.y].fight[9],	TT_SHT, 1);
-		nw_editvalue->push("¹¶·âÎ¨¡§£¹",	&m_data->m_enemy[m_cur.y].fight_r[9],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼",	&m_data->m_enemy[m_cur.y].fight[0],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼",	&m_data->m_enemy[m_cur.y].fight_r[0],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼‘",	&m_data->m_enemy[m_cur.y].fight[1],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼‘",	&m_data->m_enemy[m_cur.y].fight_r[1],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼’",	&m_data->m_enemy[m_cur.y].fight[2],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼’",	&m_data->m_enemy[m_cur.y].fight_r[2],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼“",	&m_data->m_enemy[m_cur.y].fight[3],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼“",	&m_data->m_enemy[m_cur.y].fight_r[3],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼”",	&m_data->m_enemy[m_cur.y].fight[4],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼”",	&m_data->m_enemy[m_cur.y].fight_r[4],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼•",	&m_data->m_enemy[m_cur.y].fight[5],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼•",	&m_data->m_enemy[m_cur.y].fight_r[5],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼–",	&m_data->m_enemy[m_cur.y].fight[6],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼–",	&m_data->m_enemy[m_cur.y].fight_r[6],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼—",	&m_data->m_enemy[m_cur.y].fight[7],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼—",	&m_data->m_enemy[m_cur.y].fight_r[7],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼˜",	&m_data->m_enemy[m_cur.y].fight[8],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼˜",	&m_data->m_enemy[m_cur.y].fight_r[8],	TT_CHR, 1);
+		nw_editvalue->push("æ”»æ’ƒIDï¼šï¼™",	&m_data->m_enemy[m_cur.y].fight[9],	TT_SHT, 1);
+		nw_editvalue->push("æ”»æ’ƒç‡ï¼šï¼™",	&m_data->m_enemy[m_cur.y].fight_r[9],	TT_CHR, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("¥Õ¥é¥°",		&m_data->m_enemy[m_cur.y].flg,		TT_INT, 1);
-		nw_editvalue->push("¼¡¤ÎÅ¨ID",		&m_data->m_enemy[m_cur.y].next_enemy,	TT_INT, 1);
-		nw_editvalue->push("¸Æ¤ÖÅ¨ID¡§£°",	&m_data->m_enemy[m_cur.y].call_enemy[0],TT_INT, 1);
-		nw_editvalue->push("¸Æ¤ÖÅ¨ID¡§£±",	&m_data->m_enemy[m_cur.y].call_enemy[1],TT_INT, 1);
-		nw_editvalue->push("¸Æ¤ÖÅ¨ID¡§£²",	&m_data->m_enemy[m_cur.y].call_enemy[2],TT_INT, 1);
-		nw_editvalue->push("¸Æ¤ÖÅ¨ID¡§£³",	&m_data->m_enemy[m_cur.y].call_enemy[3],TT_INT, 1);
-		nw_editvalue->push("¸Æ¤ÖÅ¨ID¡§£´",	&m_data->m_enemy[m_cur.y].call_enemy[4],TT_INT, 1);
+		nw_editvalue->push("ãƒ•ãƒ©ã‚°",		&m_data->m_enemy[m_cur.y].flg,		TT_INT, 1);
+		nw_editvalue->push("æ¬¡ã®æ•µID",		&m_data->m_enemy[m_cur.y].next_enemy,	TT_INT, 1);
+		nw_editvalue->push("å‘¼ã¶æ•µIDï¼šï¼",	&m_data->m_enemy[m_cur.y].call_enemy[0],TT_INT, 1);
+		nw_editvalue->push("å‘¼ã¶æ•µIDï¼šï¼‘",	&m_data->m_enemy[m_cur.y].call_enemy[1],TT_INT, 1);
+		nw_editvalue->push("å‘¼ã¶æ•µIDï¼šï¼’",	&m_data->m_enemy[m_cur.y].call_enemy[2],TT_INT, 1);
+		nw_editvalue->push("å‘¼ã¶æ•µIDï¼šï¼“",	&m_data->m_enemy[m_cur.y].call_enemy[3],TT_INT, 1);
+		nw_editvalue->push("å‘¼ã¶æ•µIDï¼šï¼”",	&m_data->m_enemy[m_cur.y].call_enemy[4],TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("¥×¥í¥Õ¥£¡¼¥ë",	&m_data->m_enemy[m_cur.y].prof,		TT_CST, 1);
+		nw_editvalue->push("ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«",	&m_data->m_enemy[m_cur.y].prof,		TT_CST, 1);
 
 		nw_editvalue->startwin(true);
 		delete(nw_editvalue);
 
-		// Å¨¥­¥ã¥é½ñ¤­½Ğ¤·
+		// æ•µã‚­ãƒ£ãƒ©æ›¸ãå‡ºã—
 		CWinSelect1Item* nw_select1item;
 		nw_select1item = new CWinSelect1Item;
 		nw_select1item->setsize(20, 5);
@@ -254,21 +254,21 @@ bool CWinEnemyEditor::onkeypress_ok()
 			write_enemy(m_cur.y);
 			change(m_data->m_enemy[m_cur.y].name, m_cur.y, m_cur.y);
 			if (m_cur.y == m_enemynum)
-			{ // ¿·µ¬ÄÉ²Ã¤À¤Ã¤¿
+			{ // æ–°è¦è¿½åŠ ã ã£ãŸ
 				m_enemynum++;
-				push("¿·µ¬ºîÀ®", m_enemynum);
+				push("æ–°è¦ä½œæˆ", m_enemynum);
 
 			}
 		}
 		drawwin();
 		touchwin(m_this);
 		wrefresh(m_this);
-		return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+		return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 	}
 }
 bool CWinEnemyEditor::onkeypress_cancel()
 {
-	return false;	// ½ªÎ»
+	return false;	// çµ‚äº†
 }
 
 

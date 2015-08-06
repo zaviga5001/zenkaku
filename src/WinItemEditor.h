@@ -26,30 +26,30 @@ public:
 	void		push(const CString str, const int id);
 	void		push(const CString str, const int id, const int cpair);
 	void		change(const CString str, const int id, const int index);
-	void		read_item();		// ƒAƒCƒeƒ€“Ç‚İ‚İ
-	void		write_item();		// ƒAƒCƒeƒ€‘‚«‚İ
+	void		read_item();		// ã‚¢ã‚¤ãƒ†ãƒ èª­ã¿è¾¼ã¿
+	void		write_item();		// ã‚¢ã‚¤ãƒ†ãƒ æ›¸ãè¾¼ã¿
 
-	Pos		m_wpos;			// ƒEƒBƒ“ƒhƒEã‚Ì•\¦ˆÊ’u
+	Pos		m_wpos;			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä¸Šã®è¡¨ç¤ºä½ç½®
 
-	void		keyloop();		// ƒL[“ü—Íƒ‹[ƒv
-	bool		onkeypress_left();	// ¶ƒL[‰Ÿ‰º
-	bool		onkeypress_down();	// ‰ºƒL[‰Ÿ‰º
-	bool		onkeypress_up();	// ãƒL[‰Ÿ‰º
-	bool		onkeypress_right();	// ‰EƒL[‰Ÿ‰º
-	virtual bool	onkeypress_ok();	// ‚n‚jƒL[‰Ÿ‰º
-	virtual bool	onkeypress_cancel();	// ƒLƒƒƒ“ƒZƒ‹ƒL[‰Ÿ‰º
+	void		keyloop();		// ã‚­ãƒ¼å…¥åŠ›ãƒ«ãƒ¼ãƒ—
+	bool		onkeypress_left();	// å·¦ã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_down();	// ä¸‹ã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_up();	// ä¸Šã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_right();	// å³ã‚­ãƒ¼æŠ¼ä¸‹
+	virtual bool	onkeypress_ok();	// ï¼¯ï¼«ã‚­ãƒ¼æŠ¼ä¸‹
+	virtual bool	onkeypress_cancel();	// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚­ãƒ¼æŠ¼ä¸‹
 
-	CData*		m_data;			// ƒQ[ƒ€“à‚Ì‚ ‚ç‚ä‚éî•ñ
+	CData*		m_data;			// ã‚²ãƒ¼ãƒ å†…ã®ã‚ã‚‰ã‚†ã‚‹æƒ…å ±
 
 protected:
-	void	warn(enum msg_id tmp_msg);	// ŒxƒEƒBƒ“ƒhƒD•\¦
+	void	warn(enum msg_id tmp_msg);	// è­¦å‘Šã‚¦ã‚£ãƒ³ãƒ‰ã‚¥è¡¨ç¤º
 
-	std::vector<CString>	m_list;		// —v‘f
-	std::vector<int>	m_cp;		// F
-	std::vector<int>	m_index;	// ’l
-	int	m_maxwidth;		// ƒŠƒXƒg•¶š—ñ‚ÌÅ‘å•
-	Pos	m_cur;			// ƒJ[ƒ\ƒ‹‚ÌˆÊ’u
-	Pos	m_dpos;			// ƒŠƒXƒg‚Ì•\¦ŠJnˆÊ’ui‰¡’·‘Î‰j
+	std::vector<CString>	m_list;		// è¦ç´ 
+	std::vector<int>	m_cp;		// è‰²
+	std::vector<int>	m_index;	// å€¤
+	int	m_maxwidth;		// ãƒªã‚¹ãƒˆæ–‡å­—åˆ—ã®æœ€å¤§å¹…
+	Pos	m_cur;			// ã‚«ãƒ¼ã‚½ãƒ«ã®ä½ç½®
+	Pos	m_dpos;			// ãƒªã‚¹ãƒˆã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆæ¨ªé•·å¯¾å¿œï¼‰
 
 private:
 };

@@ -2,26 +2,26 @@
 
 CWinMessageEditor::CWinMessageEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_dpos.x = 0;
 	m_dpos.y = 0;
 	m_cur.y  = 0;
 	m_wpos.x = 1;
 	m_wpos.y = 1;
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
-	m_maxwidth = 0;		// Ê¸»úÎó¤ÎºÇÂçÉı
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
+	m_maxwidth = 0;		// æ–‡å­—åˆ—ã®æœ€å¤§å¹…
 
 	m_data = new CData;
 
 	m_data->m_messnum = 0;
 
-	// ¤³¤³¤Ç¥·¥Ê¥ê¥ª¤òÆÉ¤ß¹ş¤á
+	// ã“ã“ã§ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚
 
-	// ¥á¥Ã¥»¡¼¥¸ÆÉ¤ß¹ş¤ß
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸èª­ã¿è¾¼ã¿
 	read_mess();
 
 	for (int i = 0; i < m_data->m_messnum; i++)
@@ -31,7 +31,7 @@ CWinMessageEditor::CWinMessageEditor(CConfig* config)
 		
 		push(CString(tmp_buf) + ":" + m_data->m_mess[i].msg, i);
 	}
-	push("¿·µ¬ºîÀ®", m_data->m_messnum);
+	push("æ–°è¦ä½œæˆ", m_data->m_messnum);
 }
 
 CWinMessageEditor::~CWinMessageEditor()
@@ -72,7 +72,7 @@ void CWinMessageEditor::change(const CString str, const int id, const int index)
 }
 
 
-// ¥á¥Ã¥»¡¼¥¸¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 void CWinMessageEditor::read_mess()
 {
 	CFile*	fp;
@@ -83,7 +83,7 @@ void CWinMessageEditor::read_mess()
 	delete(fp);
 }
 
-// ¥á¥Ã¥»¡¼¥¸¥Õ¥¡¥¤¥ë½ñ¤­¹ş¤ß
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 void CWinMessageEditor::write_mess()
 {
 	CFile*	fp;
@@ -96,7 +96,7 @@ void CWinMessageEditor::write_mess()
 
 void CWinMessageEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	for( ; ; )
 	{
@@ -147,26 +147,26 @@ bool CWinMessageEditor::onkeypress_left()
 {
 	if (m_dpos.x > 0)	m_dpos.x--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMessageEditor::onkeypress_down()
 {
 	if (m_cur.y < m_index.size() - 1)	m_cur.y++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMessageEditor::onkeypress_up()
 {
 	if (m_cur.y > 0)	m_cur.y--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMessageEditor::onkeypress_right()
 {
-	// ºÇÂçÄ¹¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// æœ€å¤§é•·ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	if (m_winw - m_wpos.x - 2 < m_maxwidth - m_dpos.x)	m_dpos.x++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMessageEditor::onkeypress_ok()
 {
@@ -176,9 +176,9 @@ bool CWinMessageEditor::onkeypress_ok()
 
 	CWinGetPath*	nw_getpath;
 
-	// ¥«¡¼¥½¥ë°ÌÃÖ¤Î¥á¥Ã¥»¡¼¥¸ÆÉ¤ß¹ş¤ß
+	// ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸èª­ã¿è¾¼ã¿
 	if (m_cur.y == m_data->m_messnum)
-	{ // ¿·µ¬ÄÉ²Ã
+	{ // æ–°è¦è¿½åŠ 
 		tmp_ms = &tmp_mso;
 	}
 	else
@@ -188,7 +188,7 @@ bool CWinMessageEditor::onkeypress_ok()
 
 	for ( ; ; )
 	{
-		// ¥İ¥¤¥ó¥¿¥»¥Ã¥È
+		// ãƒã‚¤ãƒ³ã‚¿ã‚»ãƒƒãƒˆ
 		nw_getpath = new CWinGetPath;
 		nw_getpath->setsize(400, 200);
 
@@ -199,7 +199,7 @@ bool CWinMessageEditor::onkeypress_ok()
 		delete(nw_getpath);
 
 		
-		// ¥¢¥¤¥Æ¥à½ñ¤­½Ğ¤·
+		// ã‚¢ã‚¤ãƒ†ãƒ æ›¸ãå‡ºã—
 		CWinSelect1Item* nw_select1item;
 		nw_select1item = new CWinSelect1Item;
 		nw_select1item->setsize(20, 5);
@@ -220,9 +220,9 @@ bool CWinMessageEditor::onkeypress_ok()
 			sprintf(tmp_buf, "%05d", m_cur.y);
 			change(CString(tmp_buf) + ":" + tmp_ms->msg, m_cur.y, m_cur.y);
 			if (m_cur.y == m_data->m_messnum)
-			{ // ¿·µ¬ÄÉ²Ã¤À¤Ã¤¿
+			{ // æ–°è¦è¿½åŠ ã ã£ãŸ
 				m_data->m_messnum++;
-				push("¿·µ¬ºîÀ®", m_data->m_messnum);
+				push("æ–°è¦ä½œæˆ", m_data->m_messnum);
 
 				m_data->m_mess.push_back(*tmp_ms);
 			}
@@ -231,12 +231,12 @@ bool CWinMessageEditor::onkeypress_ok()
 		drawwin();
 		touchwin(m_this);
 		wrefresh(m_this);
-		return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+		return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 	}
 }
 bool CWinMessageEditor::onkeypress_cancel()
 {
-	return false;	// ½ªÎ»
+	return false;	// çµ‚äº†
 }
 
 

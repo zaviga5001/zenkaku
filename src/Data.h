@@ -22,27 +22,27 @@ public:
 	int		get_flg(int num);
 	void		set_flg(int num, bool flg);
 
-	int		m_flg[FLG_NUM_BY_INT];		// ╔у╔И╔╟
+	int		m_flg[FLG_NUM_BY_INT];		// Ц┐∙Ц┐╘Ц┌╟
 	
-	ScnData		m_scn;				// ╔╥╔й╔Й╔╙╔г║╪╔©
-	MyChar		m_mychar[MAX_MYCHAR];		// ╔ч╔╓╔╜╔Ц╔И╧╫б╓бн
-	char		m_mycharnum;			// ╔╥╔й╔Й╔╙╓гм╜╦З╓й╔ч╔╓╔╜╔Ц╔И╓н©Т
-	MyParty		m_myparty;			// ╔ч╔╓╔я║╪╔ф╔ё╧╫б╓бн
+	ScnData		m_scn;				// Ц┌╥Ц┐┼Ц┐╙Ц┌╙Ц┐┤Ц┐╪Ц┌©
+	MyChar		m_mychar[MAX_MYCHAR];		// Ц┐·Ц┌╓Ц┌╜Ц┐ёЦ┐╘Ф╖▀И─═Д╫⌠
+	char		m_mycharnum;			// Ц┌╥Ц┐┼Ц┐╙Ц┌╙Ц│╖Ф°┴Е┼╧Ц│╙Ц┐·Ц┌╓Ц┌╜Ц┐ёЦ┐╘Ц│╝Ф∙╟
+	MyParty		m_myparty;			// Ц┐·Ц┌╓Ц┐▒Ц┐╪Ц┐├Ц┌ёФ╖▀И─═Д╫⌠
 
-	Enemy		m_enemy[MAX_ENEMYCACHE];	// е╗╔╜╔Ц╔И╧╫б╓бн
-	char		m_enemynum;			// ё╠╔я║╪╔ф╔ё╓не╗╔╜╔Ц╔И╓н©Т
-	EnemyParty	m_enemyparty;			// е╗╔я║╪╔ф╔ё╧╫б╓бн
-	ShopData	m_shop;				// ╔╥╔Г╔ц╔в╧╫б╓бн
+	Enemy		m_enemy[MAX_ENEMYCACHE];	// Ф∙╣Ц┌╜Ц┐ёЦ┐╘Ф╖▀И─═Д╫⌠
+	char		m_enemynum;			// О╪▒Ц┐▒Ц┐╪Ц┐├Ц┌ёЦ│╝Ф∙╣Ц┌╜Ц┐ёЦ┐╘Ц│╝Ф∙╟
+	EnemyParty	m_enemyparty;			// Ф∙╣Ц┐▒Ц┐╪Ц┐├Ц┌ёФ╖▀И─═Д╫⌠
+	ShopData	m_shop;				// Ц┌╥Ц┐╖Ц┐┐Ц┐≈Ф╖▀И─═Д╫⌠
 
-	std::vector<EnemyPG>	m_enemypg;		// е╗╔я║╪╔ф╔ё╥╡╧╫б╓бн
-	std::vector<EventData>	m_event;		// ╔╓╔ы╔С╔х╧╫б╓бн
-	std::vector<ItemData>	m_item;			// ╔╒╔╓╔ф╔Ю╧╫б╓бн
-	std::vector<MessData>	m_mess;			// ╔А╔ц╔╩║╪╔╦╧╫б╓бн
+	std::vector<EnemyPG>	m_enemypg;		// Ф∙╣Ц┐▒Ц┐╪Ц┐├Ц┌ёГ╬╓Ф╖▀И─═Д╫⌠
+	std::vector<EventData>	m_event;		// Ц┌╓Ц┐≥Ц┐ЁЦ┐┬Ф╖▀И─═Д╫⌠
+	std::vector<ItemData>	m_item;			// Ц┌╒Ц┌╓Ц┐├Ц┐═Ф╖▀И─═Д╫⌠
+	std::vector<MessData>	m_mess;			// Ц┐║Ц┐┐Ц┌╩Ц┐╪Ц┌╦Ф╖▀И─═Д╫⌠
 
-	int			m_enemypgnum;		// е╗╔я║╪╔ф╔ё╧╫б╓бн╓н©Т
-	int			m_eventnum;		// ╔╓╔ы╔С╔х╧╫б╓бн╓н©Т
-	int			m_itemnum;		// ╔╒╔╓╔ф╔Ю╧╫б╓бн╓н©Т
-	int			m_messnum;		// ╔А╔ц╔╩║╪╔╦╧╫б╓бн╓н©Т
+	int			m_enemypgnum;		// Ф∙╣Ц┐▒Ц┐╪Ц┐├Ц┌ёФ╖▀И─═Д╫⌠Ц│╝Ф∙╟
+	int			m_eventnum;		// Ц┌╓Ц┐≥Ц┐ЁЦ┐┬Ф╖▀И─═Д╫⌠Ц│╝Ф∙╟
+	int			m_itemnum;		// Ц┌╒Ц┌╓Ц┐├Ц┐═Ф╖▀И─═Д╫⌠Ц│╝Ф∙╟
+	int			m_messnum;		// Ц┐║Ц┐┐Ц┌╩Ц┐╪Ц┌╦Ф╖▀И─═Д╫⌠Ц│╝Ф∙╟
 
 protected:
 

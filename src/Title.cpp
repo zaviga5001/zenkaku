@@ -8,7 +8,7 @@ CTitle::~CTitle()
 {
 }
 
-// ¥¿¥¤¥È¥ë²èÌÌ¤òÉ½¼¨
+// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã‚’è¡¨ç¤º
 //
 bool CTitle::disp_title(CConfig* config)
 {
@@ -22,7 +22,7 @@ bool CTitle::disp_title(CConfig* config)
 	return true;
 }
 
-// ¥·¥Ê¥ê¥ª¤òÁªÂò¤¹¤ë
+// ã‚·ãƒŠãƒªã‚ªã‚’é¸æŠã™ã‚‹
 //
 bool CTitle::select_game(CConfig* config)
 {
@@ -41,7 +41,7 @@ bool CTitle::select_game(CConfig* config)
 	nw_select1line->setsize(40, 28);
 	nw_select1line->settitle(CString(msg[MY_MSG_SYS_SEL_SCENARIO].msg));
 
-	// ¥·¥Ê¥ê¥ª¤È¥·¥Ê¥ê¥ªID¤ò¥ê¥¹¥È¥¢¥Ã¥×¤¹¤ë
+	// ã‚·ãƒŠãƒªã‚ªã¨ã‚·ãƒŠãƒªã‚ªIDã‚’ãƒªã‚¹ãƒˆã‚¢ãƒƒãƒ—ã™ã‚‹
 	CString path = zenkaku_home + "/scenario/";
 	dir = opendir(path);
 
@@ -84,7 +84,7 @@ bool CTitle::select_game(CConfig* config)
 		if (tmp_ret == 1)	break;
 	}
 
-	// ¥İ¥¤¥ó¥¿²òÊü
+	// ãƒã‚¤ãƒ³ã‚¿è§£æ”¾
 	delete(nw_select1line);
 	delete(scenario);
 

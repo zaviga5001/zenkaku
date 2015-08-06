@@ -2,7 +2,7 @@
 #define MY_COMMON_H
 
 /****************************************/
-/* ¥Ç¥Ğ¥Ã¥°¥Õ¥é¥°			*/
+/* ãƒ‡ãƒãƒƒã‚°ãƒ•ãƒ©ã‚°			*/
 /****************************************/
 #define	DEBUG
 
@@ -10,171 +10,171 @@
 #include	"CString.h"
 
 /****************************************/
-/* Äê¿ô					*/
+/* å®šæ•°					*/
 /****************************************/
-#define		FLG_BITS	128	// *32 bits¸Ä¤Î¥Õ¥é¥°¤ò°·¤¨¤ë
+#define		FLG_BITS	128	// *32 bitså€‹ã®ãƒ•ãƒ©ã‚°ã‚’æ‰±ãˆã‚‹
 
-#define		MAX_MYCHAR	8	// ¥²¡¼¥àÆâ¤Î¥Ş¥¤¥­¥ã¥é¿ô
-#define		MAX_PARTY	8	// Æ±»ş¤Ë¥Ñ¡¼¥Æ¥£¤Ë²Ã¤ï¤ë¥Ş¥¤¥­¥ã¥é¿ô
-#define		MAX_ITEM	128	// ¥¢¥¤¥Æ¥à¤Î½ê»ı¾å¸Â¡Ê°ì¿Í¡Ë
-#define		MAX_SITEM	16	// ¥¹¥Ú¥·¥ã¥ë¥¢¥¤¥Æ¥à¤Î½ê»ı¾å¸Â
-#define		MAX_STOCK	99	// £±¤Ä¤Î¥¢¥¤¥Æ¥à¤Î½ê»ı¾å¸Â
-#define		MAX_FIGHT	8	// Â°À­±üµÁ¤Î¼ïÎà
-#define		MAX_MAGIC	8	// ËâË¡¤Î¼ïÎà
-#define		MAX_SKILL	8	// ¥¹¥­¥ë¤Î¼ïÎà
-#define		MAX_TYPE	8	// Â°À­¤Î¼ïÎà
-#define		MAX_EQUIP	3	// ÁõÈ÷¤Ç¤­¤ëÁõ¾şÉÊ¤Î¿ô
-#define		ENEMY_ITEM	5	// Å¨¥­¥ã¥é¤¬½ê»ı¤·¤Æ¤¤¤ë¥¢¥¤¥Æ¥à¤Î¼ïÎà
-#define		ENEMY_FIGHT	10	// Å¨¥­¥ã¥é¤Î¹¶·â¼êÃÊ
-#define		ENEMY_CALL	5	// Å¨¥­¥ã¥é¤¬¸Æ¤ÖÃç´Ö¤Î¼ïÎà
-#define		MAX_ENEMY	16	// £±¤Ä¤Î¥Ñ¡¼¥Æ¥£Æâ¤ÎºÇÂçÅ¨¥­¥ã¥é¿ô
-//#define		MAX_ENEMYCACHE	16	// °ìÅÙ¤ËÆÉ¤ß¹ş¤á¤ëºÇÂçÅ¨¥­¥ã¥é¿ô
-#define		MAX_ENEMYCACHE	1024	// °ìÅÙ¤ËÆÉ¤ß¹ş¤á¤ëºÇÂçÅ¨¥­¥ã¥é¿ô
-#define		MAX_ENEMYNAME	40	// Å¨¥­¥ã¥é¤ÎÌ¾Á°¤ÎÄ¹¤µ
-#define		MAX_ENEMYPROF	256	// Å¨¥­¥ã¥é¤Î¥×¥í¥Õ¥£¡¼¥ë¤ÎÄ¹¤µ
-#define		EVENT_ELM	5	// ¥¤¥Ù¥ó¥ÈÆâÍÆ
-#define		ITEM_ELM	5	// ¥¢¥¤¥Æ¥àÆâÍÆ
+#define		MAX_MYCHAR	8	// ã‚²ãƒ¼ãƒ å†…ã®ãƒã‚¤ã‚­ãƒ£ãƒ©æ•°
+#define		MAX_PARTY	8	// åŒæ™‚ã«ãƒ‘ãƒ¼ãƒ†ã‚£ã«åŠ ã‚ã‚‹ãƒã‚¤ã‚­ãƒ£ãƒ©æ•°
+#define		MAX_ITEM	128	// ã‚¢ã‚¤ãƒ†ãƒ ã®æ‰€æŒä¸Šé™ï¼ˆä¸€äººï¼‰
+#define		MAX_SITEM	16	// ã‚¹ãƒšã‚·ãƒ£ãƒ«ã‚¢ã‚¤ãƒ†ãƒ ã®æ‰€æŒä¸Šé™
+#define		MAX_STOCK	99	// ï¼‘ã¤ã®ã‚¢ã‚¤ãƒ†ãƒ ã®æ‰€æŒä¸Šé™
+#define		MAX_FIGHT	8	// å±æ€§å¥¥ç¾©ã®ç¨®é¡
+#define		MAX_MAGIC	8	// é­”æ³•ã®ç¨®é¡
+#define		MAX_SKILL	8	// ã‚¹ã‚­ãƒ«ã®ç¨®é¡
+#define		MAX_TYPE	8	// å±æ€§ã®ç¨®é¡
+#define		MAX_EQUIP	3	// è£…å‚™ã§ãã‚‹è£…é£¾å“ã®æ•°
+#define		ENEMY_ITEM	5	// æ•µã‚­ãƒ£ãƒ©ãŒæ‰€æŒã—ã¦ã„ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®ç¨®é¡
+#define		ENEMY_FIGHT	10	// æ•µã‚­ãƒ£ãƒ©ã®æ”»æ’ƒæ‰‹æ®µ
+#define		ENEMY_CALL	5	// æ•µã‚­ãƒ£ãƒ©ãŒå‘¼ã¶ä»²é–“ã®ç¨®é¡
+#define		MAX_ENEMY	16	// ï¼‘ã¤ã®ãƒ‘ãƒ¼ãƒ†ã‚£å†…ã®æœ€å¤§æ•µã‚­ãƒ£ãƒ©æ•°
+//#define		MAX_ENEMYCACHE	16	// ä¸€åº¦ã«èª­ã¿è¾¼ã‚ã‚‹æœ€å¤§æ•µã‚­ãƒ£ãƒ©æ•°
+#define		MAX_ENEMYCACHE	1024	// ä¸€åº¦ã«èª­ã¿è¾¼ã‚ã‚‹æœ€å¤§æ•µã‚­ãƒ£ãƒ©æ•°
+#define		MAX_ENEMYNAME	40	// æ•µã‚­ãƒ£ãƒ©ã®åå‰ã®é•·ã•
+#define		MAX_ENEMYPROF	256	// æ•µã‚­ãƒ£ãƒ©ã®ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«ã®é•·ã•
+#define		EVENT_ELM	5	// ã‚¤ãƒ™ãƒ³ãƒˆå†…å®¹
+#define		ITEM_ELM	5	// ã‚¢ã‚¤ãƒ†ãƒ å†…å®¹
 
 extern CString	zenkaku_home;
 extern CString	user_home;
 
 /****************************************/
-/* ¿§¡¹¤Ê·¿Àë¸À¤Ê¤É			*/
+/* è‰²ã€…ãªå‹å®£è¨€ãªã©			*/
 /****************************************/
 
 enum e_race {
-		R_HUMAN,	// ¿Í´Ö
-		R_ELF,		// ¥¨¥ë¥Õ
-		R_HALFELF,	// ¥Ï¡¼¥Õ¥¨¥ë¥Õ
-		R_DWARF,	// ¥É¥ï¡¼¥Õ
-		R_HOBIT,	// ¥Û¥Ó¥Ã¥È
-		R_OAK,		// ¥ª¡¼¥¯
-		R_TOROL,	// ¥È¥í¥ë
-		R_NORM,		// ¥Î¡¼¥à
-		R_DRAGON,	// ¥É¥é¥´¥ó
-		R_ROBOT,	// µ¡³£
-		R_FAIRY,	// ÍÅÀº
-		R_RACEETC	// ¤½¤ÎÂ¾
+		R_HUMAN,	// äººé–“
+		R_ELF,		// ã‚¨ãƒ«ãƒ•
+		R_HALFELF,	// ãƒãƒ¼ãƒ•ã‚¨ãƒ«ãƒ•
+		R_DWARF,	// ãƒ‰ãƒ¯ãƒ¼ãƒ•
+		R_HOBIT,	// ãƒ›ãƒ“ãƒƒãƒˆ
+		R_OAK,		// ã‚ªãƒ¼ã‚¯
+		R_TOROL,	// ãƒˆãƒ­ãƒ«
+		R_NORM,		// ãƒãƒ¼ãƒ 
+		R_DRAGON,	// ãƒ‰ãƒ©ã‚´ãƒ³
+		R_ROBOT,	// æ©Ÿæ¢°
+		R_FAIRY,	// å¦–ç²¾
+		R_RACEETC	// ãã®ä»–
 };
 
 enum e_job {
-		J_FIGHTER,	// Àï»Î
-		J_KNIGHT,	// µ³»Î 
-		J_SAMURAI,	// »ø
-		J_ARCHER,	// ¥¢¡¼¥Á¥ã¡¼
-		J_MAIGCKNIGHT,	// ËâË¡Àï»Î
-		J_MAGE,		// ËâÆ³»Î
-		J_SORSARAR,	// ¼ö½Ñ»Õ
-		J_WIZARD,	// ËâË¡»È¤¤
-		J_PRIEST,	// ÁÎÎ·
-		J_SUMMONER,	// ¾¤´­»Î
-		J_HERAR,	// ¥Ò¡¼¥é¡¼
-		J_MONK,		// ¥â¥ó¥¯
-		J_NINJA,	// Ç¦¼Ô
-		J_THIEF,	// ÅğÂ±
-		J_DANCER,	// ÍÙ¤ê»Ò
-		J_COOK		// Ä´Íı»Õ
+		J_FIGHTER,	// æˆ¦å£«
+		J_KNIGHT,	// é¨å£« 
+		J_SAMURAI,	// ä¾
+		J_ARCHER,	// ã‚¢ãƒ¼ãƒãƒ£ãƒ¼
+		J_MAIGCKNIGHT,	// é­”æ³•æˆ¦å£«
+		J_MAGE,		// é­”å°å£«
+		J_SORSARAR,	// å‘ªè¡“å¸«
+		J_WIZARD,	// é­”æ³•ä½¿ã„
+		J_PRIEST,	// åƒ§ä¾¶
+		J_SUMMONER,	// å¬å–šå£«
+		J_HERAR,	// ãƒ’ãƒ¼ãƒ©ãƒ¼
+		J_MONK,		// ãƒ¢ãƒ³ã‚¯
+		J_NINJA,	// å¿è€…
+		J_THIEF,	// ç›—è³Š
+		J_DANCER,	// è¸Šã‚Šå­
+		J_COOK		// èª¿ç†å¸«
 };
 
 enum e_type {
-		T_FIRE	= 0x01,	// ²Ğ
-		T_WATER	= 0x02,	// ¿å
-		T_WIND	= 0x04,	// É÷
-		T_EARTH	= 0x08,	// ÅÚ
-		T_RAY	= 0x10,	// ¸÷
-		T_DARK	= 0x20,	// °Ç
-		T_TIME	= 0x40,	// »ş
-		T_SPACE	= 0x80	// ¶õ
+		T_FIRE	= 0x01,	// ç«
+		T_WATER	= 0x02,	// æ°´
+		T_WIND	= 0x04,	// é¢¨
+		T_EARTH	= 0x08,	// åœŸ
+		T_RAY	= 0x10,	// å…‰
+		T_DARK	= 0x20,	// é—‡
+		T_TIME	= 0x40,	// æ™‚
+		T_SPACE	= 0x80	// ç©º
 };
 
 enum e_gender {
-		G_MAIL,		// ÃË
-		G_FEMAIL,	// ½÷
-		G_UNK		// ÉÔÌÀ
+		G_MAIL,		// ç”·
+		G_FEMAIL,	// å¥³
+		G_UNK		// ä¸æ˜
 };
 
 enum e_command {
-		C_FIGHT,	// Æ®¤¦
-		C_USEMAGIC,	// ËâË¡
-		C_USEITEM,	// ¥¢¥¤¥Æ¥à
-		C_DEFFENCE,	// ¼é¤ë
-		C_EQUIP,	// ÁõÈ÷
-		C_ESCAPE,	// Æ¨¤²¤ë
-		C_SAME		// Á°²ó¤ÈÆ±¤¸
+		C_FIGHT,	// é—˜ã†
+		C_USEMAGIC,	// é­”æ³•
+		C_USEITEM,	// ã‚¢ã‚¤ãƒ†ãƒ 
+		C_DEFFENCE,	// å®ˆã‚‹
+		C_EQUIP,	// è£…å‚™
+		C_ESCAPE,	// é€ƒã’ã‚‹
+		C_SAME		// å‰å›ã¨åŒã˜
 };
 
 enum e_weapon {
-		W_SWORD,	// ·õ¡Ê²Ğ¡Ë
-		W_SPIER,	// Áä¡Ê¿å¡Ë
-		W_DAGGER,	// Ã»·õ¡ÊÉ÷¡Ë
-		W_HAMMER,	// ÛşËÀ¡ÊÅÚ¡Ë
-		W_ARROW,	// µİÌğ¡Ê¸÷¡Ë
-		W_AXE,		// Éà¡Ê°Ç¡Ë
-		W_ROD,		// ¾ó¡Ê»ş¡Ë
-		W_WIP		// ÊÜ¡Ê¶õ¡Ë
+		W_SWORD,	// å‰£ï¼ˆç«ï¼‰
+		W_SPIER,	// æ§ï¼ˆæ°´ï¼‰
+		W_DAGGER,	// çŸ­å‰£ï¼ˆé¢¨ï¼‰
+		W_HAMMER,	// æ£æ£’ï¼ˆåœŸï¼‰
+		W_ARROW,	// å¼“çŸ¢ï¼ˆå…‰ï¼‰
+		W_AXE,		// æ–§ï¼ˆé—‡ï¼‰
+		W_ROD,		// æ–ï¼ˆæ™‚ï¼‰
+		W_WIP		// é­ï¼ˆç©ºï¼‰
 };
 
 enum e_status {
-		ST_NORMAL	= 0x0000,	// ÉáÄÌ
-		ST_POISON	= 0x0001,	// ÆÇ   ÅÚÂ°À­¤Ï¤«¤«¤é¤Ê¤¤
-		ST_FREEZE	= 0x0002,	// Åà·ë ¿åÂ°À­¤Ï¤«¤«¤é¤Ê¤¤
-		ST_SLEEP	= 0x0004,	// Ì²¤ê
-		ST_BLIND	= 0x0008,	// ÌÕÌÜ °ÇÂ°À­¤Ï¤«¤«¤é¤Ê¤¤
-		ST_SLOW		= 0x0010,	// ÃÙ¤¤ »şÂ°À­¤Ï¤«¤«¤é¤Ê¤¤
-		ST_FORGET	= 0x0020,	// ËºµÑ
-		ST_CONFUSE	= 0x0040,	// º®Íğ
-		ST_STONE	= 0x0080,	// ÀĞ²½ ÅÚÂ°À­¤Ï¤«¤«¤é¤Ê¤¤
-		ST_STUN		= 0x0100,	// µ¤Àä
-		ST_DEAD		= 0x0200	// »à
+		ST_NORMAL	= 0x0000,	// æ™®é€š
+		ST_POISON	= 0x0001,	// æ¯’   åœŸå±æ€§ã¯ã‹ã‹ã‚‰ãªã„
+		ST_FREEZE	= 0x0002,	// å‡çµ æ°´å±æ€§ã¯ã‹ã‹ã‚‰ãªã„
+		ST_SLEEP	= 0x0004,	// çœ ã‚Š
+		ST_BLIND	= 0x0008,	// ç›²ç›® é—‡å±æ€§ã¯ã‹ã‹ã‚‰ãªã„
+		ST_SLOW		= 0x0010,	// é…ã„ æ™‚å±æ€§ã¯ã‹ã‹ã‚‰ãªã„
+		ST_FORGET	= 0x0020,	// å¿˜å´
+		ST_CONFUSE	= 0x0040,	// æ··ä¹±
+		ST_STONE	= 0x0080,	// çŸ³åŒ– åœŸå±æ€§ã¯ã‹ã‹ã‚‰ãªã„
+		ST_STUN		= 0x0100,	// æ°—çµ¶
+		ST_DEAD		= 0x0200	// æ­»
 };
 
 enum e_skill {
-		T_ROGUE		= 0x00,	// ÅğÂ±
-		T_HEARL		= 0x01,	// Ä´¹ç
-		T_THRROW	= 0x02,	// Åê¤²¤ë
-		T_SWIM		= 0x04,	// ±Ë¤°
-		T_COOK		= 0x08,	// ÎÁÍı
-		T_DANCE		= 0x10,	// ¥À¥ó¥¹
-		T_LUCK		= 0x20,	// ±¿
-		T_DUMMY		= 0x40	// Í½È÷
+		T_ROGUE		= 0x00,	// ç›—è³Š
+		T_HEARL		= 0x01,	// èª¿åˆ
+		T_THRROW	= 0x02,	// æŠ•ã’ã‚‹
+		T_SWIM		= 0x04,	// æ³³ã
+		T_COOK		= 0x08,	// æ–™ç†
+		T_DANCE		= 0x10,	// ãƒ€ãƒ³ã‚¹
+		T_LUCK		= 0x20,	// é‹
+		T_DUMMY		= 0x40	// äºˆå‚™
 };
 
 enum e_event {
-	EV_FLG,			// ¥Õ¥é¥°¤òÁàºî¤¹¤ë
-	EV_COUNTER,		// ¥«¥¦¥ó¥¿¡¼¤òÁàºî¤¹¤ë
-	EV_MESS,		// ¥á¥Ã¥»¡¼¥¸É½¼¨
-	EV_BATTLE,		// ÀïÆ®³«»Ï
-	EV_CURPOS,		// ¸½ºßÃÏ¤òµ­²±¡¿Ìá¤¹
-	EV_LOADPOS,		// ¥Ş¥Ã¥×ÆÉ¤ß¹ş¤ß
-	EV_MOVE,		// °ÜÆ°¤¹¤ë
-	EV_KEY,			// ¥­¡¼ÆşÎÏ¤ò¥·¥ß¥å¥ì¡¼¥È
-	EV_WINDOW,		// ¥¦¥£¥ó¥É¥¥¤ò³«¤¯¡¿ÊÄ¤¸¤ë
-	EV_MEMBER,		// ¥á¥ó¥Ğ¡¼¤òÄÉ²Ã¡¿Î¥Ã¦¤¹¤ë
-	EV_DRAWMEMBER,		// ¥á¥ó¥Ğ¡¼¤Î¥·¥ó¥Ü¥ë¤òÉ½¼¨¤¹¤ë
-	EV_DRAWCHAR,		// ¤½¤ÎÂ¾¤ÎÊ¸»ú¥·¥ó¥Ü¥ë¤òÉ½¼¨¤¹¤ë
-	EV_ITEM,		// ¥¢¥¤¥Æ¥à¤òÁı¸º¤¹¤ë
-	EV_STATUS,		// ¥¹¥Æ¡¼¥¿¥¹¤òÁàºî¤¹¤ë
-	EV_MAGIC,		// ËâË¡¤òÈ¯Æ°¤¹¤ë
-	EV_DISPLAY,		// ²èÌÌ¸ú²Ì
-	EV_NONE,		// ²¿¤â¤·¤Ê¤¤
-	EV_GAMEOVER,		// ¶¯°ú¤Ë¥²¡¼¥à¥ª¡¼¥Ğ¡¼¤ò°ú¤­µ¯¤³¤¹
-	EV_ENDING		// ¥¨¥ó¥Ç¥£¥ó¥°³«»Ï
+	EV_FLG,			// ãƒ•ãƒ©ã‚°ã‚’æ“ä½œã™ã‚‹
+	EV_COUNTER,		// ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’æ“ä½œã™ã‚‹
+	EV_MESS,		// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
+	EV_BATTLE,		// æˆ¦é—˜é–‹å§‹
+	EV_CURPOS,		// ç¾åœ¨åœ°ã‚’è¨˜æ†¶ï¼æˆ»ã™
+	EV_LOADPOS,		// ãƒãƒƒãƒ—èª­ã¿è¾¼ã¿
+	EV_MOVE,		// ç§»å‹•ã™ã‚‹
+	EV_KEY,			// ã‚­ãƒ¼å…¥åŠ›ã‚’ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆ
+	EV_WINDOW,		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã‚’é–‹ãï¼é–‰ã˜ã‚‹
+	EV_MEMBER,		// ãƒ¡ãƒ³ãƒãƒ¼ã‚’è¿½åŠ ï¼é›¢è„±ã™ã‚‹
+	EV_DRAWMEMBER,		// ãƒ¡ãƒ³ãƒãƒ¼ã®ã‚·ãƒ³ãƒœãƒ«ã‚’è¡¨ç¤ºã™ã‚‹
+	EV_DRAWCHAR,		// ãã®ä»–ã®æ–‡å­—ã‚·ãƒ³ãƒœãƒ«ã‚’è¡¨ç¤ºã™ã‚‹
+	EV_ITEM,		// ã‚¢ã‚¤ãƒ†ãƒ ã‚’å¢—æ¸›ã™ã‚‹
+	EV_STATUS,		// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’æ“ä½œã™ã‚‹
+	EV_MAGIC,		// é­”æ³•ã‚’ç™ºå‹•ã™ã‚‹
+	EV_DISPLAY,		// ç”»é¢åŠ¹æœ
+	EV_NONE,		// ä½•ã‚‚ã—ãªã„
+	EV_GAMEOVER,		// å¼·å¼•ã«ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã‚’å¼•ãèµ·ã“ã™
+	EV_ENDING		// ã‚¨ãƒ³ãƒ‡ã‚£ãƒ³ã‚°é–‹å§‹
 };
 
 enum e_item {
-	IT_FOOD,		// ¿©ÎÁ
-	IT_DRUG,		// Ìô
-	IT_WEAPON,		// Éğ´ï
-	IT_SHIELD,		// ½â
-	IT_HELM,		// ³õ
-	IT_ARMOR,		// ËÉ¶ñ
-	IT_MANT,		// ¥Ş¥ó¥È
-	IT_BOOTS,		// ·¤
-	IT_EQUIP,		// Áõ¾şÉÊ
-	IT_RIDE,		// ¾è¤êÊª
-	IT_BOOK,		// ËÜ
-	IT_THROW,		// Åê¤²¤ëÊª
-	IT_ETC			// ¤½¤ÎÂ¾
+	IT_FOOD,		// é£Ÿæ–™
+	IT_DRUG,		// è–¬
+	IT_WEAPON,		// æ­¦å™¨
+	IT_SHIELD,		// ç›¾
+	IT_HELM,		// å…œ
+	IT_ARMOR,		// é˜²å…·
+	IT_MANT,		// ãƒãƒ³ãƒˆ
+	IT_BOOTS,		// é´
+	IT_EQUIP,		// è£…é£¾å“
+	IT_RIDE,		// ä¹—ã‚Šç‰©
+	IT_BOOK,		// æœ¬
+	IT_THROW,		// æŠ•ã’ã‚‹ç‰©
+	IT_ETC			// ãã®ä»–
 };
 
 enum e_shop {
@@ -193,210 +193,210 @@ enum e_dir {
 
 
 /*************************************************************/
-typedef struct typePos{		// ¥­¥ã¥é¥¯¥¿¤Î°ÌÃÖ
-	int	x;		// ¥Ş¥Ã¥×¾å¤ÎXºÂÉ¸
-	int	y;		// ¥Ş¥Ã¥×¾å¤ÎYºÂÉ¸
+typedef struct typePos{		// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã®ä½ç½®
+	int	x;		// ãƒãƒƒãƒ—ä¸Šã®Xåº§æ¨™
+	int	y;		// ãƒãƒƒãƒ—ä¸Šã®Yåº§æ¨™
 } Pos;
 
-typedef struct typePos3{	// ¥­¥ã¥é¥¯¥¿¤Î°ÌÃÖ(»°¼¡¸µ)
-	int	x;		// ¥Ş¥Ã¥×¾å¤ÎXºÂÉ¸
-	int	y;		// ¥Ş¥Ã¥×¾å¤ÎYºÂÉ¸
-	char	h;		// ¥Ş¥Ã¥×¾å¤Î¹â¤µ
+typedef struct typePos3{	// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã®ä½ç½®(ä¸‰æ¬¡å…ƒ)
+	int	x;		// ãƒãƒƒãƒ—ä¸Šã®Xåº§æ¨™
+	int	y;		// ãƒãƒƒãƒ—ä¸Šã®Yåº§æ¨™
+	char	h;		// ãƒãƒƒãƒ—ä¸Šã®é«˜ã•
 } Pos3;
 
-typedef struct typeScnData{	// ¥·¥Ê¥ê¥ª¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	int	id;			// ¥·¥Ê¥ê¥ªID¡Ê¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë½çÈÖ¤Ë¤è¤Ã¤ÆÊÑ¤ï¤ë¡Ë
-	CString path;			// ¥·¥Ê¥ê¥ª¥Ç¥£¥ì¥¯¥È¥êÌ¾¡Ê¥¤¥ó¥¹¥È¡¼¥ë»şÍğ¿ô¤Ç·è¤Ş¤ë¡Ë
-	CString mychar[MAX_MYCHAR];	// ¥Ş¥¤¥­¥ã¥é¥Õ¥¡¥¤¥ëÌ¾
+typedef struct typeScnData{	// ã‚·ãƒŠãƒªã‚ªã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	int	id;			// ã‚·ãƒŠãƒªã‚ªIDï¼ˆã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹é †ç•ªã«ã‚ˆã£ã¦å¤‰ã‚ã‚‹ï¼‰
+	CString path;			// ã‚·ãƒŠãƒªã‚ªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåï¼ˆã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«æ™‚ä¹±æ•°ã§æ±ºã¾ã‚‹ï¼‰
+	CString mychar[MAX_MYCHAR];	// ãƒã‚¤ã‚­ãƒ£ãƒ©ãƒ•ã‚¡ã‚¤ãƒ«å
 } ScnData;
 
-typedef struct typeScnList{	// ¥·¥Ê¥ê¥ª¥ê¥¹¥ÈÍÑ¥Ç¡¼¥¿
-	int	id;			// ¥·¥Ê¥ê¥ªID¡Ê¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë½çÈÖ¤Ë¤è¤Ã¤ÆÊÑ¤ï¤ë¡Ë
-	CString name;			// ¥·¥Ê¥ê¥ªÌ¾
-	CString doc;			// ¥·¥Ê¥ê¥ª³µÍ×
+typedef struct typeScnList{	// ã‚·ãƒŠãƒªã‚ªãƒªã‚¹ãƒˆç”¨ãƒ‡ãƒ¼ã‚¿
+	int	id;			// ã‚·ãƒŠãƒªã‚ªIDï¼ˆã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹é †ç•ªã«ã‚ˆã£ã¦å¤‰ã‚ã‚‹ï¼‰
+	CString name;			// ã‚·ãƒŠãƒªã‚ªå
+	CString doc;			// ã‚·ãƒŠãƒªã‚ªæ¦‚è¦
 } ScnList;
 
-typedef struct typeMyCharValue{	// ¥Ş¥¤¥­¥ã¥é¤ÎÃÍ·¿
-	int	p;		// ¸½ºß¤ÎÃÍ
-	int	t;		// °ì»şÅª¤Ë¾å¾º¤·¤¿ºÇÂçÃÍ
-	int	m;		// ºÇÂçÃÍ
+typedef struct typeMyCharValue{	// ãƒã‚¤ã‚­ãƒ£ãƒ©ã®å€¤å‹
+	int	p;		// ç¾åœ¨ã®å€¤
+	int	t;		// ä¸€æ™‚çš„ã«ä¸Šæ˜‡ã—ãŸæœ€å¤§å€¤
+	int	m;		// æœ€å¤§å€¤
 } MyCharValue;
 
-typedef struct typeMyChar{	// ¥Ş¥¤¥­¥ã¥é¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	int		id;			// ¸½ºß¥×¥ì¥¤Ãæ¤Î¥·¥Ê¥ê¥ªID
-	enum e_race	race;			// ¼ïÂ²
-	enum e_job	job;			// ¿¦¶È
-	enum e_gender	gender;			// À­ÊÌ
-	CString		name;			// Ì¾Á°
-	char		tile[2];		// Ê¸»ú
-	char		ch;			// Ê¸»ú¿§
-	char		bg;			// ÇØ·Ê¿§
+typedef struct typeMyChar{	// ãƒã‚¤ã‚­ãƒ£ãƒ©ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	int		id;			// ç¾åœ¨ãƒ—ãƒ¬ã‚¤ä¸­ã®ã‚·ãƒŠãƒªã‚ªID
+	enum e_race	race;			// ç¨®æ—
+	enum e_job	job;			// è·æ¥­
+	enum e_gender	gender;			// æ€§åˆ¥
+	CString		name;			// åå‰
+	char		tile[2];		// æ–‡å­—
+	char		ch;			// æ–‡å­—è‰²
+	char		bg;			// èƒŒæ™¯è‰²
 
-	BYTE		type;			// Â°À­
-	enum e_status	status;			// ¥¹¥Æ¡¼¥¿¥¹
-	unsigned char	level;			// ¥ì¥Ù¥ë
-	unsigned int	exp;			// ·Ğ¸³ÃÍ
+	BYTE		type;			// å±æ€§
+	enum e_status	status;			// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
+	unsigned char	level;			// ãƒ¬ãƒ™ãƒ«
+	unsigned int	exp;			// çµŒé¨“å€¤
 
-	MyCharValue	hp;			// ÂÎÎÏ
-	MyCharValue	sp;			// ¥¹¥­¥ë¥İ¥¤¥ó¥È
-	MyCharValue	ap;			// ¹¶·âÎÏ
-	MyCharValue	gp;			// ËÉ¸æÎÏ
-	MyCharValue	mp;			// ËâË¡ÎÏ
-	MyCharValue	ep;			// ²óÈòÎÏ
-	MyCharValue	fp;			// ÁÇÁá¤µ
-	MyCharValue	dp;			// ´ïÍÑ¤µ
-	unsigned short	rweapon;		// ±¦¼êÉğ´ï
-	unsigned short	lweapon;		// º¸¼êÉğ´ï
-	unsigned short	helm;			// Æ¬ËÉ¶ñ
-	unsigned short	armor;			// ÂÎËÉ¶ñ
-	unsigned short	mant;			// ÂÎËÉ¶ñ
-	unsigned short	boots;			// Â­ËÉ¶ñ
-	unsigned short	equip[MAX_EQUIP];	// Áõ¾şÉÊ
-	BYTE		food;			// ËşÊ¢ÅÙ
+	MyCharValue	hp;			// ä½“åŠ›
+	MyCharValue	sp;			// ã‚¹ã‚­ãƒ«ãƒã‚¤ãƒ³ãƒˆ
+	MyCharValue	ap;			// æ”»æ’ƒåŠ›
+	MyCharValue	gp;			// é˜²å¾¡åŠ›
+	MyCharValue	mp;			// é­”æ³•åŠ›
+	MyCharValue	ep;			// å›é¿åŠ›
+	MyCharValue	fp;			// ç´ æ—©ã•
+	MyCharValue	dp;			// å™¨ç”¨ã•
+	unsigned short	rweapon;		// å³æ‰‹æ­¦å™¨
+	unsigned short	lweapon;		// å·¦æ‰‹æ­¦å™¨
+	unsigned short	helm;			// é ­é˜²å…·
+	unsigned short	armor;			// ä½“é˜²å…·
+	unsigned short	mant;			// ä½“é˜²å…·
+	unsigned short	boots;			// è¶³é˜²å…·
+	unsigned short	equip[MAX_EQUIP];	// è£…é£¾å“
+	BYTE		food;			// æº€è…¹åº¦
 
-	BYTE		magic[MAX_TYPE][MAX_MAGIC];	// ËâË¡¥ì¥Ù¥ë
-	BYTE		magicexp[MAX_TYPE][MAX_MAGIC];	// ËâË¡·Ğ¸³ÃÍ
-	BYTE		fight[MAX_TYPE][MAX_FIGHT];	// Â°À­±üµÁ¥ì¥Ù¥ë
-	BYTE		fightexp[MAX_TYPE][MAX_FIGHT];	// Â°À­±üµÁ·Ğ¸³ÃÍ
-	BYTE		skill[MAX_TYPE][MAX_SKILL];	// ¥¹¥­¥ë¥ì¥Ù¥ë
-	BYTE		skillexp[MAX_TYPE][MAX_SKILL];	// ¥¹¥­¥ë·Ğ¸³ÃÍ
-	BYTE		curse[MAX_TYPE];		// ¼ö¤¤¡ÊÂ°À­Ëè¡Ë
+	BYTE		magic[MAX_TYPE][MAX_MAGIC];	// é­”æ³•ãƒ¬ãƒ™ãƒ«
+	BYTE		magicexp[MAX_TYPE][MAX_MAGIC];	// é­”æ³•çµŒé¨“å€¤
+	BYTE		fight[MAX_TYPE][MAX_FIGHT];	// å±æ€§å¥¥ç¾©ãƒ¬ãƒ™ãƒ«
+	BYTE		fightexp[MAX_TYPE][MAX_FIGHT];	// å±æ€§å¥¥ç¾©çµŒé¨“å€¤
+	BYTE		skill[MAX_TYPE][MAX_SKILL];	// ã‚¹ã‚­ãƒ«ãƒ¬ãƒ™ãƒ«
+	BYTE		skillexp[MAX_TYPE][MAX_SKILL];	// ã‚¹ã‚­ãƒ«çµŒé¨“å€¤
+	BYTE		curse[MAX_TYPE];		// å‘ªã„ï¼ˆå±æ€§æ¯ï¼‰
 
-	CString		prof;			// ¥×¥í¥Õ¥£¡¼¥ë
+	CString		prof;			// ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«
 } MyChar;
 
-typedef struct typeItemNum{	// ½ê»ı¥¢¥¤¥Æ¥à·¿
-	unsigned short	id;		// ¥¢¥¤¥Æ¥àID
-	char		num;		// ½ê»ı¿ô
+typedef struct typeItemNum{	// æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ å‹
+	unsigned short	id;		// ã‚¢ã‚¤ãƒ†ãƒ ID
+	char		num;		// æ‰€æŒæ•°
 } ItemNum;
 
-typedef struct typeMyParty{	// ¥Ñ¡¼¥Æ¥£¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	char		mychar[MAX_PARTY];	// ¥Ñ¡¼¥Æ¥£¥á¥ó¥Ğ¡¼
-	char		map;			// ¥Ş¥Ã¥×ÈÖ¹æ
-	Pos3		pos;			// ¸½ºßÃÏ
-	ItemNum		item[MAX_ITEM];		// ½ê»ı¥¢¥¤¥Æ¥à
-	ItemNum		spitem[MAX_SITEM];	// ½ê»ı¥¹¥Ú¥·¥ã¥ë¥¢¥¤¥Æ¥à
-	unsigned int	gold;			// ½ê»ı¶â
-	char		status;			// ¥¹¥Æ¡¼¥¿¥¹¡Ê¾è¤êÊª¤Ë¾è¤Ã¤Æ¤¤¤ë¤Ê¤É¡Ë
+typedef struct typeMyParty{	// ãƒ‘ãƒ¼ãƒ†ã‚£ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	char		mychar[MAX_PARTY];	// ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¡ãƒ³ãƒãƒ¼
+	char		map;			// ãƒãƒƒãƒ—ç•ªå·
+	Pos3		pos;			// ç¾åœ¨åœ°
+	ItemNum		item[MAX_ITEM];		// æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ 
+	ItemNum		spitem[MAX_SITEM];	// æ‰€æŒã‚¹ãƒšã‚·ãƒ£ãƒ«ã‚¢ã‚¤ãƒ†ãƒ 
+	unsigned int	gold;			// æ‰€æŒé‡‘
+	char		status;			// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ï¼ˆä¹—ã‚Šç‰©ã«ä¹—ã£ã¦ã„ã‚‹ãªã©ï¼‰
 } MyParty;
 
-typedef struct typeMapData{	// ¥Ş¥Ã¥×¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	int	width;		// ²£Éı
-	int	height;		// ½ÄÉı
-	char	nextmap_u;	// ¼¡¥Ş¥Ã¥×¡Ê¾å¡Ë
-	char	nextmap_d;	// ¼¡¥Ş¥Ã¥×¡Ê²¼¡Ë
-	char	nextmap_l;	// ¼¡¥Ş¥Ã¥×¡Êº¸¡Ë
-	char	nextmap_r;	// ¼¡¥Ş¥Ã¥×¡Ê±¦¡Ë
+typedef struct typeMapData{	// ãƒãƒƒãƒ—ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	int	width;		// æ¨ªå¹…
+	int	height;		// ç¸¦å¹…
+	char	nextmap_u;	// æ¬¡ãƒãƒƒãƒ—ï¼ˆä¸Šï¼‰
+	char	nextmap_d;	// æ¬¡ãƒãƒƒãƒ—ï¼ˆä¸‹ï¼‰
+	char	nextmap_l;	// æ¬¡ãƒãƒƒãƒ—ï¼ˆå·¦ï¼‰
+	char	nextmap_r;	// æ¬¡ãƒãƒƒãƒ—ï¼ˆå³ï¼‰
 
 } MapData;
 
-typedef struct typePosData{	// ¥İ¥¸¥·¥ç¥ó¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	int	flg;		// ¥Õ¥é¥°
-	int	falseid;	// ¥¿¥¤¥ëID¡¢¤â¤·¤¯¤Ï»²¾È¥¹¥Ú¥·¥ã¥ë¥İ¥¸¥·¥ç¥ó
-	int	trueid;		// ¥¿¥¤¥ëID¡¢¤â¤·¤¯¤Ï»²¾È¥¹¥Ú¥·¥ã¥ë¥İ¥¸¥·¥ç¥ó
-	int	enemy;		// ½Ğ¸½Å¨
-	char	encount;	// ¥¨¥ó¥«¥¦¥ó¥ÈÎ¨(0-100%)
-	char	name;		// ÃÏÌ¾ID
+typedef struct typePosData{	// ãƒã‚¸ã‚·ãƒ§ãƒ³ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	int	flg;		// ãƒ•ãƒ©ã‚°
+	int	falseid;	// ã‚¿ã‚¤ãƒ«IDã€ã‚‚ã—ãã¯å‚ç…§ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³
+	int	trueid;		// ã‚¿ã‚¤ãƒ«IDã€ã‚‚ã—ãã¯å‚ç…§ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³
+	int	enemy;		// å‡ºç¾æ•µ
+	char	encount;	// ã‚¨ãƒ³ã‚«ã‚¦ãƒ³ãƒˆç‡(0-100%)
+	char	name;		// åœ°åID
 } PosData;
-// [x][y]      ¥Ş¥Ã¥×¥ï¡¼¥¯¥¨¥ê¥¢
-// [MAX_SPPOS] ¥¹¥Ú¥·¥ã¥ë¥İ¥¸¥·¥ç¥ó
+// [x][y]      ãƒãƒƒãƒ—ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢
+// [MAX_SPPOS] ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³
 
-typedef struct typeTileData{	// ¥¿¥¤¥ë¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	char	tile[2];	// Ê¸»ú
-	char	ch;		// Ê¸»ú¿§
-	char	bg;		// ÇØ·Ê¿§
-	char	attr;		// Â°À­
-	char	height;		// ¹â¤µ
-	char	move;		// °ÜÆ°Â°À­
+typedef struct typeTileData{	// ã‚¿ã‚¤ãƒ«ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	char	tile[2];	// æ–‡å­—
+	char	ch;		// æ–‡å­—è‰²
+	char	bg;		// èƒŒæ™¯è‰²
+	char	attr;		// å±æ€§
+	char	height;		// é«˜ã•
+	char	move;		// ç§»å‹•å±æ€§
 } TileData;
-// [MAX_TILE] ¥ï¡¼¥¯¥¨¥ê¥¢
+// [MAX_TILE] ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢
 
-typedef struct typePosEvent{	// ¥İ¥¸¥·¥ç¥ó¥¤¥Ù¥ó¥È¥Ç¡¼¥¿
-	int	flg;		// È¯À¸³ÎÇ§¥Õ¥é¥°ÈÖ¹æ
-	bool	torf;		// È¯À¸³ÎÇ§¥Õ¥é¥°Bit
-	int	x;		// È¯À¸¾ì½êX
-	int	y;		// È¯À¸¾ì½êY
-	char	h;		// È¯À¸¹â¤µ
-	int	event;		// È¯À¸¥¤¥Ù¥ó¥ÈÈÖ¹æ
+typedef struct typePosEvent{	// ãƒã‚¸ã‚·ãƒ§ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿
+	int	flg;		// ç™ºç”Ÿç¢ºèªãƒ•ãƒ©ã‚°ç•ªå·
+	bool	torf;		// ç™ºç”Ÿç¢ºèªãƒ•ãƒ©ã‚°Bit
+	int	x;		// ç™ºç”Ÿå ´æ‰€X
+	int	y;		// ç™ºç”Ÿå ´æ‰€Y
+	char	h;		// ç™ºç”Ÿé«˜ã•
+	int	event;		// ç™ºç”Ÿã‚¤ãƒ™ãƒ³ãƒˆç•ªå·
 } PosEvent;
-// [MAX_MAPEVENT] ¥ï¡¼¥¯¥¨¥ê¥¢
+// [MAX_MAPEVENT] ãƒ¯ãƒ¼ã‚¯ã‚¨ãƒªã‚¢
 
-typedef struct typeEnemyValue{	// Å¨¥­¥ã¥é¤ÎÃÍ·¿
-	int	p;		// ¸½ºß¤ÎÃÍ
-	int	m;		// ºÇÂçÃÍ
+typedef struct typeEnemyValue{	// æ•µã‚­ãƒ£ãƒ©ã®å€¤å‹
+	int	p;		// ç¾åœ¨ã®å€¤
+	int	m;		// æœ€å¤§å€¤
 } EnemyValue;
 
-typedef struct typeEnemy{	// Å¨¥­¥ã¥é¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	CString		name;			// Ì¾Á°
-	BYTE		type;			// Â°À­
-	enum e_status	status;			// ¥¹¥Æ¡¼¥¿¥¹
+typedef struct typeEnemy{	// æ•µã‚­ãƒ£ãƒ©ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	CString		name;			// åå‰
+	BYTE		type;			// å±æ€§
+	enum e_status	status;			// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 
-	EnemyValue	hp;			// ÂÎÎÏ
-	EnemyValue	ap;			// ¹¶·âÎÏ
-	EnemyValue	gp;			// ËÉ¸æÎÏ
-	EnemyValue	mp;			// ËâË¡ÎÏ
-	EnemyValue	ep;			// ²óÈòÎÏ
-	EnemyValue	fp;			// ÁÇÁá¤µ
+	EnemyValue	hp;			// ä½“åŠ›
+	EnemyValue	ap;			// æ”»æ’ƒåŠ›
+	EnemyValue	gp;			// é˜²å¾¡åŠ›
+	EnemyValue	mp;			// é­”æ³•åŠ›
+	EnemyValue	ep;			// å›é¿åŠ›
+	EnemyValue	fp;			// ç´ æ—©ã•
 
-	unsigned int	exp;			// ½ê»ı·Ğ¸³ÃÍ
-	unsigned int	gold;			// ½ê»ı¶â
-	ItemNum		item[ENEMY_ITEM];	// ½ê»ı¥¢¥¤¥Æ¥à
-	char		item_r[ENEMY_ITEM];	// ½ê»ı³ÎÎ¨
-	unsigned short	fight[ENEMY_FIGHT];	// ¹¶·âÊıË¡
-	char		fight_r[ENEMY_FIGHT];	// ¹¶·â³ÎÎ¨
+	unsigned int	exp;			// æ‰€æŒçµŒé¨“å€¤
+	unsigned int	gold;			// æ‰€æŒé‡‘
+	ItemNum		item[ENEMY_ITEM];	// æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ 
+	char		item_r[ENEMY_ITEM];	// æ‰€æŒç¢ºç‡
+	unsigned short	fight[ENEMY_FIGHT];	// æ”»æ’ƒæ–¹æ³•
+	char		fight_r[ENEMY_FIGHT];	// æ”»æ’ƒç¢ºç‡
 
-	int		flg;			// Åİ¤µ¤ì¤¿»şÎ©¤Æ¤ë¥Õ¥é¥°ÈÖ¹æ
-	int		next_enemy;		// Åİ¤µ¤ì¤¿»ş¡¢¼¡¤ËÆÉ¤ß¹ş¤àÅ¨ID
-	int		call_enemy[ENEMY_CALL];	// ¸Æ¤ÖÅ¨ID
+	int		flg;			// å€’ã•ã‚ŒãŸæ™‚ç«‹ã¦ã‚‹ãƒ•ãƒ©ã‚°ç•ªå·
+	int		next_enemy;		// å€’ã•ã‚ŒãŸæ™‚ã€æ¬¡ã«èª­ã¿è¾¼ã‚€æ•µID
+	int		call_enemy[ENEMY_CALL];	// å‘¼ã¶æ•µID
 
-	CString		prof;			// ¥×¥í¥Õ¥£¡¼¥ë
+	CString		prof;			// ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«
 } Enemy;
 
-typedef struct typeEnemyParty{	// Å¨¥Ñ¡¼¥Æ¥£¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	int		enemy[MAX_ENEMY];	// ¥Ñ¡¼¥Æ¥£¥á¥ó¥Ğ¡¼
-	ItemNum		item[ENEMY_ITEM];	// ½ê»ı¥¢¥¤¥Æ¥à¡Ê¥Ñ¡¼¥Æ¥£¸ÇÍ­¡Ë
-	char		item_r[ENEMY_ITEM];	// ½ê»ı³ÎÎ¨¡Ê¥Ñ¡¼¥Æ¥£¸ÇÍ­¡Ë
-	int		flg;			// Åİ¤µ¤ì¤¿»şÎ©¤Æ¤ë¥Õ¥é¥°ÈÖ¹æ
+typedef struct typeEnemyParty{	// æ•µãƒ‘ãƒ¼ãƒ†ã‚£ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	int		enemy[MAX_ENEMY];	// ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¡ãƒ³ãƒãƒ¼
+	ItemNum		item[ENEMY_ITEM];	// æ‰€æŒã‚¢ã‚¤ãƒ†ãƒ ï¼ˆãƒ‘ãƒ¼ãƒ†ã‚£å›ºæœ‰ï¼‰
+	char		item_r[ENEMY_ITEM];	// æ‰€æŒç¢ºç‡ï¼ˆãƒ‘ãƒ¼ãƒ†ã‚£å›ºæœ‰ï¼‰
+	int		flg;			// å€’ã•ã‚ŒãŸæ™‚ç«‹ã¦ã‚‹ãƒ•ãƒ©ã‚°ç•ªå·
 } EnemyParty;
 
-typedef struct typeEnemyPGValue{	// Å¨¥Ñ¡¼¥Æ¥£·²¤ÎÃÍ·¿
-	int		party;		// ¥Ñ¡¼¥Æ¥£
-	char		party_r;	// ½Ğ¸½³ÎÎ¨
+typedef struct typeEnemyPGValue{	// æ•µãƒ‘ãƒ¼ãƒ†ã‚£ç¾¤ã®å€¤å‹
+	int		party;		// ãƒ‘ãƒ¼ãƒ†ã‚£
+	char		party_r;	// å‡ºç¾ç¢ºç‡
 } EnemyPGValue;
 
-typedef struct typeEnemyPG{	// Å¨¥Ñ¡¼¥Æ¥£·²¤ËÉÕ¿ï¤¹¤ë¥Ç¡¼¥¿
-	std::vector<EnemyPGValue>	elm;	// ¥Ñ¡¼¥Æ¥£
+typedef struct typeEnemyPG{	// æ•µãƒ‘ãƒ¼ãƒ†ã‚£ç¾¤ã«ä»˜éšã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+	std::vector<EnemyPGValue>	elm;	// ãƒ‘ãƒ¼ãƒ†ã‚£
 } EnemyPG;
 
-typedef struct typeEventData{	// ¥¤¥Ù¥ó¥È¥Ç¡¼¥¿
-	e_event		action;			// Æ°ºî
-	int		elm[EVENT_ELM];		// ÆâÍÆ¡ÊÆ°ºî¤Ë¤è¤Ã¤Æ³ÊÇ¼¤¹¤ëÃÍ¤Î°ÕÌ£¤Ï°ã¤¦¡Ë
-	int		flg;			// Æ°ºî¸å¤ËÈ½Äê¤¹¤ë¥Õ¥é¥°ÈÖ¹æ
-	int		falseid;		// False¤Î»şÁ«°Ü¤¹¤ë¥¤¥Ù¥ó¥È
-	int		trueid;			// True¤Î»şÁ«°Ü¤¹¤ë¥¤¥Ù¥ó¥È
+typedef struct typeEventData{	// ã‚¤ãƒ™ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿
+	e_event		action;			// å‹•ä½œ
+	int		elm[EVENT_ELM];		// å†…å®¹ï¼ˆå‹•ä½œã«ã‚ˆã£ã¦æ ¼ç´ã™ã‚‹å€¤ã®æ„å‘³ã¯é•ã†ï¼‰
+	int		flg;			// å‹•ä½œå¾Œã«åˆ¤å®šã™ã‚‹ãƒ•ãƒ©ã‚°ç•ªå·
+	int		falseid;		// Falseã®æ™‚é·ç§»ã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
+	int		trueid;			// Trueã®æ™‚é·ç§»ã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
 } EventData;
 
-typedef struct typeItemData{	// ¥¢¥¤¥Æ¥à¥Ç¡¼¥¿
-	CString		name;			// Ì¾Á°
-	e_item		type;			// ¼ïÎà
-	int		price;			// ²Á³Ê
-	int		elm[ITEM_ELM];		// ÆâÍÆ¡Ê¼ïÎà¤Ë¤è¤Ã¤Æ³ÊÇ¼¤¹¤ëÃÍ¤Î°ÕÌ£¤Ï°ã¤¦¡Ë
+typedef struct typeItemData{	// ã‚¢ã‚¤ãƒ†ãƒ ãƒ‡ãƒ¼ã‚¿
+	CString		name;			// åå‰
+	e_item		type;			// ç¨®é¡
+	int		price;			// ä¾¡æ ¼
+	int		elm[ITEM_ELM];		// å†…å®¹ï¼ˆç¨®é¡ã«ã‚ˆã£ã¦æ ¼ç´ã™ã‚‹å€¤ã®æ„å‘³ã¯é•ã†ï¼‰
 } ItemData;
 
-typedef struct typeShopValue{	// ¥·¥ç¥Ã¥×¤ÎÃÍ·¿
-	int		item;			// ¾¦ÉÊ¡Ê¥¢¥¤¥Æ¥àID¡Ë
-	int		stock;			// ºß¸Ë¿ô
-	int		spprice;		// ¥¹¥Ú¥·¥ã¥ë¥×¥é¥¤¥¹
+typedef struct typeShopValue{	// ã‚·ãƒ§ãƒƒãƒ—ã®å€¤å‹
+	int		item;			// å•†å“ï¼ˆã‚¢ã‚¤ãƒ†ãƒ IDï¼‰
+	int		stock;			// åœ¨åº«æ•°
+	int		spprice;		// ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒ—ãƒ©ã‚¤ã‚¹
 } ShopValue;
 
-typedef struct typeShopData{	// ¥·¥ç¥Ã¥×¥Ç¡¼¥¿
-	CString		name;			// Ì¾Á°
-	e_shop		type;			// ¼ïÎà
-	std::vector<ShopValue>	elm;		// ¾¦ÉÊ
+typedef struct typeShopData{	// ã‚·ãƒ§ãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
+	CString		name;			// åå‰
+	e_shop		type;			// ç¨®é¡
+	std::vector<ShopValue>	elm;		// å•†å“
 } ShopData;
 
-typedef struct typeMessData{	// ¥á¥Ã¥»¡¼¥¸¥Ç¡¼¥¿
-	CString		msg;			// ¥á¥Ã¥»¡¼¥¸
+typedef struct typeMessData{	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿
+	CString		msg;			// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 } MessData;
 
 

@@ -2,24 +2,24 @@
 
 CWinPartyEditor::CWinPartyEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_dpos.x = 0;
 	m_dpos.y = 0;
 	m_cur.y  = 0;
 	m_wpos.x = 1;
 	m_wpos.y = 1;
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
-	m_maxwidth = 0;		// Ê¸»úÎó¤ÎºÇÂçÉı
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
+	m_maxwidth = 0;		// æ–‡å­—åˆ—ã®æœ€å¤§å¹…
 
 	m_data = new CData;
 
-	// ¤³¤³¤Ç¥·¥Ê¥ê¥ª¤òÆÉ¤ß¹ş¤á
+	// ã“ã“ã§ã‚·ãƒŠãƒªã‚ªã‚’èª­ã¿è¾¼ã‚
 
-	// ¥Ñ¡¼¥Æ¥£ÆÉ¤ß¹ş¤ß
+	// ãƒ‘ãƒ¼ãƒ†ã‚£èª­ã¿è¾¼ã¿
 	for (m_partynum_in_file = 0; ; m_partynum_in_file++)
 	{
 		if (!read_party(m_partynum_in_file))	break;
@@ -28,7 +28,7 @@ CWinPartyEditor::CWinPartyEditor(CConfig* config)
 		sprintf(tmp_buf, "%05d", m_partynum_in_file);
 		push(CString(tmp_buf), m_partynum_in_file);
 	}
-	push("¿·µ¬ºîÀ®", m_partynum_in_file);
+	push("æ–°è¦ä½œæˆ", m_partynum_in_file);
 }
 
 CWinPartyEditor::~CWinPartyEditor()
@@ -69,7 +69,7 @@ void CWinPartyEditor::change(const CString str, const int id, const int index)
 }
 
 
-// ¥Ñ¡¼¥Æ¥£¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 bool CWinPartyEditor::read_party(int index)
 {
 	CFile*	fp;
@@ -82,7 +82,7 @@ bool CWinPartyEditor::read_party(int index)
 	return(ret);
 }
 
-// ¥Ñ¡¼¥Æ¥£¥Õ¥¡¥¤¥ë½ñ¤­¹ş¤ß
+// ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 void CWinPartyEditor::write_party(int index)
 {
 	CFile*	fp;
@@ -95,7 +95,7 @@ void CWinPartyEditor::write_party(int index)
 
 void CWinPartyEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	for( ; ; )
 	{
@@ -131,28 +131,28 @@ bool CWinPartyEditor::onkeypress_left()
 {
 	if (m_dpos.x > 0)	m_dpos.x--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinPartyEditor::onkeypress_down()
 {
 	if (m_cur.y < m_index.size() - 1)	m_cur.y++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinPartyEditor::onkeypress_up()
 {
 	if (m_cur.y > 0)	m_cur.y--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinPartyEditor::onkeypress_right()
 {
-	// ¸Ä¡¹¤Î¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// å€‹ã€…ã®ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	//if (m_list[m_cur.y].Len() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
-	// ºÇÂçÄ¹¥é¥¤¥ó¤Î±¦Ã¼¤Ş¤Ç¥¹¥¯¥í¡¼¥ë
+	// æœ€å¤§é•·ãƒ©ã‚¤ãƒ³ã®å³ç«¯ã¾ã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 	if (m_winw - m_wpos.x - 1 + m_dpos.x < m_maxwidth)	m_dpos.x++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinPartyEditor::onkeypress_ok()
 {
@@ -160,9 +160,9 @@ bool CWinPartyEditor::onkeypress_ok()
 	EnemyParty	tmp_epo;
 	CWinEditValue*	nw_editvalue;
 
-	// ¥«¡¼¥½¥ë°ÌÃÖ¤Î¥Ñ¡¼¥Æ¥£¾ğÊóÆÉ¤ß¹ş¤ß
+	// ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®ã®ãƒ‘ãƒ¼ãƒ†ã‚£æƒ…å ±èª­ã¿è¾¼ã¿
 	if (m_cur.y == m_partynum_in_file)
-	{ // ¿·µ¬ÄÉ²Ã
+	{ // æ–°è¦è¿½åŠ 
 		tmp_ep = &tmp_epo;
 	}
 	else
@@ -174,41 +174,41 @@ bool CWinPartyEditor::onkeypress_ok()
 	for ( ; ; )
 	{
 		nw_editvalue = new CWinEditValue;
-		// ¥İ¥¤¥ó¥¿¥»¥Ã¥È
-		nw_editvalue->push("Å¨¡§£°",		&tmp_ep->enemy[0],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£±",		&tmp_ep->enemy[1],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£²",		&tmp_ep->enemy[2],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£³",		&tmp_ep->enemy[3],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£´",		&tmp_ep->enemy[4],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£µ",		&tmp_ep->enemy[5],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£¶",		&tmp_ep->enemy[6],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£·",		&tmp_ep->enemy[7],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£¸",		&tmp_ep->enemy[8],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£¹",		&tmp_ep->enemy[9],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£Á",		&tmp_ep->enemy[10],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£Â",		&tmp_ep->enemy[11],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£Ã",		&tmp_ep->enemy[12],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£Ä",		&tmp_ep->enemy[13],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£Å",		&tmp_ep->enemy[14],	TT_INT, 1);
-		nw_editvalue->push("Å¨¡§£Æ",		&tmp_ep->enemy[15],	TT_INT, 1);
+		// ãƒã‚¤ãƒ³ã‚¿ã‚»ãƒƒãƒˆ
+		nw_editvalue->push("æ•µï¼šï¼",		&tmp_ep->enemy[0],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼‘",		&tmp_ep->enemy[1],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼’",		&tmp_ep->enemy[2],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼“",		&tmp_ep->enemy[3],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼”",		&tmp_ep->enemy[4],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼•",		&tmp_ep->enemy[5],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼–",		&tmp_ep->enemy[6],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼—",		&tmp_ep->enemy[7],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼˜",		&tmp_ep->enemy[8],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼™",		&tmp_ep->enemy[9],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼¡",		&tmp_ep->enemy[10],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼¢",		&tmp_ep->enemy[11],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼£",		&tmp_ep->enemy[12],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼¤",		&tmp_ep->enemy[13],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼¥",		&tmp_ep->enemy[14],	TT_INT, 1);
+		nw_editvalue->push("æ•µï¼šï¼¦",		&tmp_ep->enemy[15],	TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥à¡§£°",	&tmp_ep->item[0],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥àÎ¨¡§£°",	&tmp_ep->item_r[0],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥à¡§£±",	&tmp_ep->item[1],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥àÎ¨¡§£±",	&tmp_ep->item_r[1],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥à¡§£²",	&tmp_ep->item[2],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥àÎ¨¡§£²",	&tmp_ep->item_r[2],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥à¡§£³",	&tmp_ep->item[3],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥àÎ¨¡§£³",	&tmp_ep->item_r[3],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥à¡§£´",	&tmp_ep->item[4],	TT_INT, 1);
-		nw_editvalue->push("¥¢¥¤¥Æ¥àÎ¨¡§£´",	&tmp_ep->item_r[4],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ï¼šï¼",	&tmp_ep->item[0],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼",	&tmp_ep->item_r[0],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ï¼šï¼‘",	&tmp_ep->item[1],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼‘",	&tmp_ep->item_r[1],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ï¼šï¼’",	&tmp_ep->item[2],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼’",	&tmp_ep->item_r[2],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ï¼šï¼“",	&tmp_ep->item[3],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼“",	&tmp_ep->item_r[3],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ï¼šï¼”",	&tmp_ep->item[4],	TT_INT, 1);
+		nw_editvalue->push("ã‚¢ã‚¤ãƒ†ãƒ ç‡ï¼šï¼”",	&tmp_ep->item_r[4],	TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("¥Õ¥é¥°",		&tmp_ep->flg,		TT_INT, 1);
+		nw_editvalue->push("ãƒ•ãƒ©ã‚°",		&tmp_ep->flg,		TT_INT, 1);
 
 		nw_editvalue->startwin(true);
 		delete(nw_editvalue);
 		
-		// ¥¢¥¤¥Æ¥à½ñ¤­½Ğ¤·
+		// ã‚¢ã‚¤ãƒ†ãƒ æ›¸ãå‡ºã—
 		CWinSelect1Item* nw_select1item;
 		nw_select1item = new CWinSelect1Item;
 		nw_select1item->setsize(20, 5);
@@ -227,24 +227,24 @@ bool CWinPartyEditor::onkeypress_ok()
 		else if (tmp_ret == 1)
 		{
 			if (m_cur.y == m_partynum_in_file)
-			{ // ¿·µ¬ÄÉ²Ã¤À¤Ã¤¿
+			{ // æ–°è¦è¿½åŠ ã ã£ãŸ
 				char tmp_buf[6];
 				sprintf(tmp_buf, "%05d", m_partynum_in_file);
 				change(tmp_buf, m_partynum_in_file, m_partynum_in_file);
 				m_partynum_in_file++;
-				push("¿·µ¬ºîÀ®", m_data->m_itemnum);
+				push("æ–°è¦ä½œæˆ", m_data->m_itemnum);
 			}
 			write_party(m_cur.y);
 		}
 		drawwin();
 		touchwin(m_this);
 		wrefresh(m_this);
-		return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+		return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 	}
 }
 bool CWinPartyEditor::onkeypress_cancel()
 {
-	return false;	// ½ªÎ»
+	return false;	// çµ‚äº†
 }
 
 

@@ -2,16 +2,16 @@
 
 CWinMapEditor::CWinMapEditor(CConfig* config)
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
-	m_dpos.x = 0;		// ¥Ş¥Ã¥×¾å¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡ÊÁë¤Îº¸¾å¤Ë¤¯¤ë¡Ë
-	m_dpos.y = 0;		// ¥Ş¥Ã¥×¾å¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡ÊÁë¤Îº¸¾å¤Ë¤¯¤ë¡Ë
-	m_cur.x  = 0;		// ¥«¡¼¥½¥ë¤Î°ÌÃÖ
-	m_cur.y  = 0;		// ¥«¡¼¥½¥ë¤Î°ÌÃÖ
-	m_winx   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winy   = 0;		// Áë¤ÎÉ½¼¨³«»Ï°ÌÃÖ¡Ê¾ï¤Ë0¡Ë
-	m_winw   = COLS / 2;	// Áë¤ÎÉı¡ÊÁ´³Ñ¤Ç¥«¥¦¥ó¥È¡Ë
-	m_winh   = LINES;	// Áë¤Î¹â¤µ
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
+	m_dpos.x = 0;		// ãƒãƒƒãƒ—ä¸Šã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆçª“ã®å·¦ä¸Šã«ãã‚‹ï¼‰
+	m_dpos.y = 0;		// ãƒãƒƒãƒ—ä¸Šã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆçª“ã®å·¦ä¸Šã«ãã‚‹ï¼‰
+	m_cur.x  = 0;		// ã‚«ãƒ¼ã‚½ãƒ«ã®ä½ç½®
+	m_cur.y  = 0;		// ã‚«ãƒ¼ã‚½ãƒ«ã®ä½ç½®
+	m_winx   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winy   = 0;		// çª“ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ï¼ˆå¸¸ã«0ï¼‰
+	m_winw   = COLS / 2;	// çª“ã®å¹…ï¼ˆå…¨è§’ã§ã‚«ã‚¦ãƒ³ãƒˆï¼‰
+	m_winh   = LINES;	// çª“ã®é«˜ã•
 
 	m_posdata = NULL;
 	m_posbuf.flg     = 0;
@@ -37,7 +37,7 @@ CWinMapEditor::CWinMapEditor(CConfig* config)
 
 	for (int i = 0; i < MAX_FNAME; i++)
 	{
-		m_fieldname[i] = "¡¡";
+		m_fieldname[i] = "ã€€";
 	}
 
 	m_data = new CData;
@@ -52,9 +52,9 @@ CWinMapEditor::~CWinMapEditor()
 
 int CWinMapEditor::drawwin()
 {
-	// ¥«¡¼¥½¥ëÈ¿Å¾
+	// ã‚«ãƒ¼ã‚½ãƒ«åè»¢
 	chg_attr(m_cur.x - m_dpos.x, m_cur.y - m_dpos.y, WA_REVERSE);
-	// ²èÌÌºÆÉÁ²è
+	// ç”»é¢å†æç”»
 	wrefresh(m_this);
 	return true;
 }
@@ -79,7 +79,7 @@ void CWinMapEditor::refreshpos(int x, int y)
 		    y > m_mapdata.height - 1   )
 		{
 			wattrset(m_this, COLOR_PAIR(0));
-			mvwaddnstr(m_this, y - m_dpos.y, adjx(x - m_dpos.x), "¡¡", 2);
+			mvwaddnstr(m_this, y - m_dpos.y, adjx(x - m_dpos.x), "ã€€", 2);
 		}
 		else
 		{
@@ -100,7 +100,7 @@ int CWinMapEditor::gettile(int x, int y)
 	else
 		tileno = m_posdata[xyton(x, y)].falseid;
 
-	// ¥¹¥Ú¥·¥ã¥ë¥İ¥¸¥·¥ç¥óID¤«¤É¤¦¤«È½Äê
+	// ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³IDã‹ã©ã†ã‹åˆ¤å®š
 	for ( ; ; )
 	{
 		if (tileno >= 100000)
@@ -123,7 +123,7 @@ int CWinMapEditor::gettile(int x, int y)
 
 void CWinMapEditor::keyloop()
 {
-	timeout(-1);    // ¥­¡¼ÆşÎÏ¤ÇÂÔ¤Ä
+	timeout(-1);    // ã‚­ãƒ¼å…¥åŠ›ã§å¾…ã¤
 
 	CWinEditValue*		nw_editvalue;
 	CWinEditValue_Flg*	nw_editvalue_flg;
@@ -155,7 +155,7 @@ void CWinMapEditor::keyloop()
 				if (!onkeypress_right())	return;
 				break;
 			case 'a':
-				// ¥¿¥¤¥ëÄÉ²Ã
+				// ã‚¿ã‚¤ãƒ«è¿½åŠ 
 				int tmp_copyid;
 				if (m_data->get_flg(m_posdata[xyton(m_cur.x, m_cur.y)].flg) == true)
 					tmp_copyid = m_posdata[xyton(m_cur.x, m_cur.y)].trueid;
@@ -165,7 +165,7 @@ void CWinMapEditor::keyloop()
 				m_tiledata[m_tilenum] = m_tiledata[tmp_copyid];
 				m_tilenum++;
 
-				// ÄÉ²Ã´°Î»¥á¥Ã¥»¡¼¥¸
+				// è¿½åŠ å®Œäº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 				nw_msg = new CWinMsg;
 				nw_msg->m_msg = msg[MY_MSG_SYS_ADD_TILE].msg;
 				nw_msg->setdefcpair(1, 0);
@@ -175,7 +175,7 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 'b':
-				// ¥Õ¥é¥°¥Ó¥Ã¥È¥¨¥Ç¥£¥¿
+				// ãƒ•ãƒ©ã‚°ãƒ“ãƒƒãƒˆã‚¨ãƒ‡ã‚£ã‚¿
 				int	tmp_id, tmp_old_id, tmp_value, tmp_ret;
 				tmp_id     = 1;
 				tmp_old_id = 1;
@@ -193,7 +193,7 @@ void CWinMapEditor::keyloop()
 
 					if (tmp_id != tmp_old_id)
 					{
-						// ID¤¬ÊÑ¹¹¤µ¤ì¤¿
+						// IDãŒå¤‰æ›´ã•ã‚ŒãŸ
 						if (tmp_id < 0)
 							tmp_id = FLG_BITS * 32 - 1;
 						if (tmp_id > FLG_BITS * 32 - 1)
@@ -203,7 +203,7 @@ void CWinMapEditor::keyloop()
 						continue;
 					}
 
-					// ¥Õ¥é¥°ÊÑ¹¹
+					// ãƒ•ãƒ©ã‚°å¤‰æ›´
 					m_data->set_flg(tmp_id, tmp_value);
 
 					if (tmp_ret)	break;
@@ -213,11 +213,11 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 'c':
-				// ¥³¥Ô¡¼
+				// ã‚³ãƒ”ãƒ¼
 				m_posbuf = m_posdata[xyton(m_cur.x, m_cur.y)];
 				break;
 			case 'v':
-				// ¥Ú¡¼¥¹¥È
+				// ãƒšãƒ¼ã‚¹ãƒˆ
 				m_posundobuf	= m_posdata[xyton(m_cur.x, m_cur.y)];
 				if (m_posmsk.flg)	m_posdata[xyton(m_cur.x, m_cur.y)].flg		= m_posbuf.flg;
 				if (m_posmsk.falseid)	m_posdata[xyton(m_cur.x, m_cur.y)].falseid	= m_posbuf.falseid;
@@ -229,7 +229,7 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 'u':
-				// ¥¢¥ó¥É¥¥
+				// ã‚¢ãƒ³ãƒ‰ã‚¥
 				if (m_posmsk.flg)	m_posdata[xyton(m_cur.x, m_cur.y)].flg		= m_posundobuf.flg;
 				if (m_posmsk.falseid)	m_posdata[xyton(m_cur.x, m_cur.y)].falseid	= m_posundobuf.falseid;
 				if (m_posmsk.trueid)	m_posdata[xyton(m_cur.x, m_cur.y)].trueid	= m_posundobuf.trueid;
@@ -240,11 +240,11 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 'e':
-				// ¥¤¥Ù¥ó¥È¥¨¥Ç¥£¥¿
+				// ã‚¤ãƒ™ãƒ³ãƒˆã‚¨ãƒ‡ã‚£ã‚¿
 			case 'f':
-				// ¥¤¥Ù¥ó¥È¥¨¥Ç¥£¥¿
+				// ã‚¤ãƒ™ãƒ³ãƒˆã‚¨ãƒ‡ã‚£ã‚¿
 				if (m_mapdata.height > 0 && m_mapdata.width > 0)
-				{	// ¥Ş¥Ã¥×¤¬Â¸ºß¤·¤¿
+				{	// ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãŸ
 					int	tmp_id = 0;
 
 					for ( ; ; )
@@ -272,7 +272,7 @@ void CWinMapEditor::keyloop()
 
 						if (tmp_ret == 1)
 						{
-							// ID¤¬ÊÑ¹¹¤µ¤ì¤¿
+							// IDãŒå¤‰æ›´ã•ã‚ŒãŸ
 							if (tmp_id < 0)
 								tmp_id = MAX_MAPEVENT - 1;
 							if (tmp_id > MAX_MAPEVENT - 1)
@@ -290,13 +290,13 @@ void CWinMapEditor::keyloop()
 					}
 				}
 				else
-				{	// ¥Ş¥Ã¥×¤¬ÆÉ¤ß¹ş¤Ş¤ì¤Æ¤¤¤Ê¤¤·Ù¹ğ
+				{	// ãƒãƒƒãƒ—ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã„è­¦å‘Š
 					warn_no_map();
 				}
 				break;
 			case 'h':
 				nw_msg = new CWinMsg;
-				nw_msg->m_msg = "£Á¡§¥¿¥¤¥ëÄÉ²Ãn£Â¡§¥Õ¥é¥°¥Ó¥Ã¥È¥¨¥Ç¥£¥¿n£Ã¡§¥³¥Ô¡¼n£Ö¡§¥Ú¡¼¥¹¥Èn£Õ¡§¥¢¥ó¥É¥¥n£Ñ¡§¥³¥Ô¡¼¥Ş¥¹¥¯¥¨¥Ç¥£¥¿n£Å¡§¥¤¥Ù¥ó¥È¥¨¥Ç¥£¥¿n£Ì¡§¥í¡¼¥Én£Í¡§¥Ş¥Ã¥×¾ğÊó¥¨¥Ç¥£¥¿n£Î¡§ÃÏÌ¾¥¨¥Ç¥£¥¿n£Ğ¡§¥Ñ¥ì¥Ã¥ÈÉ½¼¨n£Ô¡§¥¿¥¤¥ë¥¨¥Ç¥£¥¿n£Ó¡§¥¹¥Ú¥·¥ã¥ë¥İ¥¸¥·¥ç¥ó¥¨¥Ç¥£¥¿n£Ø¡§¥İ¥¸¥·¥ç¥ó¥¨¥Ç¥£¥¿n£Ú¡§¥»¡¼¥Ö½ªÎ»";
+				nw_msg->m_msg = "ï¼¡ï¼šã‚¿ã‚¤ãƒ«è¿½åŠ nï¼¢ï¼šãƒ•ãƒ©ã‚°ãƒ“ãƒƒãƒˆã‚¨ãƒ‡ã‚£ã‚¿nï¼£ï¼šã‚³ãƒ”ãƒ¼nï¼¶ï¼šãƒšãƒ¼ã‚¹ãƒˆnï¼µï¼šã‚¢ãƒ³ãƒ‰ã‚¥nï¼±ï¼šã‚³ãƒ”ãƒ¼ãƒã‚¹ã‚¯ã‚¨ãƒ‡ã‚£ã‚¿nï¼¥ï¼šã‚¤ãƒ™ãƒ³ãƒˆã‚¨ãƒ‡ã‚£ã‚¿nï¼¬ï¼šãƒ­ãƒ¼ãƒ‰nï¼­ï¼šãƒãƒƒãƒ—æƒ…å ±ã‚¨ãƒ‡ã‚£ã‚¿nï¼®ï¼šåœ°åã‚¨ãƒ‡ã‚£ã‚¿nï¼°ï¼šãƒ‘ãƒ¬ãƒƒãƒˆè¡¨ç¤ºnï¼´ï¼šã‚¿ã‚¤ãƒ«ã‚¨ãƒ‡ã‚£ã‚¿nï¼³ï¼šã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³ã‚¨ãƒ‡ã‚£ã‚¿nï¼¸ï¼šãƒã‚¸ã‚·ãƒ§ãƒ³ã‚¨ãƒ‡ã‚£ã‚¿nï¼ºï¼šã‚»ãƒ¼ãƒ–çµ‚äº†";
 				nw_msg->setsize(20,100);
 				nw_msg->startwin(true);
 				delete(nw_msg);
@@ -305,7 +305,7 @@ void CWinMapEditor::keyloop()
 				break;
 			case 'l':
 				mapfp = new CFile;
-				// ¥Ş¥Ã¥×ÈÖ¹æ¤òÆşÎÏ¤¹¤ë
+				// ãƒãƒƒãƒ—ç•ªå·ã‚’å…¥åŠ›ã™ã‚‹
 				nw_getpath = new CWinGetPath;
 				nw_getpath->settitle(CString(msg[MY_MSG_SYS_INP_MAPNO].msg));
 				m_path = nw_getpath->startdialog(true);
@@ -313,15 +313,15 @@ void CWinMapEditor::keyloop()
 				delete(nw_getpath);
 			
 			
-				// ¥Ş¥Ã¥×¥µ¥¤¥º¡¢NextMap¤ò¼èÆÀ
+				// ãƒãƒƒãƒ—ã‚µã‚¤ã‚ºã€NextMapã‚’å–å¾—
 				m_mapdata = mapfp->get_map_size(m_path);
 				if (m_mapdata.height > 0 && m_mapdata.width > 0)
 				{
-					// °ÊÁ°¤Î¥İ¥¸¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤¬¤¢¤ì¤Ğ¡¢¤Ş¤ºÇË´ş¤¹¤ë
+					// ä»¥å‰ã®ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ãŒã‚ã‚Œã°ã€ã¾ãšç ´æ£„ã™ã‚‹
 					if (m_posdata != NULL)	delete[] m_posdata;
-					// ¥İ¥¸¥·¥ç¥ó¥Æ¡¼¥Ö¥ëºÆÀ¸À®
+					// ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«å†ç”Ÿæˆ
 					m_posdata = new PosData[m_mapdata.height * m_mapdata.width];
-					// ¥Ş¥Ã¥×¤ÎÃæ¿È¤òÆÉ¤ß¹ş¤ß
+					// ãƒãƒƒãƒ—ã®ä¸­èº«ã‚’èª­ã¿è¾¼ã¿
 					m_tilenum = mapfp->read_map(m_path, &m_mapdata, m_posdata, m_spposdata, m_tiledata, m_pevent, m_sevent, m_fieldname);
 				}
 				delete(mapfp);
@@ -331,13 +331,13 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 'm':
-				// ¥Ş¥Ã¥×¾ğÊó¥¨¥Ç¥£¥¿
+				// ãƒãƒƒãƒ—æƒ…å ±ã‚¨ãƒ‡ã‚£ã‚¿
 				nw_editvalue = new CWinEditValue;
 
-				nw_editvalue->push("NEXTMAP ¾å", &m_mapdata.nextmap_u, TT_CHR, 1);
-				nw_editvalue->push("NEXTMAP ²¼", &m_mapdata.nextmap_d, TT_CHR, 1);
-				nw_editvalue->push("NEXTMAP º¸", &m_mapdata.nextmap_l, TT_CHR, 1);
-				nw_editvalue->push("NEXTMAP ±¦", &m_mapdata.nextmap_r, TT_CHR, 1);
+				nw_editvalue->push("NEXTMAP ä¸Š", &m_mapdata.nextmap_u, TT_CHR, 1);
+				nw_editvalue->push("NEXTMAP ä¸‹", &m_mapdata.nextmap_d, TT_CHR, 1);
+				nw_editvalue->push("NEXTMAP å·¦", &m_mapdata.nextmap_l, TT_CHR, 1);
+				nw_editvalue->push("NEXTMAP å³", &m_mapdata.nextmap_r, TT_CHR, 1);
 
 				nw_editvalue->startwin(true);
 				delete(nw_editvalue);
@@ -345,7 +345,7 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 'n':
-				// ÃÏÌ¾¥¨¥Ç¥£¥¿
+				// åœ°åã‚¨ãƒ‡ã‚£ã‚¿
 				nw_editvalue = new CWinEditValue;
 
 				char tmp_str[4];
@@ -360,15 +360,15 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 'p':
-				// ¥Ñ¥ì¥Ã¥ÈÉ½¼¨
+				// ãƒ‘ãƒ¬ãƒƒãƒˆè¡¨ç¤º
 				if (m_mapdata.height > 0 && m_mapdata.width > 0)
-				{	// ¥Ş¥Ã¥×¤¬Â¸ºß¤·¤¿
+				{	// ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãŸ
 					nw_select1icon = new CWinSelect1Icon;
 					nw_select1icon->setsize(10, 10);
 					for (int i = 0; i < COLOR_NUM * COLOR_NUM; i++)
 					{
 						nw_select1icon->m_cols = 8;
-						nw_select1icon->push("¡ü", i, i);
+						nw_select1icon->push("â—", i, i);
 					}
 					nw_select1icon->startwin(true);
 					delete(nw_select1icon);
@@ -376,12 +376,12 @@ void CWinMapEditor::keyloop()
 					drawwin();
 				}
 				else
-				{	// ¥Ş¥Ã¥×¤¬ÆÉ¤ß¹ş¤Ş¤ì¤Æ¤¤¤Ê¤¤·Ù¹ğ
+				{	// ãƒãƒƒãƒ—ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã„è­¦å‘Š
 					warn_no_map();
 				}
 				break;
 			case 'q':
-				// ¥³¥Ô¡¼¥Ş¥¹¥¯¥¨¥Ç¥£¥¿
+				// ã‚³ãƒ”ãƒ¼ãƒã‚¹ã‚¯ã‚¨ãƒ‡ã‚£ã‚¿
 				for ( ; ; )
 				{
 					nw_editvalue_cmask = new CWinEditValue_Cmask();
@@ -403,9 +403,9 @@ void CWinMapEditor::keyloop()
 				drawwin();
 				break;
 			case 't':
-				// ¥¿¥¤¥ë¥¨¥Ç¥£¥¿
+				// ã‚¿ã‚¤ãƒ«ã‚¨ãƒ‡ã‚£ã‚¿
 				if (m_mapdata.height > 0 && m_mapdata.width > 0)
-				{	// ¥Ş¥Ã¥×¤¬Â¸ºß¤·¤¿
+				{	// ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãŸ
 					int	tmp_id = gettile(m_cur.x, m_cur.y);
 
 					for ( ; ; )
@@ -424,7 +424,7 @@ void CWinMapEditor::keyloop()
 
 						if (tmp_ret_id == 1)
 						{
-							// ¥¿¥¤¥ë¤¬ÊÑ¹¹¤µ¤ì¤¿
+							// ã‚¿ã‚¤ãƒ«ãŒå¤‰æ›´ã•ã‚ŒãŸ
 							if (tmp_id < 0)			tmp_id = m_tilenum - 1;
 							if (tmp_id > m_tilenum - 1)	tmp_id = 0;
 
@@ -440,16 +440,16 @@ void CWinMapEditor::keyloop()
 					}
 				}
 				else
-				{	// ¥Ş¥Ã¥×¤¬ÆÉ¤ß¹ş¤Ş¤ì¤Æ¤¤¤Ê¤¤·Ù¹ğ
+				{	// ãƒãƒƒãƒ—ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã„è­¦å‘Š
 					warn_no_map();
 				}
 				break;
 			case 's':
-				// ¥¹¥Ú¥·¥ã¥ë¥İ¥¸¥·¥ç¥ó¥Ç¡¼¥¿¥¨¥Ç¥£¥¿
+				// ã‚¹ãƒšã‚·ãƒ£ãƒ«ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚¨ãƒ‡ã‚£ã‚¿
 			case 'x':
-				// ¥İ¥¸¥·¥ç¥ó¥Ç¡¼¥¿¥¨¥Ç¥£¥¿
+				// ãƒã‚¸ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚¨ãƒ‡ã‚£ã‚¿
 				if (m_mapdata.height > 0 && m_mapdata.width > 0)
-				{	// ¥Ş¥Ã¥×¤¬Â¸ºß¤·¤¿
+				{	// ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãŸ
 					PosData* tmp_posdata;
 					int posi = -1;
 					for ( ; ; )
@@ -478,7 +478,7 @@ void CWinMapEditor::keyloop()
 						}
 
 						nw_editvalue_pos = new CWinEditValue_Pos;
-						// »²¾È¥Õ¥é¥°
+						// å‚ç…§ãƒ•ãƒ©ã‚°
 						nw_editvalue_pos->push("FLAG",		&tmp_posdata->flg,	TT_INT, 1);
 						nw_editvalue_pos->push("FALSE ID",	&tmp_posdata->falseid,	TT_INT, 1);
 						nw_editvalue_pos->push("TRUE  ID",	&tmp_posdata->trueid,	TT_INT, 1);
@@ -504,7 +504,7 @@ void CWinMapEditor::keyloop()
 
 						if (tmp_ret == 1)
 						{
-							// False¥¿¥¤¥ë¤¬ÊÑ¹¹¤µ¤ì¤¿
+							// Falseã‚¿ã‚¤ãƒ«ãŒå¤‰æ›´ã•ã‚ŒãŸ
 							if      (tmp_posdata->falseid == 99999)
 								tmp_posdata->falseid = 100000 + MAX_SPPOS - 1;
 							else if (tmp_posdata->falseid > 100000 + MAX_SPPOS - 1)
@@ -521,7 +521,7 @@ void CWinMapEditor::keyloop()
 						}
 						else if (tmp_ret == 2)
 						{
-							// True¥¿¥¤¥ë¤¬ÊÑ¹¹¤µ¤ì¤¿
+							// Trueã‚¿ã‚¤ãƒ«ãŒå¤‰æ›´ã•ã‚ŒãŸ
 							if      (tmp_posdata->trueid == 99999)
 								tmp_posdata->trueid = 100000 + MAX_SPPOS - 1;
 							else if (tmp_posdata->trueid > 100000 + MAX_SPPOS - 1)
@@ -545,12 +545,12 @@ void CWinMapEditor::keyloop()
 					}
 				}
 				else
-				{	// ¥Ş¥Ã¥×¤¬ÆÉ¤ß¹ş¤Ş¤ì¤Æ¤¤¤Ê¤¤·Ù¹ğ
+				{	// ãƒãƒƒãƒ—ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã„è­¦å‘Š
 					warn_no_map();
 				}
 				break;
 			case 'z':
-				// ¥Ş¥Ã¥×¤ÎÃæ¿È¤ò½ñ¤­½Ğ¤·
+				// ãƒãƒƒãƒ—ã®ä¸­èº«ã‚’æ›¸ãå‡ºã—
 				if (m_mapdata.height > 0 && m_mapdata.width > 0)
 				{
 					nw_select1item = new CWinSelect1Item;
@@ -601,60 +601,60 @@ bool CWinMapEditor::onkeypress_left()
 {
 	chg_attr(m_cur.x - m_dpos.x, m_cur.y - m_dpos.y, WA_NORMAL);
 	if (m_cur.x > 0){
-		m_cur.x--;			// ¥«¡¼¥½¥ëº¸
+		m_cur.x--;			// ã‚«ãƒ¼ã‚½ãƒ«å·¦
 		if (m_cur.x < m_dpos.x)
 		{
-			m_dpos.x--;		// º¸¥¹¥¯¥í¡¼¥ë
+			m_dpos.x--;		// å·¦ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 			refreshwin();
 		}
 	}
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMapEditor::onkeypress_down()
 {
 	chg_attr(m_cur.x - m_dpos.x, m_cur.y - m_dpos.y, WA_NORMAL);
 	if (m_cur.y < m_dpos.y + LINES && m_cur.y < m_mapdata.height - 1){
-		m_cur.y++;			// ¥«¡¼¥½¥ë²¼¤²¤ë
+		m_cur.y++;			// ã‚«ãƒ¼ã‚½ãƒ«ä¸‹ã’ã‚‹
 		if (m_cur.y > m_dpos.y + LINES - 1)
 		{
-			m_dpos.y++;		// ²¼¥¹¥¯¥í¡¼¥ë
+			m_dpos.y++;		// ä¸‹ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 			refreshwin();
 		}
 	}
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMapEditor::onkeypress_up()
 {
 	chg_attr(m_cur.x - m_dpos.x, m_cur.y - m_dpos.y, WA_NORMAL);
 	if (m_cur.y > 0){
-		m_cur.y--;			// ¥«¡¼¥½¥ë¾å¤²¤ë
+		m_cur.y--;			// ã‚«ãƒ¼ã‚½ãƒ«ä¸Šã’ã‚‹
 		if (m_cur.y < m_dpos.y)
 		{
-			m_dpos.y--;		// ¾å¥¹¥¯¥í¡¼¥ë
+			m_dpos.y--;		// ä¸Šã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 			refreshwin();
 		}
 	}
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinMapEditor::onkeypress_right()
 {
 	chg_attr(m_cur.x - m_dpos.x, m_cur.y - m_dpos.y, WA_NORMAL);
 	if (m_cur.x < m_dpos.x + COLS / 2 && m_cur.x < m_mapdata.width - 1){
-		m_cur.x++;			// ¥«¡¼¥½¥ë±¦
+		m_cur.x++;			// ã‚«ãƒ¼ã‚½ãƒ«å³
 		if (m_cur.x > m_dpos.x + COLS / 2 - 1)
 		{
-			m_dpos.x++;		// ±¦¥¹¥¯¥í¡¼¥ë
+			m_dpos.x++;		// å³ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«
 			refreshwin();
 		}
 	}
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 
-// Æó¼¡¸µ¤ÎºÂÉ¸¤ò°ì¼¡¸µ¤ÎÇÛÎóÍ×ÁÇ¤ËÊÑ´¹¤¹¤ë¡Ê¥ª¡¼¥Ğ¡¼¥é¥¤¥É¡Ë
+// äºŒæ¬¡å…ƒã®åº§æ¨™ã‚’ä¸€æ¬¡å…ƒã®é…åˆ—è¦ç´ ã«å¤‰æ›ã™ã‚‹ï¼ˆã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ï¼‰
 int CWinMapEditor::xyton(int x, int y){
 	return (y * m_mapdata.width + x);
 }

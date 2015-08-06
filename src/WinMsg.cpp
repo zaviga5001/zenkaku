@@ -31,6 +31,6 @@ int CWinMsg::drawwin()
 	return true;
 }
 
-bool CWinMsg::onkeypress_ok()		{ return false; }	// ¥­¡¼¥ë¡¼¥×½ªÎ»
-bool CWinMsg::onkeypress_cancel()	{ return false; }	// ¥­¡¼¥ë¡¼¥×½ªÎ»
+bool CWinMsg::onkeypress_ok()		{ return false; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—çµ‚äº†
+bool CWinMsg::onkeypress_cancel()	{ return false; }	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—çµ‚äº†
 

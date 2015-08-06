@@ -13,11 +13,11 @@
 
 int main(int argc, char *argv[])
 {
-	// ¥Ñ¥¹¼èÆÀ
+	// ãƒ‘ã‚¹å–å¾—
 	get_zenkaku_home();
 	get_user_home();
 
-	// ²èÌÌ½é´ü²½
+	// ç”»é¢åˆæœŸåŒ–
 	if(initscr() == NULL)
 	{
 		fprintf(stderr, "ERROR:main001:initscr failure\n");
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	// ¥³¥ó¥Õ¥£¥°¾ðÊó³ÊÇ¼¥¨¥ê¥¢ºîÀ®
+	// ã‚³ãƒ³ãƒ•ã‚£ã‚°æƒ…å ±æ ¼ç´ã‚¨ãƒªã‚¢ä½œæˆ
 	CConfig*	config;
 	config	= new CConfig();
 	if (config == NULL)
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	// ÀßÄê¥Õ¥¡¥¤¥ëÆÉ¤ß¹þ¤ß
+	// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	CString	fname = ZENKAKURC;
 	CFile*	zenkakurc;
 	zenkakurc	= new CFile;
@@ -63,10 +63,10 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	zenkakurc->read_cfg(fname, config);
-	// ¥Ý¥¤¥ó¥¿²òÊü
+	// ãƒã‚¤ãƒ³ã‚¿è§£æ”¾
 	delete zenkakurc;
 
-	// ¥¿¥¤¥È¥ë²èÌÌ
+	// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢
 	CTitle*	title;
 	title = new CTitle;
 	if (title == NULL)
@@ -75,24 +75,24 @@ int main(int argc, char *argv[])
 		endwin();
 		return 0;
 	}
-	// ¥¿¥¤¥È¥ë²èÌÌÉ½¼¨
+	// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢è¡¨ç¤º
 	if (title->disp_title(config) == false)
 	{
 		fprintf(stderr, "ERROR:main008:disp_title failure\n");
 		endwin();
 		return 0;
 	}
-	// ¥·¥Ê¥ê¥ªÁªÂò
+	// ã‚·ãƒŠãƒªã‚ªé¸æŠž
 	if (title->select_game(config) == false)
 	{
 		fprintf(stderr, "ERROR:main009:select_game failure\n");
 		endwin();
 		return 0;
 	}
-	// ¥¿¥¤¥È¥ë²èÌÌ¥Ý¥¤¥ó¥¿²òÊü
+	// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ãƒã‚¤ãƒ³ã‚¿è§£æ”¾
 	delete title;
 
-	// ¥²¡¼¥àºîÀ®
+	// ã‚²ãƒ¼ãƒ ä½œæˆ
 	CGame*	game;
 	game = new CGame(config);
 	if (game == NULL)
@@ -101,12 +101,12 @@ int main(int argc, char *argv[])
 		endwin();
 		return 0;
 	}
-	// ¥²¡¼¥à¥¹¥¿¡¼¥È
+	// ã‚²ãƒ¼ãƒ ã‚¹ã‚¿ãƒ¼ãƒˆ
 	game->main();
-	// ½ªÎ»
+	// çµ‚äº†
 	delete game;
 
-	// Ã¼ËöÉüµ¢
+	// ç«¯æœ«å¾©å¸°
 	endwin();
 	return 0;
 }
@@ -115,14 +115,14 @@ bool init_cpairs()
 {
 	int i, j, num = 0;
 
-	// ¥«¥é¡¼¥Æ¡¼¥Ö¥ë
+	// ã‚«ãƒ©ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«
 	int colors[COLOR_NUM];
 	for(i = 0; i < COLOR_NUM; i++)
 	{
 		colors[i] = COLOR_BLACK + i;
 	}
 
-	// ¥«¥é¡¼¥Ú¥¢¥Æ¡¼¥Ö¥ë
+	// ã‚«ãƒ©ãƒ¼ãƒšã‚¢ãƒ†ãƒ¼ãƒ–ãƒ«
 	for(i = 0; i < COLOR_NUM; i++)
 	{
 		for(j = 0; j < COLOR_NUM; j++)

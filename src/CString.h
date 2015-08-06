@@ -17,17 +17,17 @@ extern "C" {
 //#define NULL            0
 #define NOT_FOUND		-1
 
-//¸¡º÷¥Õ¥é¥°
+//æ¤œç´¢ãƒ•ãƒ©ã‚°
 #define SSF_DEFAULT     0x0
 #define SSF_REVERSE		0x1
 #define SSF_TOKEN		0x2
 #define SSF_ALL			0x4
 
-//Î¬µ­ÍÑ¥Ş¥¯¥í
+//ç•¥è¨˜ç”¨ãƒã‚¯ãƒ­
 #define STRING      const CString&
 #define _DEFAULT    CString::m_defaultCharset
 
-//ÈÆÍÑ·¿ÄêµÁ
+//æ±ç”¨å‹å®šç¾©
 typedef unsigned char   BYTE;
 typedef unsigned int    UINT;
 typedef char*           LPSTR;
@@ -186,12 +186,12 @@ protected:
 
 /* construction ------------------------------------------------------------- */
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 inline CString::CString()
 : m_nLen(0), m_lpsz(NULL){
 }
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿ [for internal use]
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ [for internal use]
 inline CString::CString(int nLen, LPSTR lpsz)
 : m_nLen(nLen), m_lpsz(lpsz){
 }
@@ -199,7 +199,7 @@ inline CString::CString(int nLen, LPSTR lpsz)
 
 /* member access (getting) -------------------------------------------------- */
 
-//Ê¸»úÎóÄ¹¤Î¼èÆÀ
+//æ–‡å­—åˆ—é•·ã®å–å¾—
 inline int CString::Len() const {
 	return m_nLen;
 }
@@ -207,7 +207,7 @@ inline int CString::Len() const {
 
 /* operator (cast) ---------------------------------------------------------- */
 
-//¥­¥ã¥¹¥È (LPCSTR)
+//ã‚­ãƒ£ã‚¹ãƒˆ (LPCSTR)
 inline CString::operator LPCSTR () const {
 	return m_lpsz;
 }
@@ -215,7 +215,7 @@ inline CString::operator LPCSTR () const {
 
 /* operator ----------------------------------------------------------------- */
 
-//Í×ÁÇ»²¾È
+//è¦ç´ å‚ç…§
 inline const char& CString::operator [] (int nIndex) const {
 	assert(m_lpsz);
 	assert(nIndex >=0);
@@ -226,12 +226,12 @@ inline const char& CString::operator [] (int nIndex) const {
 
 /* multi-byte caracter manipulation ----------------------------------------- */
 
-//Ê¸»ú¿ô¥«¥¦¥ó¥È
+//æ–‡å­—æ•°ã‚«ã‚¦ãƒ³ãƒˆ
 inline int CString::Count(Charset cs) const {
 	return count(m_lpsz, cs);
 }
 
-//Ê¸»ú°ÌÃÖ¥·¡¼¥¯
+//æ–‡å­—ä½ç½®ã‚·ãƒ¼ã‚¯
 inline int CString::Seek(int nPos, Charset cs) const {
 	return seek(m_lpsz, nPos, cs);
 }
@@ -239,11 +239,11 @@ inline int CString::Seek(int nPos, Charset cs) const {
 
 /* static members ----------------------------------------------------------- */
 
-//¥Ç¥Õ¥©¥ë¥ÈÊ¸»ú¥»¥Ã¥È¤ÎÀßÄê¼èÆÀ
+//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆæ–‡å­—ã‚»ãƒƒãƒˆã®è¨­å®šå–å¾—
 inline CString::Charset CString::getDefaultCharset(){
 	return m_defaultCharset;
 }
-//¥Ç¥Õ¥©¥ë¥ÈÊ¸»ú¥»¥Ã¥È¤ÎÀßÄê
+//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆæ–‡å­—ã‚»ãƒƒãƒˆã®è¨­å®š
 inline void CString::setDefaultCharset(Charset eEnc){
 	m_defaultCharset =eEnc;
 }
@@ -251,7 +251,7 @@ inline void CString::setDefaultCharset(Charset eEnc){
 
 /* external operator -------------------------------------------------------- */
 
-//ÅùÃÍÈ½Äê (1)
+//ç­‰å€¤åˆ¤å®š (1)
 inline bool operator == (STRING s1, STRING s2){
 	return CString::equal(s1.m_lpsz, s2.m_lpsz);
 }
@@ -262,7 +262,7 @@ inline bool operator == (LPCSTR lpsz1, STRING s2){
 	return CString::equal(lpsz1, s2.m_lpsz);
 }
 
-//ÈóÅùÃÍÈ½Äê
+//éç­‰å€¤åˆ¤å®š
 inline bool operator != (STRING s1, STRING s2){
 	return !CString::equal(s1.m_lpsz, s2.m_lpsz);
 }
@@ -273,7 +273,7 @@ inline bool operator != (LPCSTR lpsz1, STRING s2){
 	return !CString::equal(lpsz1, s2.m_lpsz);
 }
 
-//¼­½ñ½çÈæ³Ó (<)
+//è¾æ›¸é †æ¯”è¼ƒ (<)
 inline bool operator < (STRING s1, STRING s2){
 	return (CString::compare(s1.m_lpsz, s2.m_lpsz) < 0);
 }
@@ -284,7 +284,7 @@ inline bool operator < (LPCSTR lpsz1, STRING s2){
 	return (CString::compare(lpsz1, s2.m_lpsz) < 0);
 }
 
-//¼­½ñ½çÈæ³Ó (<=)
+//è¾æ›¸é †æ¯”è¼ƒ (<=)
 inline bool operator <= (STRING s1, STRING s2){
 	return (CString::compare(s1.m_lpsz, s2.m_lpsz) <= 0);
 }
@@ -295,7 +295,7 @@ inline bool operator <= (LPCSTR lpsz1, STRING s2){
 	return (CString::compare(lpsz1, s2.m_lpsz) <= 0);
 }
 
-//¼­½ñ½çÈæ³Ó (>)
+//è¾æ›¸é †æ¯”è¼ƒ (>)
 inline bool operator > (STRING s1, STRING s2){
 	return (CString::compare(s1.m_lpsz, s2.m_lpsz) > 0);
 }
@@ -306,7 +306,7 @@ inline bool operator > (LPCSTR lpsz1, STRING s2){
 	return (CString::compare(lpsz1, s2.m_lpsz) > 0);
 }
 
-//¼­½ñ½çÈæ³Ó (>=)
+//è¾æ›¸é †æ¯”è¼ƒ (>=)
 inline bool operator >= (STRING s1, STRING s2){
 	return (CString::compare(s1.m_lpsz, s2.m_lpsz) >= 0);
 }
@@ -318,7 +318,7 @@ inline bool operator >= (LPCSTR lpsz1, STRING s2){
 }
 
 
-//Î¬µ­ÍÑ¥Ş¥¯¥í²ò½ü
+//ç•¥è¨˜ç”¨ãƒã‚¯ãƒ­è§£é™¤
 #undef STRING
 #undef _DEFAULT
 

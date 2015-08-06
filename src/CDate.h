@@ -9,7 +9,7 @@
 
 #include <assert.h>
 
-//Î¬µ­ÍÑ¥Ş¥¯¥í
+//ç•¥è¨˜ç”¨ãƒã‚¯ãƒ­
 #define _DATE const CDate&
 
 
@@ -80,16 +80,16 @@ bool    operator >= (_DATE, _DATE);
 
 /* construction ------------------------------------------------------------- */
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 inline CDate::CDate(){
 }
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 inline CDate::CDate(_DATE d)
 : year(d.year), month(d.month), day(d.day) {
 }
 
-//¥³¥ó¥¹¥È¥é¥¯¥¿
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 inline CDate::CDate(int nYear, int nMonth, int nDay)
 : year(nYear), month(nMonth), day(nDay) {
 }
@@ -97,7 +97,7 @@ inline CDate::CDate(int nYear, int nMonth, int nDay)
 
 /* member access (setting) -------------------------------------------------- */
 
-//ÃÍ¤ÎÀßÄê
+//å€¤ã®è¨­å®š
 inline void CDate::Set(int nYear, int nMonth, int nDay){
 	year  =nYear;
 	month =nMonth;
@@ -107,12 +107,12 @@ inline void CDate::Set(int nYear, int nMonth, int nDay){
 
 /* operation ---------------------------------------------------------------- */
 
-//Í­¸úÀ­¤ÎÈ½Äê
+//æœ‰åŠ¹æ€§ã®åˆ¤å®š
 inline bool CDate::IsValid() const {
 	return IsDateValid(year, month, day);
 }
 
-//ÍË (ÍËÆü) ¤Î¼èÆÀ
+//æ›œ (æ›œæ—¥) ã®å–å¾—
 inline UINT CDate::DayOfWeek() const {
 	return DayOfWeek(year, month, day);
 }
@@ -120,38 +120,38 @@ inline UINT CDate::DayOfWeek() const {
 
 /* external operator -------------------------------------------------------- */
 
-//ÅùÃÍÈæ³Ó
+//ç­‰å€¤æ¯”è¼ƒ
 inline bool operator == (_DATE d1, _DATE d2){
 	return (d1.year == d2.year && d1.month == d2.month && d1.day == d2.day);
 }
 
-//ÈóÅùÃÍÈæ³Ó
+//éç­‰å€¤æ¯”è¼ƒ
 inline bool operator != (_DATE d1, _DATE d2){
 	return (d1.year != d2.year || d1.month != d2.month || d1.day != d2.day);
 }
 
-//Èæ³Ó
+//æ¯”è¼ƒ
 inline bool operator < (_DATE d1, _DATE d2){
 	return (CDate::Compare(d1, d2) < 0);
 }
 
-//Èæ³Ó
+//æ¯”è¼ƒ
 inline bool operator <= (_DATE d1, _DATE d2){
 	return (CDate::Compare(d1, d2) <= 0);
 }
 
-//Èæ³Ó
+//æ¯”è¼ƒ
 inline bool operator > (_DATE d1, _DATE d2){
 	return (CDate::Compare(d1, d2) > 0);
 }
 
-//Èæ³Ó
+//æ¯”è¼ƒ
 inline bool operator >= (_DATE d1, _DATE d2){
 	return (CDate::Compare(d1, d2) >= 0);
 }
 
 
-//Î¬µ­ÍÑ¥Ş¥¯¥í²ò½ü
+//ç•¥è¨˜ç”¨ãƒã‚¯ãƒ­è§£é™¤
 #undef _DATE
 
 #endif //__CDATE_H__

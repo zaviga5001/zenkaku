@@ -17,7 +17,7 @@ public:
 	CGame(CConfig* config);
 	virtual ~CGame();
 
-	bool	main();			// ¥²¡¼¥à¥ë¡¼¥×
+	bool	main();			// ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
 
 protected:
 

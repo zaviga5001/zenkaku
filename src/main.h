@@ -15,7 +15,7 @@ bool		init_cpairs();
 void		get_zenkaku_home();
 void		get_user_home();
 
-CString		zenkaku_home;	// ƒvƒƒOƒ‰ƒ€‚Ìƒz[ƒ€ƒfƒBƒŒƒNƒgƒŠ
-CString		user_home;	// ƒ†[ƒU‚Ìƒz[ƒ€ƒfƒBƒŒƒNƒgƒŠ
+CString		zenkaku_home;	// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ãƒ›ãƒ¼ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+CString		user_home;	// ãƒ¦ãƒ¼ã‚¶ã®ãƒ›ãƒ¼ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 
 #endif	// MAIN_H

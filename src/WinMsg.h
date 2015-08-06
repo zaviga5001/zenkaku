@@ -17,13 +17,13 @@ public:
 
 	virtual int	drawwin();
 
-	bool	onkeypress_ok();	// ‚n‚jƒL[‰Ÿ‰º
-	bool	onkeypress_cancel();	// ƒLƒƒƒ“ƒZƒ‹ƒL[‰Ÿ‰º
+	bool	onkeypress_ok();	// ï¼¯ï¼«ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_cancel();	// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚­ãƒ¼æŠ¼ä¸‹
 
-	CString	m_msg;			// ƒƒbƒZ[ƒW–{•¶
+	CString	m_msg;			// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æœ¬æ–‡
 
 protected:
-	int	m_dpos;			// •\¦ŠJn•¶š‚ÌˆÊ’u
+	int	m_dpos;			// è¡¨ç¤ºé–‹å§‹æ–‡å­—ã®ä½ç½®
 
 private:
 };

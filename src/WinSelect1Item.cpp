@@ -2,8 +2,8 @@
 
 CWinSelect1Item::CWinSelect1Item()
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_maxwidth = 0;
 	m_dpos.x = 0;
 	m_cur.x  = 0;
@@ -15,8 +15,8 @@ CWinSelect1Item::CWinSelect1Item()
 	m_winh   = 10;
 	m_split  = 0;
 	m_disable_cansel = false;
-	setsize(10, 10);	// Window¥µ¥¤¥º¡Ê¥Ç¥Õ¥©¥ë¥È¡Ë
-	movewin(5, 2);		// Window°ÌÃÖ¡Ê¥Ç¥Õ¥©¥ë¥È¡Ë¡ÊÃæ±û¡¢¥Þ¡¼¥¸¥ó£±¡Ë
+	setsize(10, 10);	// Windowã‚µã‚¤ã‚ºï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼‰
+	movewin(5, 2);		// Windowä½ç½®ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼‰ï¼ˆä¸­å¤®ã€ãƒžãƒ¼ã‚¸ãƒ³ï¼‘ï¼‰
 }
 
 CWinSelect1Item::~CWinSelect1Item()
@@ -49,26 +49,26 @@ bool CWinSelect1Item::onkeypress_left()
 {
 	if (m_cur.x > 0)	m_cur.x--;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinSelect1Item::onkeypress_down()
 {
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinSelect1Item::onkeypress_up()
 {
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinSelect1Item::onkeypress_right()
 {
 	if (m_cur.x < m_list.size() - 1)      m_cur.x++;
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinSelect1Item::onkeypress_ok()
 {
 	m_return = m_index[m_cur.x];
-	return false;	// ¥­¡¼¥ë¡¼¥×½ªÎ»
+	return false;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—çµ‚äº†
 }
 bool CWinSelect1Item::onkeypress_cancel()
 {

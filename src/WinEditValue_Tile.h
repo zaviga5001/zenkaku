@@ -17,12 +17,12 @@ public:
 	CWinEditValue_Tile();
 	virtual ~CWinEditValue_Tile();
 
-	bool	onkeypress_down();	// ‰ºƒL[‰Ÿ‰º
-	bool	onkeypress_up();	// ãƒL[‰Ÿ‰º
-	bool	onkeypress_right();	// ‰EƒL[‰Ÿ‰º
-	bool	onkeypress_left();	// ¶ƒL[‰Ÿ‰º
-	bool	onkeypress_ok();	// ‚n‚jƒL[‰Ÿ‰º
-	bool	onkeypress_cancel();	// ƒLƒƒƒ“ƒZƒ‹ƒL[‰Ÿ‰º
+	bool	onkeypress_down();	// ä¸‹ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_up();	// ä¸Šã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_right();	// å³ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_left();	// å·¦ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_ok();	// ï¼¯ï¼«ã‚­ãƒ¼æŠ¼ä¸‹
+	bool	onkeypress_cancel();	// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚­ãƒ¼æŠ¼ä¸‹
 
 protected:
 

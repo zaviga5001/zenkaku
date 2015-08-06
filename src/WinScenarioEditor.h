@@ -24,21 +24,21 @@ public:
 
 	virtual int	drawwin();
 
-	void		keyloop();		// ƒL[“ü—Íƒ‹[ƒv
-	bool		onkeypress_left();	// ¶ƒL[‰Ÿ‰º
-	bool		onkeypress_down();	// ‰ºƒL[‰Ÿ‰º
-	bool		onkeypress_up();	// ãƒL[‰Ÿ‰º
-	bool		onkeypress_right();	// ‰EƒL[‰Ÿ‰º
+	void		keyloop();		// ã‚­ãƒ¼å…¥åŠ›ãƒ«ãƒ¼ãƒ—
+	bool		onkeypress_left();	// å·¦ã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_down();	// ä¸‹ã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_up();	// ä¸Šã‚­ãƒ¼æŠ¼ä¸‹
+	bool		onkeypress_right();	// å³ã‚­ãƒ¼æŠ¼ä¸‹
 
-	int		read_mychar();		// ƒ}ƒCƒLƒƒƒ‰“Ç‚İ‚İ
+	int		read_mychar();		// ãƒã‚¤ã‚­ãƒ£ãƒ©èª­ã¿è¾¼ã¿
 
-	CString		m_path;			// ƒf[ƒ^Ši”[ƒpƒX
-	int		m_mcnum;		// ƒ}ƒCƒLƒƒƒ‰ƒf[ƒ^‚Ì”
+	CString		m_path;			// ãƒ‡ãƒ¼ã‚¿æ ¼ç´ãƒ‘ã‚¹
+	int		m_mcnum;		// ãƒã‚¤ã‚­ãƒ£ãƒ©ãƒ‡ãƒ¼ã‚¿ã®æ•°
 
-	CData*		m_data;			// ƒQ[ƒ€“à‚Ì‚ ‚ç‚ä‚éî•ñ
+	CData*		m_data;			// ã‚²ãƒ¼ãƒ å†…ã®ã‚ã‚‰ã‚†ã‚‹æƒ…å ±
 
 protected:
-	void		warn(enum msg_id tmp_msg);	// ŒxƒEƒBƒ“ƒhƒD•\¦
+	void		warn(enum msg_id tmp_msg);	// è­¦å‘Šã‚¦ã‚£ãƒ³ãƒ‰ã‚¥è¡¨ç¤º
 
 private:
 };

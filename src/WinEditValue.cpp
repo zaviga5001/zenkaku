@@ -2,8 +2,8 @@
 
 CWinEditValue::CWinEditValue()
 {
-	// °Ê²¼¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¤¹¡£
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈºîÀ®¸å¤ËÄ´À°¤·¤Æ¤¯¤À¤µ¤¤¡£
+	// ä»¥ä¸‹ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ã™ã€‚
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆå¾Œã«èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
 	m_dpos.x = 0;
 	m_dpos.y = 0;
 	m_cur.y  = 0;
@@ -14,8 +14,8 @@ CWinEditValue::CWinEditValue()
 	m_winw   = 5;
 	m_winh   = 10;
 	m_disable_cansel = false;
-	setsize(0, 0);		// Window¥µ¥¤¥º¡Ê¥Ç¥Õ¥©¥ë¥È¡Ë
-	movewin(5, 1);		// Window°ÌÃÖ¡Ê¥Ç¥Õ¥©¥ë¥È¡Ë¡ÊÃæ±û¡¢¥Ş¡¼¥¸¥ó£±¡Ë
+	setsize(0, 0);		// Windowã‚µã‚¤ã‚ºï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼‰
+	movewin(5, 1);		// Windowä½ç½®ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼‰ï¼ˆä¸­å¤®ã€ãƒãƒ¼ã‚¸ãƒ³ï¼‘ï¼‰
 }
 
 CWinEditValue::~CWinEditValue()
@@ -121,27 +121,27 @@ void CWinEditValue::decode(CString* str, void *ptr, const int chr)
 
 bool CWinEditValue::onkeypress_down()
 {
-	if (m_cur.y < m_name.size() - 1)	m_cur.y++;	// ¥«¡¼¥½¥ë²¼¤²¤ë
-	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y++;	// ¥¹¥Ú¡¼¥µ¤Ê¤é¤â¤¦¤¤¤Ã¤Á¤ç²¼¤²¤ë
+	if (m_cur.y < m_name.size() - 1)	m_cur.y++;	// ã‚«ãƒ¼ã‚½ãƒ«ä¸‹ã’ã‚‹
+	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y++;	// ã‚¹ãƒšãƒ¼ã‚µãªã‚‰ã‚‚ã†ã„ã£ã¡ã‚‡ä¸‹ã’ã‚‹
 
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue::onkeypress_up()
 {
-	if (m_cur.y > 0)			m_cur.y--;	// ¥«¡¼¥½¥ë¾å¤²¤ë
-	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y--;	// ¥¹¥Ú¡¼¥µ¤Ê¤é¤â¤¦¤¤¤Ã¤Á¤ç¾å¤²¤ë
+	if (m_cur.y > 0)			m_cur.y--;	// ã‚«ãƒ¼ã‚½ãƒ«ä¸Šã’ã‚‹
+	if (m_my_tt[m_cur.y] == TT_SPC)		m_cur.y--;	// ã‚¹ãƒšãƒ¼ã‚µãªã‚‰ã‚‚ã†ã„ã£ã¡ã‚‡ä¸Šã’ã‚‹
 
 	drawwin();
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue::onkeypress_right()
 {
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue::onkeypress_left()
 {
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue::onkeypress_ok()
 {
@@ -161,10 +161,10 @@ bool CWinEditValue::onkeypress_ok()
 	else if (m_my_tt[m_cur.y] == TT_VCT)
 	{
 		*(int*)m_ptr[m_cur.y] = 1;
-		return false;	// Vector¤òÄÉ²Ã¤¹¤ë¤¿¤á¤Ë°ìÃ¶½ªÎ»
+		return false;	// Vectorã‚’è¿½åŠ ã™ã‚‹ãŸã‚ã«ä¸€æ—¦çµ‚äº†
 	}
 
-	return true;	// ¥­¡¼¥ë¡¼¥×·ÑÂ³
+	return true;	// ã‚­ãƒ¼ãƒ«ãƒ¼ãƒ—ç¶™ç¶š
 }
 bool CWinEditValue::onkeypress_cancel()
 {

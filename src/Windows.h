@@ -24,7 +24,7 @@
 #define	ATTR_NUM	11
 #define	SYSTEM_COLOR_NUM	63
 
-//	¿§
+//	è‰²
 //		COLOR_BLACK
 //		COLOR_RED
 //		COLOR_GREEN
@@ -34,7 +34,7 @@
 //		COLOR_CYAN
 //		COLOR_WHITE
 
-//	Â°À­
+//	å±æ€§
 //		A_NORMAL
 //		A_STANDOUT
 //		A_UNDERLINE
@@ -66,78 +66,78 @@ public:
 	CWindows();
 	virtual ~CWindows();
 
-	int	startwin(bool frame);			// É½¼¨³«»Ï¡Ê¥Õ¥ì¡¼¥àÉÕ¡Ë
-	CString	startdialog(bool frame);		// É½¼¨³«»Ï¡ÊÊ¸»úÎó³ÎÄê·¿¡Ë
+	int	startwin(bool frame);			// è¡¨ç¤ºé–‹å§‹ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ ä»˜ï¼‰
+	CString	startdialog(bool frame);		// è¡¨ç¤ºé–‹å§‹ï¼ˆæ–‡å­—åˆ—ç¢ºå®šå‹ï¼‰
 
-	void	settitle(const CString title);		// ¥¦¥£¥ó¥É¥¥¥¿¥¤¥È¥ë¤òÉ½¼¨¤¹¤ë
-	void	setsize(int w, int h);			// ²èÌÌ¥µ¥¤¥º¤ò·è¤á¤ë
-	void	movewin(int x, int y);			// É½¼¨°ÌÃÖ¤ò°ÜÆ°¤¹¤ë
-	int	getcpair(int ch, int bg);		// ¥«¥é¡¼¥Ú¥¢ÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
-	int	getchcolor(int cpair);			// ¥«¥é¡¼¥Ú¥¢ÈÖ¹æ¤òÊ¬²ò¤¹¤ë
-	int	getbgcolor(int cpair);			// ¥«¥é¡¼¥Ú¥¢ÈÖ¹æ¤òÊ¬²ò¤¹¤ë
-	void	setdefcpair(int cpair);			// ¥Ç¥Õ¥©¥ë¥È¥«¥é¡¼¤ò¥»¥Ã¥È¤¹¤ë
+	void	settitle(const CString title);		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¡¨ç¤ºã™ã‚‹
+	void	setsize(int w, int h);			// ç”»é¢ã‚µã‚¤ã‚ºã‚’æ±ºã‚ã‚‹
+	void	movewin(int x, int y);			// è¡¨ç¤ºä½ç½®ã‚’ç§»å‹•ã™ã‚‹
+	int	getcpair(int ch, int bg);		// ã‚«ãƒ©ãƒ¼ãƒšã‚¢ç•ªå·ã‚’å–å¾—ã™ã‚‹
+	int	getchcolor(int cpair);			// ã‚«ãƒ©ãƒ¼ãƒšã‚¢ç•ªå·ã‚’åˆ†è§£ã™ã‚‹
+	int	getbgcolor(int cpair);			// ã‚«ãƒ©ãƒ¼ãƒšã‚¢ç•ªå·ã‚’åˆ†è§£ã™ã‚‹
+	void	setdefcpair(int cpair);			// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ©ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	void	setdefcpair(int ch, int bg);
 
-	void	drawframe();				// ¥Õ¥ì¡¼¥à¤òÉ½¼¨¤¹¤ë
-	virtual int	drawwin() = 0;			// Ãæ¿È¤òÉ½¼¨¤¹¤ë²¾ÁÛ´Ø¿ô¡ÊÇÉÀ¸Àè¤Ç»È¤¦¡Ë
+	void	drawframe();				// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’è¡¨ç¤ºã™ã‚‹
+	virtual int	drawwin() = 0;			// ä¸­èº«ã‚’è¡¨ç¤ºã™ã‚‹ä»®æƒ³é–¢æ•°ï¼ˆæ´¾ç”Ÿå…ˆã§ä½¿ã†ï¼‰
 
-	void	splitwin(int y);			// ¥¦¥£¥ó¥É¥¥¤ò¾å²¼¤ËÊ¬³ä¤¹¤ë
-	void	setmessage(int x, int y, CString str);	// ¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤¹¤ë
+	void	splitwin(int y);			// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã‚’ä¸Šä¸‹ã«åˆ†å‰²ã™ã‚‹
+	void	setmessage(int x, int y, CString str);	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹
 	void	setmessage(int x, int y, CString str, int cpair);
 	void	setmessage(int x, int y, CString str, int ch, int bg);
-	int	setmessage_n(int x, int y, CString str);// ¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤¹¤ë¡Ê¼«Æ°²ş¹Ô¡Ë
+	int	setmessage_n(int x, int y, CString str);// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹ï¼ˆè‡ªå‹•æ”¹è¡Œï¼‰
 	int	setmessage_n(int x, int y, CString str, int cpair);
 	int	setmessage_n(int x, int y, CString str, int ch, int bg);
 	void	seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, std::vector<int> cpair, int col);
-							// ¥Ş¥È¥ê¥¯¥¹¤òÉ½¼¨¤¹¤ë
+							// ãƒãƒˆãƒªã‚¯ã‚¹ã‚’è¡¨ç¤ºã™ã‚‹
 	void	setselect(int x, int y, int* posx, int* dposx, std::vector<CString> list, std::vector<int> cpair);
-							// ¥»¥ì¥¯¥È¥¿¥Ö¤òÉ½¼¨¤¹¤ë
+							// ã‚»ãƒ¬ã‚¯ãƒˆã‚¿ãƒ–ã‚’è¡¨ç¤ºã™ã‚‹
 	void	setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vector<CString> list, std::vector<int> cpair);
-							// ¥ê¥¹¥È¤òÉ½¼¨¤¹¤ë
+							// ãƒªã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹
 	void	setedit(int x, int y, int* posy, int* dposy, std::vector<CString> name, std::vector<CString> value, std::vector<int> cpair);
-							// ¥ê¥¹¥È¤òÉ½¼¨¤¹¤ë
-	void	wclrtorborder();			// 1¹Ô¥¯¥ê¥¢
-	void	clearwin();				// ¥¦¥£¥ó¥É¥¥ÆâÉô¤òÁ´¥¯¥ê¥¢¡Ê·ÓÀş¤Ï»Ä¤¹¡Ë
+							// ãƒªã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹
+	void	wclrtorborder();			// 1è¡Œã‚¯ãƒªã‚¢
+	void	clearwin();				// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥å†…éƒ¨ã‚’å…¨ã‚¯ãƒªã‚¢ï¼ˆç½«ç·šã¯æ®‹ã™ï¼‰
 	bool	mvwaddstrtoeol(int x, int y, const CString str);
-							// ¹ÔËö¤Ş¤ÇÉ½¼¨
+							// è¡Œæœ«ã¾ã§è¡¨ç¤º
 
-	void	chg_attr(int x, int y, long attr);				// Â°À­¤À¤±ÊÑ¹¹
-	void	chg_color(int x, int y, int cpair);				// ¿§¤À¤±ÊÑ¹¹
-	void	chg_color(int x, int y, int ch, int bg);			// ¿§¤À¤±ÊÑ¹¹
-	void	chg_attr_color(int x, int y, long attr, int cpair);		// ¿§¤ÈÂ°À­¤òÊÑ¹¹
-	void	chg_attr_color(int x, int y, long attr, int ch, int bg);	// ¿§¤ÈÂ°À­¤òÊÑ¹¹
+	void	chg_attr(int x, int y, long attr);				// å±æ€§ã ã‘å¤‰æ›´
+	void	chg_color(int x, int y, int cpair);				// è‰²ã ã‘å¤‰æ›´
+	void	chg_color(int x, int y, int ch, int bg);			// è‰²ã ã‘å¤‰æ›´
+	void	chg_attr_color(int x, int y, long attr, int cpair);		// è‰²ã¨å±æ€§ã‚’å¤‰æ›´
+	void	chg_attr_color(int x, int y, long attr, int ch, int bg);	// è‰²ã¨å±æ€§ã‚’å¤‰æ›´
 
-	virtual void	keyloop();			// ¥­¡¼ÆşÎÏ¥ë¡¼¥×
-	virtual bool	onkeypress_left();		// º¸¥­¡¼²¡²¼¡Ê²¾ÁÛ´Ø¿ô¡Ë
-	virtual bool	onkeypress_down();		// ²¼¥­¡¼²¡²¼¡Ê²¾ÁÛ´Ø¿ô¡Ë
-	virtual bool	onkeypress_up();		// ¾å¥­¡¼²¡²¼¡Ê²¾ÁÛ´Ø¿ô¡Ë
-	virtual bool	onkeypress_right();		// ±¦¥­¡¼²¡²¼¡Ê²¾ÁÛ´Ø¿ô¡Ë
-	virtual bool	onkeypress_ok();		// £Ï£Ë¥­¡¼²¡²¼¡Ê²¾ÁÛ´Ø¿ô¡Ë
-	virtual bool	onkeypress_cancel();		// ¥­¥ã¥ó¥»¥ë¥­¡¼²¡²¼¡Ê²¾ÁÛ´Ø¿ô¡Ë
+	virtual void	keyloop();			// ã‚­ãƒ¼å…¥åŠ›ãƒ«ãƒ¼ãƒ—
+	virtual bool	onkeypress_left();		// å·¦ã‚­ãƒ¼æŠ¼ä¸‹ï¼ˆä»®æƒ³é–¢æ•°ï¼‰
+	virtual bool	onkeypress_down();		// ä¸‹ã‚­ãƒ¼æŠ¼ä¸‹ï¼ˆä»®æƒ³é–¢æ•°ï¼‰
+	virtual bool	onkeypress_up();		// ä¸Šã‚­ãƒ¼æŠ¼ä¸‹ï¼ˆä»®æƒ³é–¢æ•°ï¼‰
+	virtual bool	onkeypress_right();		// å³ã‚­ãƒ¼æŠ¼ä¸‹ï¼ˆä»®æƒ³é–¢æ•°ï¼‰
+	virtual bool	onkeypress_ok();		// ï¼¯ï¼«ã‚­ãƒ¼æŠ¼ä¸‹ï¼ˆä»®æƒ³é–¢æ•°ï¼‰
+	virtual bool	onkeypress_cancel();		// ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚­ãƒ¼æŠ¼ä¸‹ï¼ˆä»®æƒ³é–¢æ•°ï¼‰
 
 
-	int	m_winx;			// É½¼¨°ÌÃÖº¸
-	int	m_winy;			// É½¼¨°ÌÃÖ¾å
-	int	m_winw;			// Éı
-	int	m_winh;			// ¹â¤µ
+	int	m_winx;			// è¡¨ç¤ºä½ç½®å·¦
+	int	m_winy;			// è¡¨ç¤ºä½ç½®ä¸Š
+	int	m_winw;			// å¹…
+	int	m_winh;			// é«˜ã•
 
-	int	m_return;		// startwin¤ÎÊÖ¤êÃÍ
-	CString	m_returnstr;		// startdialog¤ÎÊÖ¤êÃÍ
+	int	m_return;		// startwinã®è¿”ã‚Šå€¤
+	CString	m_returnstr;		// startdialogã®è¿”ã‚Šå€¤
 
-	int	m_colors[COLOR_NUM];	// ¥«¥é¡¼¥Æ¡¼¥Ö¥ë
-	int	m_cpair;		// ¥Ç¥Õ¥©¥ë¥È¥«¥é¡¼¥Ú¥¢
-	long	m_attrs[ATTR_NUM];	// Â°À­¥Æ¡¼¥Ö¥ë
+	int	m_colors[COLOR_NUM];	// ã‚«ãƒ©ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«
+	int	m_cpair;		// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ©ãƒ¼ãƒšã‚¢
+	long	m_attrs[ATTR_NUM];	// å±æ€§ãƒ†ãƒ¼ãƒ–ãƒ«
 
-	WINDOW*	m_this;			// ¼«Ê¬¼«¿È¤Î¥¦¥£¥ó¥É¥¥¥Ï¥ó¥É¥é
+	WINDOW*	m_this;			// è‡ªåˆ†è‡ªèº«ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ãƒãƒ³ãƒ‰ãƒ©
 
 
 	void signal_handler(int sig);
 
 protected:
-	int	adjx(int x);		// Á´³ÑXºÂÉ¸¤ò¼Âºİ¤ÎºÂÉ¸¤ËÊÑ´¹¤¹¤ë
-	int	xyton(int x, int y);	// Æó¼¡¸µ¤ÎºÂÉ¸¤ò°ì¼¡¸µ¤ÎÇÛÎóÍ×ÁÇ¤ËÊÑ´¹¤¹¤ë
+	int	adjx(int x);		// å…¨è§’Xåº§æ¨™ã‚’å®Ÿéš›ã®åº§æ¨™ã«å¤‰æ›ã™ã‚‹
+	int	xyton(int x, int y);	// äºŒæ¬¡å…ƒã®åº§æ¨™ã‚’ä¸€æ¬¡å…ƒã®é…åˆ—è¦ç´ ã«å¤‰æ›ã™ã‚‹
 
-	CString	m_title;		// ¥¦¥£¥ó¥É¥¥¥¿¥¤¥È¥ë
+	CString	m_title;		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¥ã‚¿ã‚¤ãƒˆãƒ«
 
 private:
 
