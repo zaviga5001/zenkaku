@@ -7,6 +7,7 @@
 #include <time.h>
 #include <signal.h>
 #include <ncurses.h>
+#include <string>
 #include "Windows.h"
 
 class CWinMsg : public CWindows
@@ -20,7 +21,7 @@ public:
 	bool	onkeypress_ok();	// ＯＫキー押下
 	bool	onkeypress_cancel();	// キャンセルキー押下
 
-	CString	m_msg;			// メッセージ本文
+	std::string	m_msg;			// メッセージ本文
 
 protected:
 	int	m_dpos;			// 表示開始文字の位置

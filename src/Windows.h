@@ -8,9 +8,9 @@
 #include <signal.h>
 #include <vector>
 #include <ncurses.h>
+#include <string>
 #include "common.h"
 #include "msg.h"
-#include "CString.h"
 #include "Data.h"
 
 #define	MYKEY_LEFT	68
@@ -67,9 +67,9 @@ public:
 	virtual ~CWindows();
 
 	int	startwin(bool frame);			// 表示開始（フレーム付）
-	CString	startdialog(bool frame);		// 表示開始（文字列確定型）
+	std::string	startdialog(bool frame);		// 表示開始（文字列確定型）
 
-	void	settitle(const CString title);		// ウィンドゥタイトルを表示する
+	void	settitle(const std::string title);		// ウィンドゥタイトルを表示する
 	void	setsize(int w, int h);			// 画面サイズを決める
 	void	movewin(int x, int y);			// 表示位置を移動する
 	int	getcpair(int ch, int bg);		// カラーペア番号を取得する
@@ -82,23 +82,23 @@ public:
 	virtual int	drawwin() = 0;			// 中身を表示する仮想関数（派生先で使う）
 
 	void	splitwin(int y);			// ウィンドゥを上下に分割する
-	void	setmessage(int x, int y, CString str);	// メッセージを表示する
-	void	setmessage(int x, int y, CString str, int cpair);
-	void	setmessage(int x, int y, CString str, int ch, int bg);
-	int	setmessage_n(int x, int y, CString str);// メッセージを表示する（自動改行）
-	int	setmessage_n(int x, int y, CString str, int cpair);
-	int	setmessage_n(int x, int y, CString str, int ch, int bg);
-	void	seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, std::vector<int> cpair, int col);
+	void	setmessage(int x, int y, std::string str);	// メッセージを表示する
+	void	setmessage(int x, int y, std::string str, int cpair);
+	void	setmessage(int x, int y, std::string str, int ch, int bg);
+	int	setmessage_n(int x, int y, std::string str);// メッセージを表示する（自動改行）
+	int	setmessage_n(int x, int y, std::string str, int cpair);
+	int	setmessage_n(int x, int y, std::string str, int ch, int bg);
+	void	seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<std::string> list, std::vector<int> cpair, int col);
 							// マトリクスを表示する
-	void	setselect(int x, int y, int* posx, int* dposx, std::vector<CString> list, std::vector<int> cpair);
+	void	setselect(int x, int y, int* posx, int* dposx, std::vector<std::string> list, std::vector<int> cpair);
 							// セレクトタブを表示する
-	void	setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vector<CString> list, std::vector<int> cpair);
+	void	setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vector<std::string> list, std::vector<int> cpair);
 							// リストを表示する
-	void	setedit(int x, int y, int* posy, int* dposy, std::vector<CString> name, std::vector<CString> value, std::vector<int> cpair);
+	void	setedit(int x, int y, int* posy, int* dposy, std::vector<std::string> name, std::vector<std::string> value, std::vector<int> cpair);
 							// リストを表示する
 	void	wclrtorborder();			// 1行クリア
 	void	clearwin();				// ウィンドゥ内部を全クリア（罫線は残す）
-	bool	mvwaddstrtoeol(int x, int y, const CString str);
+	bool	mvwaddstrtoeol(int x, int y, const std::string str);
 							// 行末まで表示
 
 	void	chg_attr(int x, int y, long attr);				// 属性だけ変更
@@ -122,7 +122,7 @@ public:
 	int	m_winh;			// 高さ
 
 	int	m_return;		// startwinの返り値
-	CString	m_returnstr;		// startdialogの返り値
+	std::string	m_returnstr;		// startdialogの返り値
 
 	int	m_colors[COLOR_NUM];	// カラーテーブル
 	int	m_cpair;		// デフォルトカラーペア
@@ -137,7 +137,7 @@ protected:
 	int	adjx(int x);		// 全角X座標を実際の座標に変換する
 	int	xyton(int x, int y);	// 二次元の座標を一次元の配列要素に変換する
 
-	CString	m_title;		// ウィンドゥタイトル
+	std::string	m_title;		// ウィンドゥタイトル
 
 private:
 

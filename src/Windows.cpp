@@ -40,7 +40,7 @@ int CWindows::startwin(bool frame)
 
 // 表示開始
 //
-CString CWindows::startdialog(bool frame)
+std::string CWindows::startdialog(bool frame)
 {
 	m_this = newwin(m_winh, adjx(m_winw), m_winy, adjx(m_winx));
 	refresh();
@@ -54,7 +54,7 @@ CString CWindows::startdialog(bool frame)
 
 // ウィンドゥタイトルをセットする
 //
-void CWindows::settitle(const CString title)
+void CWindows::settitle(const std::string title)
 {
 	m_title = title;
 }
@@ -63,13 +63,10 @@ void CWindows::settitle(const CString title)
 //
 void CWindows::setsize(int max_w, int max_h)
 {
-	if (adjx(max_w) > COLS  - 4 || max_w == 0)	m_winw = (COLS  - 4) / 2;
-	else						m_winw = max_w;
-	if (max_h     > LINES - 2 || max_h == 0)	m_winh = (LINES - 2);
-	else				m_winh = max_h;
-
-	m_winx = (COLS / 2 - m_winw) / 2;
-	m_winy = (LINES    - m_winh) / 2;
+	if (adjx(max_w) > COLS || max_w == 0)	m_winw = (COLS) / 2;
+	else					m_winw = max_w;
+	if (max_h      > LINES || max_h == 0)	m_winh = LINES;
+	else					m_winh = max_h;
 }
 
 // ウィンドゥの表示位置を調整する
@@ -175,9 +172,10 @@ void CWindows::drawframe()
 	mvwprintw(m_this, m_winh-1, 0,                "%s", msg[MY_MSG_WIN_1].msg);
 	mvwprintw(m_this, m_winh-1, adjx(m_winw - 1), "%s", msg[MY_MSG_WIN_3].msg);
 
-	if (m_title != "" && m_title != NULL)
+	if (m_title != "")
 	{	// ウィンドウタイトル表示
-		mvwprintw(m_this, 0, 2,   "%s", LPCSTR(m_title.Sub(0, adjx(m_winw - 2))));
+		std::string tmp_str = m_title.substr(0, adjx(m_winw - 2));
+		mvwprintw(m_this, 0, 2,   "%s", tmp_str.c_str());
 	}
 
 	wrefresh(m_this);
@@ -202,21 +200,21 @@ void CWindows::splitwin(int pos)
 // メッセージ表示
 // 改行対応なし（色指定なし）
 //
-void CWindows::setmessage(int x, int y, CString message)
+void CWindows::setmessage(int x, int y, std::string message)
 {
 	setmessage(x, y, message, m_cpair);
 }
 // メッセージ表示
 // 改行対応なし（色指定あり）
 //
-void CWindows::setmessage(int x, int y, CString message, int ch, int bg)
+void CWindows::setmessage(int x, int y, std::string message, int ch, int bg)
 {
 	setmessage(x, y, message, getcpair(ch, bg));
 }
 // メッセージ表示
 // 改行対応なし
 //
-void CWindows::setmessage(int x, int y, CString message, int cpair)
+void CWindows::setmessage(int x, int y, std::string message, int cpair)
 {
 	wattrset(m_this, COLOR_PAIR(cpair));
 
@@ -227,46 +225,78 @@ void CWindows::setmessage(int x, int y, CString message, int cpair)
 // メッセージ表示
 // 改行対応（色指定なし）
 //
-int CWindows::setmessage_n(int x, int y, CString message)
+int CWindows::setmessage_n(int x, int y, std::string message)
 {
 	return (setmessage_n(x, y, message, m_cpair));
 }
 // メッセージ表示
 // 改行対応
 //
-int CWindows::setmessage_n(int x, int y, CString message, int ch, int bg)
+int CWindows::setmessage_n(int x, int y, std::string message, int ch, int bg)
 {
 	return (setmessage_n(x, y, message, getcpair(ch, bg)));
 }
 // メッセージ表示
 // 改行対応（色指定あり）
 //
-int CWindows::setmessage_n(int x, int y, CString message, int cpair)
+int CWindows::setmessage_n(int x, int y, std::string message, int cpair)
 {
 	int	waittime = 0, i = 0, dposx = 0;
+	std::vector<std::string> messvect = CMyStr::separate(message);
 
 	wattrset(m_this, COLOR_PAIR(cpair));
 
-	for (i = 0; i < message.Len(); i++)
+	for (i = 0; i < messvect.size(); i++)
 	{
-		if (message[i] == 'k')
+		if (messvect[i].compare("k") == 0)
 		{	// キー入力待ち記号
 
 			keyloop();
 			continue;
 		}
-		if (message[i] == 'p')
+		if (messvect[i].compare("p") == 0)
 		{	// 改ページ記号
 			keyloop();
 			i++;
 			break;
 		}
-		if (message[i] == 'n')
+		if (messvect[i].compare("n") == 0)
 		{	// 改行記号
 			// 改行
 			i++;
 			dposx = 0;
 			y++;
+		}
+		if (messvect[i].compare("t") == 0)
+		{	// ウェイトタイム記号
+			std::string tmpwait;
+			tmpwait = messvect[i+1] + messvect[i+2] + messvect[i+3];
+			waittime = atoi(tmpwait.c_str());
+			i += 3;
+			continue;
+		}
+		if (messvect[i].compare("c") == 0)
+		{	// 色指定記号
+			int tmp_ch, tmp_bg;
+			if (messvect[i + 1].compare("c") == 0)
+			{	// 色戻す
+				tmp_ch = getchcolor(m_cpair);
+			}
+			else
+			{	// 色付ける
+				tmp_ch = atoi(messvect[i + 1].c_str());
+			}
+			if (messvect[i + 2].compare("c") == 0)
+			{	// 色戻す
+				tmp_bg = getbgcolor(m_cpair);
+			}
+			else
+			{	// 色付ける
+				tmp_bg = atoi(messvect[i + 2].c_str());
+			}
+			wattrset(m_this, COLOR_PAIR(getcpair(tmp_ch, tmp_bg)));
+			i += 2;
+			continue;
 		}
 		if (adjx(x) + dposx >= adjx(m_winw - 1))
 		{	// ウィンドゥの右端まで到達
@@ -279,39 +309,9 @@ int CWindows::setmessage_n(int x, int y, CString message, int cpair)
 			keyloop();
 			break;	// ウィンドゥの終わりに到達
 		}
-		if (message[i] == 't')
-		{	// ウェイトタイム記号
-			waittime = atoi(LPCSTR(message.Sub(i + 1, i + 4)));
-			i += 3;
-			continue;
-		}
-		if (message[i] == 'c')
-		{	// 色指定記号
-			int tmp_ch, tmp_bg;
-			if (message[i + 1] == 'c')
-			{	// 色戻す
-				tmp_ch = getchcolor(m_cpair);
-			}
-			else
-			{	// 色付ける
-				tmp_ch = atoi(LPCSTR(message.Sub(i + 1, i + 2)));
-			}
-			if (message[i + 2] == 'c')
-			{	// 色戻す
-				tmp_bg = getbgcolor(m_cpair);
-			}
-			else
-			{	// 色付ける
-				tmp_bg = atoi(LPCSTR(message.Sub(i + 2, i + 3)));
-			}
-			wattrset(m_this, COLOR_PAIR(getcpair(tmp_ch, tmp_bg)));
-			i += 2;
-			continue;
-		}
 
-		mvwprintw(m_this, y, adjx(x) + dposx, "%s", LPCSTR(message.Sub(i, i + 2)));
+		mvwprintw(m_this, y, adjx(x) + dposx, "%s", messvect[i].c_str());
 		dposx += 2;
-		i++;	// 全角調整
 
 		if (waittime > 0)
 		{
@@ -326,7 +326,7 @@ int CWindows::setmessage_n(int x, int y, CString message, int cpair)
 
 // 上下左右に移動できるメニューを表示
 // 
-void CWindows::seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, std::vector<int> cpair, int col)
+void CWindows::seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<std::string> list, std::vector<int> cpair, int col)
 {
 	int	num = list.size();		// アイテムの個数
 	int	x, y;
@@ -348,7 +348,7 @@ void CWindows::seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, 
 		// 表示する
 		if (x == cur->x && y == cur->y)	wattrset(m_this, WA_REVERSE | COLOR_PAIR(cpair[i]));
 		else				wattrset(m_this, WA_NORMAL  | COLOR_PAIR(cpair[i]));
-		mvwprintw(m_this, y - dpos->y + pos.y, adjx(x - dpos->x + pos.x), "%s", LPCSTR(list[i]));
+		mvwprintw(m_this, y - dpos->y + pos.y, adjx(x - dpos->x + pos.x), "%s", list[i].c_str());
 	}
 
 	wrefresh(m_this);
@@ -357,9 +357,9 @@ void CWindows::seticon(Pos pos, Pos* cur, Pos* dpos, std::vector<CString> list, 
 // 左右にカーソル移動できるメニューを表示
 // 色塗り未対応
 // 
-void CWindows::setselect(int x, int y, int* posx, int* dposx, std::vector<CString> list, std::vector<int> cpair)
+void CWindows::setselect(int x, int y, int* posx, int* dposx, std::vector<std::string> list, std::vector<int> cpair)
 {
-	CString	str;			// アイテムを全て連結した文字列
+	std::string	str;		// アイテムを全て連結した文字列
 	int	num = list.size();	// アイテムの個数
 	int 	pos_l = 0, pos_r = 0;	// カーソルが合っているメニュー文字列の左右端座標
 	int	width;			// 表示領域の幅
@@ -368,26 +368,26 @@ void CWindows::setselect(int x, int y, int* posx, int* dposx, std::vector<CStrin
 	for (int i = 0; i < num; i++)
 	{
 		if (i != 0)	str += "　";
-		if (i == *posx)	pos_l = str.Len() / 2;	// 左端座標取得
+		if (i == *posx)	pos_l = CMyStr::length(str);	// 左端座標取得
 		str += list[i];
-		if (i == *posx)	pos_r = str.Len() / 2;	// 右端座標取得
+		if (i == *posx)	pos_r = CMyStr::length(str);	// 右端座標取得
 	}
 
 	if (pos_l < *dposx)		*dposx = pos_l;		// 左にシフト
 	if (pos_r > *dposx + width)	*dposx = pos_r - width;	// 右にシフト
 
 	// 表示する
-	mvwaddstrtoeol(x, y, str.Sub(adjx(*dposx)));
+	mvwaddstrtoeol(x, y, str.substr(adjx(*dposx)));
 
 	// 選択中アイテム反転
-	mvwchgat(m_this, y, adjx(pos_l - *dposx + x), list[*posx].Len(), WA_REVERSE, 0, NULL);
+	mvwchgat(m_this, y, adjx(pos_l - *dposx + x), list[*posx].length(), WA_REVERSE, 0, NULL);
 
 	wrefresh(m_this);
 }
 
 // 上下に選択できるリストを表示
 // 
-void CWindows::setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vector<CString> list, std::vector<int> cpair)
+void CWindows::setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vector<std::string> list, std::vector<int> cpair)
 {
 	int num = list.size();
 	if (*posy < *dposy)				*dposy = *posy;
@@ -402,19 +402,19 @@ void CWindows::setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vec
 		if (*posy == *dposy + i)	wattron(m_this,  A_REVERSE | COLOR_PAIR(cpair[i]));
 		else				wattrset(m_this, A_NORMAL | COLOR_PAIR(cpair[i]));
 
-		if (list[*dposy + i].Sub(adjx(*dposx)) == NULL)
-			mvwaddstrtoeol(x, y + i, CString(""));
+		if (list[*dposy + i].substr(adjx(*dposx)) == "")
+			mvwaddstrtoeol(x, y + i, std::string(""));
 		else
-			mvwaddstrtoeol(x, y + i, list[*dposy + i].Sub(adjx(*dposx)));
+			mvwaddstrtoeol(x, y + i, list[*dposy + i].substr(adjx(*dposx)));
 	}
 	wrefresh(m_this);
 }
 
 // 上下に選択できるエディットフィールドを表示
 // 
-void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<CString> name, std::vector<CString> value, std::vector<int> cpair)
+void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<std::string> name, std::vector<std::string> value, std::vector<int> cpair)
 {
-	CString	tmp_str;
+	std::string	tmp_str;
 	int	num = name.size();
 	int	max_size = 0;
 	int	i, j;
@@ -431,7 +431,7 @@ void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<CString>
 
 	for (i = 0; i < num; i++)
 	{
-		if (max_size < name[i].Len())	max_size = name[i].Len();
+		if (max_size < name[i].length())	max_size = name[i].length();
 	}
 	max_size += 2;
 
@@ -440,7 +440,7 @@ void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<CString>
 		if (i + y >= m_winh - 1)	break;
 
 		tmp_str = name[i + *dposy];
-		for (j = 0; j < (max_size - name[i + *dposy].Len()) / 2; j++)
+		for (j = 0; j < (max_size - name[i + *dposy].length()) / 2; j++)
 		{
 			tmp_str = tmp_str + "　";
 		}
@@ -476,11 +476,12 @@ void CWindows::clearwin()
 
 // 行末まで文字列を表示（罫線は残す）
 // 
-bool CWindows::mvwaddstrtoeol(int cur_x, int cur_y, const CString str)
+bool CWindows::mvwaddstrtoeol(int cur_x, int cur_y, const std::string str)
 {
-	mvwprintw(m_this, cur_y, adjx(cur_x), "%s", LPCSTR(str.Sub(0, adjx(m_winw - cur_x - 1))));
+	std::string tmp_str = str.substr(0, adjx(m_winw - cur_x - 1));
+	mvwprintw(m_this, cur_y, adjx(cur_x), "%s", tmp_str.c_str());
 	wclrtorborder();
-	if (adjx(m_winw - cur_x - 1) > str.Len())
+	if (adjx(m_winw - cur_x - 1) > str.length())
 	{
 		return false;
 	}
@@ -575,7 +576,6 @@ void CWindows::keyloop()
 				break;
 			default:
 				continue;
-				break;
 		}
 	}
 }

@@ -1,17 +1,20 @@
 #ifndef MY_COMMON_H
 #define MY_COMMON_H
 
+#include	"MyStr.h"
+
 /****************************************/
 /* デバッグフラグ			*/
 /****************************************/
 #define	DEBUG
 
 #include	<vector>
-#include	"CString.h"
+#include	<string>
 
 /****************************************/
 /* 定数					*/
 /****************************************/
+typedef		unsigned char	BYTE;
 #define		FLG_BITS	128	// *32 bits個のフラグを扱える
 
 #define		MAX_MYCHAR	8	// ゲーム内のマイキャラ数
@@ -35,8 +38,8 @@
 #define		EVENT_ELM	5	// イベント内容
 #define		ITEM_ELM	5	// アイテム内容
 
-extern CString	zenkaku_home;
-extern CString	user_home;
+extern std::string	zenkaku_home;
+extern std::string	user_home;
 
 /****************************************/
 /* 色々な型宣言など			*/
@@ -206,14 +209,14 @@ typedef struct typePos3{	// キャラクタの位置(三次元)
 
 typedef struct typeScnData{	// シナリオに付随するデータ
 	int	id;			// シナリオID（インストールする順番によって変わる）
-	CString path;			// シナリオディレクトリ名（インストール時乱数で決まる）
-	CString mychar[MAX_MYCHAR];	// マイキャラファイル名
+	std::string path;			// シナリオディレクトリ名（インストール時乱数で決まる）
+	std::string mychar[MAX_MYCHAR];	// マイキャラファイル名
 } ScnData;
 
 typedef struct typeScnList{	// シナリオリスト用データ
 	int	id;			// シナリオID（インストールする順番によって変わる）
-	CString name;			// シナリオ名
-	CString doc;			// シナリオ概要
+	std::string name;			// シナリオ名
+	std::string doc;			// シナリオ概要
 } ScnList;
 
 typedef struct typeMyCharValue{	// マイキャラの値型
@@ -227,7 +230,7 @@ typedef struct typeMyChar{	// マイキャラに付随するデータ
 	enum e_race	race;			// 種族
 	enum e_job	job;			// 職業
 	enum e_gender	gender;			// 性別
-	CString		name;			// 名前
+	std::string		name;			// 名前
 	char		tile[2];		// 文字
 	char		ch;			// 文字色
 	char		bg;			// 背景色
@@ -262,7 +265,7 @@ typedef struct typeMyChar{	// マイキャラに付随するデータ
 	BYTE		skillexp[MAX_TYPE][MAX_SKILL];	// スキル経験値
 	BYTE		curse[MAX_TYPE];		// 呪い（属性毎）
 
-	CString		prof;			// プロフィール
+	std::string		prof;			// プロフィール
 } MyChar;
 
 typedef struct typeItemNum{	// 所持アイテム型
@@ -327,7 +330,7 @@ typedef struct typeEnemyValue{	// 敵キャラの値型
 } EnemyValue;
 
 typedef struct typeEnemy{	// 敵キャラに付随するデータ
-	CString		name;			// 名前
+	std::string	name;			// 名前
 	BYTE		type;			// 属性
 	enum e_status	status;			// ステータス
 
@@ -349,7 +352,7 @@ typedef struct typeEnemy{	// 敵キャラに付随するデータ
 	int		next_enemy;		// 倒された時、次に読み込む敵ID
 	int		call_enemy[ENEMY_CALL];	// 呼ぶ敵ID
 
-	CString		prof;			// プロフィール
+	std::string	prof;			// プロフィール
 } Enemy;
 
 typedef struct typeEnemyParty{	// 敵パーティに付随するデータ
@@ -377,7 +380,7 @@ typedef struct typeEventData{	// イベントデータ
 } EventData;
 
 typedef struct typeItemData{	// アイテムデータ
-	CString		name;			// 名前
+	std::string	name;			// 名前
 	e_item		type;			// 種類
 	int		price;			// 価格
 	int		elm[ITEM_ELM];		// 内容（種類によって格納する値の意味は違う）
@@ -390,13 +393,13 @@ typedef struct typeShopValue{	// ショップの値型
 } ShopValue;
 
 typedef struct typeShopData{	// ショップデータ
-	CString		name;			// 名前
+	std::string	name;			// 名前
 	e_shop		type;			// 種類
 	std::vector<ShopValue>	elm;		// 商品
 } ShopData;
 
 typedef struct typeMessData{	// メッセージデータ
-	CString		msg;			// メッセージ
+	std::string	msg;			// メッセージ
 } MessData;
 
 

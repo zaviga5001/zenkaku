@@ -7,9 +7,9 @@
 #include <time.h>
 #include <signal.h>
 #include <vector>
+#include <string>
 #include <ncurses.h>
 #include "Windows.h"
-#include "CString.h"
 #include "Config.h"
 #include "Data.h"
 #include "File.h"
@@ -23,9 +23,9 @@ public:
 	virtual ~CWinPartyEditor();
 
 	virtual int	drawwin();
-	void		push(const CString str, const int id);
-	void		push(const CString str, const int id, const int cpair);
-	void		change(const CString str, const int id, const int index);
+	void		push(const std::string str, const int id);
+	void		push(const std::string str, const int id, const int cpair);
+	void		change(const std::string str, const int id, const int index);
 	bool		read_party(int index);	// パーティ読み込み
 	void		write_party(int index);	// パーティ書き込み
 
@@ -45,7 +45,7 @@ public:
 protected:
 	void	warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示
 
-	std::vector<CString>	m_list;		// 要素
+	std::vector<std::string>	m_list;		// 要素
 	std::vector<int>	m_cp;		// 色
 	std::vector<int>	m_index;	// 値
 	int	m_maxwidth;		// リスト文字列の最大幅

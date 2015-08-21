@@ -16,16 +16,16 @@ CWinMsg::~CWinMsg()
 
 int CWinMsg::drawwin()
 {
-	CString	strbuf;
+	std::string	strbuf;
 
 	strbuf = m_msg;
 	for ( ; ; )
 	{
 		clearwin();
 
-		strbuf = strbuf.Sub(m_dpos, strbuf.Len());
+		strbuf = strbuf.substr(m_dpos, strbuf.length());
 		m_dpos = setmessage_n(1, 1, strbuf);
-		if (m_dpos >= strbuf.Len())	break;
+		if (m_dpos >= strbuf.length())	break;
 	}
 
 	return true;

@@ -307,7 +307,7 @@ void CWinMapEditor::keyloop()
 				mapfp = new CFile;
 				// マップ番号を入力する
 				nw_getpath = new CWinGetPath;
-				nw_getpath->settitle(CString(msg[MY_MSG_SYS_INP_MAPNO].msg));
+				nw_getpath->settitle(std::string(msg[MY_MSG_SYS_INP_MAPNO].msg));
 				m_path = nw_getpath->startdialog(true);
 				m_path = "data/qwert123/map/" + m_path;
 				delete(nw_getpath);
@@ -352,7 +352,7 @@ void CWinMapEditor::keyloop()
 				for (int i = 0; i < MAX_FNAME; i++)
 				{
 					sprintf(tmp_str, "%02d", i);
-					nw_editvalue->push(CString(tmp_str), &m_fieldname[i], TT_CST, 1);
+					nw_editvalue->push(std::string(tmp_str), &m_fieldname[i], TT_CST, 1);
 				}
 				nw_editvalue->startwin(true);
 				delete(nw_editvalue);
@@ -464,10 +464,10 @@ void CWinMapEditor::keyloop()
 							if (posi == -1)
 							{
 								nw_getpath = new CWinGetPath();
-								nw_getpath->settitle(CString(msg[MY_MSG_SYS_INP_SPOS].msg));
-								CString spos = nw_getpath->startdialog(true);
+								nw_getpath->settitle(std::string(msg[MY_MSG_SYS_INP_SPOS].msg));
+								std::string spos = nw_getpath->startdialog(true);
 								delete(nw_getpath);
-								posi = atoi(LPCSTR(spos));
+								posi = atoi(spos.c_str());
 								if (posi < 0 || posi >= MAX_SPPOS)
 								{
 									posi = -1;

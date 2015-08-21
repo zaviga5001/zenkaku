@@ -7,9 +7,9 @@
 #include <time.h>
 #include <signal.h>
 #include <vector>
+#include <string>
 #include <ncurses.h>
 #include "Windows.h"
-#include "CString.h"
 
 class CWinSelect1Line : public CWindows
 {
@@ -18,8 +18,8 @@ public:
 	virtual ~CWinSelect1Line();
 
 	virtual int	drawwin();
-	void		push(const CString str, const int id);
-	void		push(const CString str, const int id, const int cpair);
+	void		push(const std::string str, const int id);
+	void		push(const std::string str, const int id, const int cpair);
 
 	Pos	m_wpos;			// ウィンドウ上の表示位置
 
@@ -33,7 +33,7 @@ public:
 	int	m_disable_cansel;	// キャンセルボタンが効くかどうか
 
 protected:
-	std::vector<CString>	m_list;		// 要素
+	std::vector<std::string>	m_list;		// 要素
 	std::vector<int>	m_cp;		// 色
 	std::vector<int>	m_index;	// 値
 	int	m_maxwidth;		// リスト文字列の最大幅

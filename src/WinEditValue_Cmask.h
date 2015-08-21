@@ -7,9 +7,9 @@
 #include <time.h>
 #include <signal.h>
 #include <vector>
+#include <string>
 #include <ncurses.h>
 #include "Windows.h"
-#include "CString.h"
 
 class CWinEditValue_Cmask : public CWinEditValue
 {

@@ -8,11 +8,10 @@ CFile::~CFile()
 {
 }
 
-void CFile::read_cfg(const CString fname, CConfig* config)
+void CFile::read_cfg(const std::string fname, CConfig* config)
 {
-	const char* fn = LPCSTR(fname);
 	std::map<std::string, std::string> data;
-	std::fstream in(fn, std::ios::in);
+	std::fstream in(fname.c_str(), std::ios::in);
 	if( in.fail() ){
 		fprintf(stderr, "WARN:file001:Read failure(zenkakurc)\n");
 		return;
@@ -33,14 +32,13 @@ void CFile::read_cfg(const CString fname, CConfig* config)
 	iss >> config->m_title;
 }
 
-ScnList CFile::read_scenario_list(const CString fname)
+ScnList CFile::read_scenario_list(const std::string fname)
 {
 	ScnList	tmp_scn;
 	tmp_scn.id = 1;
 
-	const char* fn = LPCSTR(fname);
 	std::map<std::string, std::string> data;
-	std::fstream in(fn, std::ios::in);
+	std::fstream in(fname.c_str(), std::ios::in);
 	if( in.fail() ){
 		fprintf(stderr, "WARN:file002:Read failure(scenario)\n");
 		tmp_scn.id = 0;
@@ -69,7 +67,7 @@ int CFile::read_mychar(CData* data)
 	FILE*	fp;
 	char	tmp_buf[1024];
 
-	fp = fopen(data->m_scn.mychar[0], "r");
+	fp = fopen(data->m_scn.mychar[0].c_str(), "r");
 	if (fp == NULL)	return 0;
 
 	fread(&data->m_mychar[0].id,	sizeof(int),		1, fp);
@@ -138,7 +136,7 @@ int CFile::read_mychar(CData* data)
 bool CFile::write_mychar(CData* data)
 {
 	FILE*	fp;
-	fp = fopen(data->m_scn.mychar[0], "w");
+	fp = fopen(data->m_scn.mychar[0].c_str(), "w");
 	if (fp == NULL)	return 0;
 
 	fwrite(&data->m_mychar[0].id,	sizeof(int),		1, fp);
@@ -176,9 +174,9 @@ bool CFile::write_mychar(CData* data)
 	fwrite(&data->m_mychar[0].skillexp,sizeof(BYTE),	MAX_TYPE * MAX_SKILL, fp);
 	fwrite(&data->m_mychar[0].curse,sizeof(BYTE),		MAX_TYPE, fp);
 
-	fwrite((LPCSTR)data->m_mychar[0].name,	sizeof(char),	data->m_mychar[0].name.Len(), fp);
+	fwrite(data->m_mychar[0].name.c_str(),	sizeof(char),	data->m_mychar[0].name.capacity(), fp);
 	fwrite( ":", sizeof(char), 1, fp);
-	fwrite((LPCSTR)data->m_mychar[0].prof,	sizeof(char),	data->m_mychar[0].prof.Len(), fp);
+	fwrite(data->m_mychar[0].prof.c_str(),	sizeof(char),	data->m_mychar[0].prof.capacity(), fp);
 	fwrite( ":", sizeof(char), 1, fp);
 
 	fclose(fp);
@@ -238,8 +236,8 @@ bool CFile::write_enemy(CData* data, const int index)
 
 	fseek(fp, 440 * index, 0);
 
-	fwrite((LPCSTR)data->m_enemy[index].name,	sizeof(char),		data->m_enemy[index].name.Len(), fp);
-	fwrite(&nullbuf,				sizeof(char),		MAX_ENEMYNAME - data->m_enemy[index].name.Len(), fp);
+	fwrite(data->m_enemy[index].name.c_str(),	sizeof(char),		data->m_enemy[index].name.capacity(), fp);
+	fwrite(&nullbuf,				sizeof(char),		MAX_ENEMYNAME - data->m_enemy[index].name.capacity(), fp);
 	fwrite(&data->m_enemy[index].type,		sizeof(BYTE),		1, fp);
 	fwrite(&data->m_enemy[index].status,		sizeof(enum e_status),	1, fp);
 	fwrite(&data->m_enemy[index].hp,		sizeof(EnemyValue),	1, fp);
@@ -257,8 +255,8 @@ bool CFile::write_enemy(CData* data, const int index)
 	fwrite(&data->m_enemy[index].flg,		sizeof(int),		1, fp);
 	fwrite(&data->m_enemy[index].next_enemy,	sizeof(int),		1, fp);
 	fwrite(&data->m_enemy[index].call_enemy,	sizeof(int),		ENEMY_CALL, fp);
-	fwrite((LPCSTR)data->m_enemy[index].prof,	sizeof(char),		data->m_enemy[index].prof.Len(), fp);
-	fwrite(&nullbuf,				sizeof(char),		MAX_ENEMYPROF - data->m_enemy[index].prof.Len(), fp);
+	fwrite(data->m_enemy[index].prof.c_str(),	sizeof(char),		data->m_enemy[index].prof.capacity(), fp);
+	fwrite(&nullbuf,				sizeof(char),		MAX_ENEMYPROF - data->m_enemy[index].prof.capacity(), fp);
 
 	fclose(fp);
 
@@ -268,7 +266,8 @@ bool CFile::write_enemy(CData* data, const int index)
 int CFile::read_party(CData* data, const int index)
 {
 	FILE*	fp;
-	fp = fopen("data/" + data->m_scn.path + "/party.dat", "r");
+	std::string tmppath = "data/" + data->m_scn.path + "/party.dat";
+	fp = fopen(tmppath.c_str(), "r");
 	if (fp == NULL)	return 0;
 
 	if (fseek(fp, sizeof(EnemyParty) * index, SEEK_SET) == 0)
@@ -292,7 +291,8 @@ int CFile::read_party(CData* data, const int index)
 bool CFile::write_party(CData* data, const int index)
 {
 	FILE*	fp;
-	fp = fopen("data/" + data->m_scn.path + "/party.dat", "r+");
+	std::string tmppath = "data/" + data->m_scn.path + "/party.dat";
+	fp = fopen(tmppath.c_str(), "r+");
 	if (fp == NULL)	return 0;
 
 	fseek(fp, sizeof(EnemyParty) * index, 0);
@@ -313,12 +313,13 @@ int CFile::read_pg(CData* data, const int index)
 	EnemyPG		tmp_pg;
 	EnemyPGValue	tmp_pgv;
 	char		tmp_buf[10];
-	CString		tmp_cs;
+	std::string	tmp_cs;
 
 	sprintf(tmp_buf, "/p%03d.dat", index);
 	tmp_cs = tmp_buf;
+	tmp_cs = "data/" + data->m_scn.path + tmp_cs;
 
-	fp = fopen("data/" + data->m_scn.path + tmp_cs, "r");
+	fp = fopen(tmp_cs.c_str(), "r");
 	if (fp == NULL)	return 0;
 
 	while(!feof(fp))
@@ -344,12 +345,13 @@ bool CFile::write_pg(CData* data, const int index)
 {
 	FILE*		fp;
 	char		tmp_buf[12];
-	CString		tmp_cs;
+	std::string		tmp_cs;
 
 	sprintf(tmp_buf, "/p%03d.dat", index);
 	tmp_cs = tmp_buf;
+	tmp_cs = "data/" + data->m_scn.path + tmp_cs;
 
-	fp = fopen("data/" + data->m_scn.path + tmp_cs, "w");
+	fp = fopen(tmp_cs.c_str(), "w");
 	if (fp == NULL)	return 0;
 
 	for (int i = 0; i < data->m_enemypg[index].elm.size(); i++)
@@ -367,7 +369,8 @@ bool CFile::read_event(CData* data)
 	FILE*	fp;
 	EventData	tmp_ev;
 
-	fp = fopen("data/" + data->m_scn.path + "/event.dat", "r");
+	std::string tmppath = "data/" + data->m_scn.path + "/event.dat";
+	fp = fopen(tmppath.c_str(), "r");
 	if (fp == NULL)	return 0;
 
 	while(!feof(fp))
@@ -388,7 +391,8 @@ bool CFile::read_event(CData* data)
 bool CFile::write_event(CData* data, const int index)
 {
 	FILE*	fp;
-	fp = fopen("data/" + data->m_scn.path + "/event.dat", "r+");
+	std::string tmppath = "data/" + data->m_scn.path + "/event.dat";
+	fp = fopen(tmppath.c_str(), "r+");
 	if (fp == NULL)	return 0;
 
 	fseek(fp, sizeof(EventData) * index, 0);
@@ -449,7 +453,7 @@ bool CFile::write_item(CData* data)
 
 	for (int i = 0; i < data->m_itemnum; i++)
 	{
-		fwrite((LPCSTR)data->m_item[i].name,sizeof(char),	data->m_item[i].name.Len(), fp);
+		fwrite(data->m_item[i].name.c_str(),sizeof(char),	data->m_item[i].name.capacity(), fp);
 		fwrite(":",			sizeof(char),		1, fp);
 		fwrite(&data->m_item[i].type,	sizeof(enum e_item),	1, fp);
 		fwrite(&data->m_item[i].price,	sizeof(int),		1, fp);
@@ -466,12 +470,13 @@ bool CFile::read_shop(CData* data, const int index)
 	ShopData	tmp_sh;
 	ShopValue	tmp_shv;
 	char		tmp_buf[1024];
-	CString		tmp_cs;
+	std::string	tmp_cs;
 
 	sprintf(tmp_buf, "/s%03d.dat", index);
 	tmp_cs = tmp_buf;
+	tmp_cs = "data/" + data->m_scn.path + tmp_cs;
 
-	fp = fopen("data/" + data->m_scn.path + tmp_cs, "r");
+	fp = fopen(tmp_cs.c_str(), "r");
 	if (fp == NULL)	return 0;
 
 	for (int i = 0; ; i++)
@@ -503,15 +508,16 @@ bool CFile::write_shop(CData* data, const int index)
 {
 	FILE*		fp;
 	char		tmp_buf[12];
-	CString		tmp_cs;
+	std::string	tmp_cs;
 
 	sprintf(tmp_buf, "/s%03d.dat", index);
 	tmp_cs = tmp_buf;
+	tmp_cs = "data/" + data->m_scn.path + tmp_cs;
 
-	fp = fopen("data/" + data->m_scn.path + tmp_cs, "w");
+	fp = fopen(tmp_cs.c_str(), "w");
 	if (fp == NULL)	return 0;
 
-	fwrite((LPCSTR)data->m_shop.name,	sizeof(char),		data->m_shop.name.Len(), fp);
+	fwrite(data->m_shop.name.c_str(),	sizeof(char),		data->m_shop.name.capacity(), fp);
 	fwrite(":",				sizeof(char),		1, fp);
 	fwrite(&data->m_shop.type,		sizeof(enum e_shop),	1, fp);
 
@@ -531,7 +537,8 @@ bool CFile::read_mess(CData* data)
 	char		tmp_buf[1024];
 	int		i;
 
-	fp = fopen("data/" + data->m_scn.path + "/mess.dat", "r");
+	std::string tmppath = "data/" + data->m_scn.path + "/mess.dat";
+	fp = fopen(tmppath.c_str(), "r");
 	if (fp == NULL)	return 0;
 
 	while(!feof(fp))
@@ -562,12 +569,13 @@ bool CFile::read_mess(CData* data)
 bool CFile::write_mess(CData* data)
 {
 	FILE*		fp;
-	fp = fopen("data/" + data->m_scn.path + "/mess.dat", "w");
+	std::string tmppath = "data/" + data->m_scn.path + "/mess.dat";
+	fp = fopen(tmppath.c_str(), "w");
 	if (fp == NULL)	return 0;
 
 	for (int i = 0; i < data->m_messnum; i++)
 	{
-		fwrite((LPCSTR)data->m_mess[i].msg,	sizeof(char),	data->m_mess[i].msg.Len(), fp);
+		fwrite(data->m_mess[i].msg.c_str(),	sizeof(char),	data->m_mess[i].msg.capacity(), fp);
 		fwrite(":",				sizeof(char),	1, fp);
 	}
 
@@ -575,50 +583,45 @@ bool CFile::write_mess(CData* data)
 	return(true);
 }
 
-MapData CFile::get_map_size(const CString fname)
+MapData CFile::get_map_size(const std::string fname)
 {
-	CString fname_t = fname + ".txt";
-	CString fname_b = fname + ".bin";
-	FILE*	fp;
 	MapData	size;
-	CString tmp_cs;
-	tmp_cs.setDefaultCharset(CString::EUC_JP);
-
 	size.height = 0;
 	size.width  = 0;
-	fp = fopen(fname_t, "r");
-	if (fp == NULL)	return(size);
-	while(1)
-        {       // 行単位ループ
-		if(tmp_cs.ReadLine(fp) == EOF)        break;
-		size.height++;
-		if (tmp_cs.Len() > size.width)		size.width = tmp_cs.Len();
+	std::string fname_t = fname + ".txt";
+	std::ifstream ifs(fname_t.c_str());
+	std::string str;
+	if (ifs.fail())
+	{
+		std::cerr << "失敗" << std::endl;
+		return(size);
 	}
-	fclose(fp);
-
-	size.width /= 2;
-
+	while (getline(ifs, str))
+	{
+		size.height++;
+		if (str.length() > size.width)		size.width = str.length();
+	}
 	return(size);
 }
 
-int CFile::read_map(const CString fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, CString* fieldname)
+int CFile::read_map(const std::string fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, std::string* fieldname)
 {
-	FILE*	fp;
-	CString fname_t = fname + ".txt";
-	CString fname_b = fname + ".bin";
-	CString tmp_cs;
-	tmp_cs.setDefaultCharset(CString::EUC_JP);
+/*	FILE*	fp;
+	std::string fname_t = fname + ".txt";
+	std::string fname_b = fname + ".bin";
+	std::string tmp_cs;
+	//tmp_cs.setDefaultCharset(std::string::EUC_JP);
 	int	i, j, k, num = 0, flg;
 
-	fp = fopen(fname_b, "r");
+	fp = fopen(fname_b.c_str(), "r");
 	if (fp == NULL)
 	{ // タイルファイルなし マップから新規作成
-		fp = fopen(fname_t, "r");
+		fp = fopen(fname_t.c_str(), "r");
 		if (fp == NULL)	return 0;	// タイルもマップもなし
 		for (k = 0; ; k++)
         	{ // 行単位ループ
 			if(tmp_cs.ReadLine(fp) == EOF)        break;
-			for(i = 0; i < tmp_cs.Len(); i = i + 2)
+			for(i = 0; i < tmp_cs.length(); i = i + 2)
 			{ // 文字単位ループ
 				flg = false;
 				for(j = 0; j < num; j++)
@@ -705,15 +708,17 @@ int CFile::read_map(const CString fname, MapData* mapdata, PosData* posdata, Pos
 	fclose(fp);
 
 	return(num);	// タイルの数を返す
+*/
+	return(0);	// タイルの数を返す
 }
 
-bool CFile::write_map(const CString fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, CString* fieldname, int tilenum)
+bool CFile::write_map(const std::string fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, std::string* fieldname, int tilenum)
 {
-	FILE*	fp;
-	CString fname_b = fname + ".bin";
+/*	FILE*	fp;
+	std::string fname_b = fname + ".bin";
 	bool	ret;
 
-	fp = fopen(fname_b, "w");
+	fp = fopen(fname_b.c_str(), "w");
 	if (fp != NULL)
 	{
 		// 書き出し
@@ -730,7 +735,7 @@ bool CFile::write_map(const CString fname, MapData* mapdata, PosData* posdata, P
 		for (int i = 0; i < MAX_FNAME; i++)
 		{
 			if (fieldname[i] == "　")	break;
-			fwrite((LPCSTR)fieldname[i], sizeof(char), fieldname[i].Len(), fp);
+			fwrite(fieldname[i].c_str(), sizeof(char), fieldname[i].capacity(), fp);
 			fwrite( ":", sizeof(char), 1, fp);
 		}
 
@@ -743,35 +748,38 @@ bool CFile::write_map(const CString fname, MapData* mapdata, PosData* posdata, P
 	}
 
 	return(ret);
+*/
+	return(0);
 }
 
 
-CString CFile::input_path_dialog()
+std::string CFile::input_path_dialog()
 {
-	CString retstr;
+	std::string retstr;
 
 	CWinGetPath*	win;
 	win = new CWinGetPath;
-	win->settitle(CString(msg[MY_MSG_SYS_INP_PATH].msg));
+	win->settitle(std::string(msg[MY_MSG_SYS_INP_PATH].msg));
 	retstr = win->startdialog(true);
 	delete(win);
 	return (retstr);
 }
 
-void CFile::mychop(CString& cs)
+void CFile::mychop(std::string& cs)
 {
-	// スペース、タブ、'#'以降を取り除く
+/*	// スペース、タブ、'#'以降を取り除く
 	int i;
 	i = cs.Find("#");
 	if (i > NOT_FOUND)	cs = cs.Left(i);
-	if (cs.Len() > 0)	cs = cs.Replace(" ", "", SSF_ALL);
-	if (cs.Len() > 0)	cs = cs.Replace("\t", "", SSF_ALL);
+	if (cs.length() > 0)	cs = cs.Replace(" ", "", SSF_ALL);
+	if (cs.length() > 0)	cs = cs.Replace("\t", "", SSF_ALL);
+*/
 }
 
 /*
-void CFile::readcsv(const CString cs, CList<int>* cl)
+void CFile::readcsv(const std::string cs, CList<int>* cl)
 {
-	CString tmp_cs = cs;
+	std::string tmp_cs = cs;
 	int	tmp_num;
 	bool	flg = false;
 
@@ -780,7 +788,7 @@ void CFile::readcsv(const CString cs, CList<int>* cl)
 		tmp_num = tmp_cs.Find(",");			// 探す
 		if (tmp_num == NOT_FOUND)
 		{
-			tmp_num = tmp_cs.Len();			// なかったら、文字列全部を対象にする
+			tmp_num = tmp_cs.length();			// なかったら、文字列全部を対象にする
 			flg = true;				// なかったら、処理後終了する
 		}
 

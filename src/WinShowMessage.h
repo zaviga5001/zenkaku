@@ -7,9 +7,9 @@
 #include <time.h>
 #include <signal.h>
 #include <vector>
+#include <string>
 #include <ncurses.h>
 #include "Windows.h"
-#include "CString.h"
 
 #define		TYPE_AUTO	0
 #define		TYPE_SCROLL	1
@@ -23,8 +23,8 @@ public:
 	virtual int	drawwin();
 	int		drawmsg();
 	int		drawitem();
-	void		push(const CString str, const int id);
-	void		push(const CString str, const int id, const int cpair);
+	void		push(const std::string str, const int id);
+	void		push(const std::string str, const int id, const int cpair);
 
 	Pos	m_wpos;			// ウィンドウ上の表示位置
 
@@ -40,15 +40,15 @@ public:
 					// 0:自動表示タイプ
 					// 1:スクロールタイプ
 
-	CString	m_msg;			// メッセージ
+	std::string	m_msg;			// メッセージ
 	int	m_split;		// スプリッタの位置
 
 protected:
-	std::vector<CString>	m_list;		// 要素
-	std::vector<CString>	m_pause;	// メッセージ一時停止用
+	std::vector<std::string>	m_list;		// 要素
+	std::vector<std::string>	m_pause;	// メッセージ一時停止用
 	std::vector<int>	m_cp;		// 色
 	std::vector<int>	m_index;	// 値
-	std::vector<CString>	m_msgvct;	// メッセージ
+	std::vector<std::string>	m_msgvct;	// メッセージ
 	int	m_maxwidth;		// リスト文字列の最大幅
 	Pos	m_cur;			// カーソルの位置
 	Pos	m_dpos;			// リストの表示開始位置（横長対応）

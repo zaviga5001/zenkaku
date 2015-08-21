@@ -90,8 +90,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) CString.$(OBJEXT) \
-	CString_st.$(OBJEXT) CString_stin.$(OBJEXT) Config.$(OBJEXT) \
+am_zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) Config.$(OBJEXT) \
 	Data.$(OBJEXT) File.$(OBJEXT) Game.$(OBJEXT) Hash.$(OBJEXT) \
 	Title.$(OBJEXT) WinEditValue.$(OBJEXT) \
 	WinEditValue_Cmask.$(OBJEXT) WinEditValue_Event.$(OBJEXT) \
@@ -104,7 +103,8 @@ am_zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) CString.$(OBJEXT) \
 	WinPartyEditor.$(OBJEXT) WinScenarioEditor.$(OBJEXT) \
 	WinSelect1Icon.$(OBJEXT) WinSelect1Item.$(OBJEXT) \
 	WinSelect1Line.$(OBJEXT) WinShopEditor.$(OBJEXT) \
-	WinShowMessage.$(OBJEXT) WinTitle.$(OBJEXT) Windows.$(OBJEXT)
+	WinShowMessage.$(OBJEXT) WinTitle.$(OBJEXT) Windows.$(OBJEXT) \
+	MyStr.$(OBJEXT)
 zenkaku_OBJECTS = $(am_zenkaku_OBJECTS)
 zenkaku_LDADD = $(LDADD)
 zenkaku_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(zenkaku_LDFLAGS) \
@@ -268,26 +268,25 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-zenkaku_SOURCES = main.cpp CDate.cpp CString.cpp CString_st.cpp \
-	CString_stin.cpp Config.cpp Data.cpp File.cpp Game.cpp \
-	Hash.cpp Title.cpp WinEditValue.cpp WinEditValue_Cmask.cpp \
-	WinEditValue_Event.cpp WinEditValue_Flg.cpp \
-	WinEditValue_Pos.cpp WinEditValue_Tile.cpp WinEnemyEditor.cpp \
-	WinEventEditor.cpp WinGetPath.cpp WinItemEditor.cpp \
-	WinMapEditor.cpp WinMessageEditor.cpp WinMsg.cpp \
-	WinMycharEditor.cpp WinPGEditor.cpp WinPartyEditor.cpp \
-	WinScenarioEditor.cpp WinSelect1Icon.cpp WinSelect1Item.cpp \
-	WinSelect1Line.cpp WinShopEditor.cpp WinShowMessage.cpp \
-	WinTitle.cpp Windows.cpp CDate.h CHashTable.h CString.h \
-	Config.h Data.h File.h Game.h Hash.h Title.h WinEditValue.h \
-	WinEditValue_Cmask.h WinEditValue_Event.h WinEditValue_Flg.h \
-	WinEditValue_Pos.h WinEditValue_Tile.h WinEnemyEditor.h \
-	WinEventEditor.h WinGetPath.h WinItemEditor.h WinMapEditor.h \
-	WinMessageEditor.h WinMsg.h WinMycharEditor.h WinPGEditor.h \
-	WinPartyEditor.h WinScenarioEditor.h WinSelect1Icon.h \
-	WinSelect1Item.h WinSelect1Line.h WinShopEditor.h \
-	WinShowMessage.h WinTitle.h Windows.h common.h main.h msg.h \
-	win.h
+zenkaku_SOURCES = main.cpp CDate.cpp Config.cpp Data.cpp File.cpp \
+	Game.cpp Hash.cpp Title.cpp WinEditValue.cpp \
+	WinEditValue_Cmask.cpp WinEditValue_Event.cpp \
+	WinEditValue_Flg.cpp WinEditValue_Pos.cpp \
+	WinEditValue_Tile.cpp WinEnemyEditor.cpp WinEventEditor.cpp \
+	WinGetPath.cpp WinItemEditor.cpp WinMapEditor.cpp \
+	WinMessageEditor.cpp WinMsg.cpp WinMycharEditor.cpp \
+	WinPGEditor.cpp WinPartyEditor.cpp WinScenarioEditor.cpp \
+	WinSelect1Icon.cpp WinSelect1Item.cpp WinSelect1Line.cpp \
+	WinShopEditor.cpp WinShowMessage.cpp WinTitle.cpp Windows.cpp \
+	CDate.h CHashTable.h Config.h Data.h File.h Game.h Hash.h \
+	Title.h WinEditValue.h WinEditValue_Cmask.h \
+	WinEditValue_Event.h WinEditValue_Flg.h WinEditValue_Pos.h \
+	WinEditValue_Tile.h WinEnemyEditor.h WinEventEditor.h \
+	WinGetPath.h WinItemEditor.h WinMapEditor.h WinMessageEditor.h \
+	WinMsg.h WinMycharEditor.h WinPGEditor.h WinPartyEditor.h \
+	WinScenarioEditor.h WinSelect1Icon.h WinSelect1Item.h \
+	WinSelect1Line.h WinShopEditor.h WinShowMessage.h WinTitle.h \
+	Windows.h common.h main.h msg.h win.h MyStr.cpp MyStr.h
 zenkaku_LDFLAGS = -lncursesw
 all: all-am
 
@@ -377,14 +376,12 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CDate.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CString.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CString_st.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CString_stin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Config.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Data.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/File.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Game.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Hash.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MyStr.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Title.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/WinEditValue.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/WinEditValue_Cmask.Po@am__quote@

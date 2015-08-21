@@ -7,9 +7,9 @@
 #include <time.h>
 #include <signal.h>
 #include <vector>
+#include <string>
 #include <ncurses.h>
 #include "Windows.h"
-#include "CString.h"
 #include "Config.h"
 #include "Data.h"
 #include "File.h"
@@ -32,7 +32,7 @@ public:
 
 	int		read_mychar();		// マイキャラ読み込み
 
-	CString		m_path;			// データ格納パス
+	std::string	m_path;			// データ格納パス
 	int		m_mcnum;		// マイキャラデータの数
 
 	CData*		m_data;			// ゲーム内のあらゆる情報

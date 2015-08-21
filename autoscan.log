@@ -1,0 +1,4 @@
+autoscan: warning: missing AC_CHECK_FUNCS([setlocale]) wanted by: 
+	src/main.cpp:19
+autoscan: warning: missing AC_CHECK_HEADERS([locale.h]) wanted by: 
+	src/main.cpp:5

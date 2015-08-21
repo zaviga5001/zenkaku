@@ -25,24 +25,24 @@ CWinSelect1Item::~CWinSelect1Item()
 
 int CWinSelect1Item::drawwin()
 {
-	if (m_msg.Len() > 0)	setmessage_n(1, 1, m_msg);
+	if (m_msg.length() > 0)	setmessage_n(1, 1, m_msg);
 	if (m_split > 0)	splitwin(m_split);
 	setselect(m_wpos.x, m_wpos.y, &m_cur.x, &m_dpos.x, m_list, m_cp);
 	return true;
 }
 
-void CWinSelect1Item::push(const CString str, const int id)
+void CWinSelect1Item::push(const std::string str, const int id)
 {
 	push(str, id, m_cpair);
 }
-void CWinSelect1Item::push(const CString str, const int id, const int cpair)
+void CWinSelect1Item::push(const std::string str, const int id, const int cpair)
 {
 	m_list.push_back(str);
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.Len())
-		m_maxwidth = str.Len() / 2;
+	if (adjx(m_maxwidth) < str.length())
+		m_maxwidth = str.length() / 2;
 }
 
 bool CWinSelect1Item::onkeypress_left()

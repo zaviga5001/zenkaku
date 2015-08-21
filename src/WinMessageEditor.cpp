@@ -28,8 +28,11 @@ CWinMessageEditor::CWinMessageEditor(CConfig* config)
 	{
 		char tmp_buf[6];
 		sprintf(tmp_buf, "%05d", i);
-		
-		push(CString(tmp_buf) + ":" + m_data->m_mess[i].msg, i);
+
+		std::string tmp_str;
+		tmp_str = std::string(tmp_buf) + ":" + m_data->m_mess[i].msg;
+
+		push(tmp_str.c_str(), i);
 	}
 	push("新規作成", m_data->m_messnum);
 }
@@ -45,29 +48,29 @@ int CWinMessageEditor::drawwin()
 	return true;
 }
 
-void CWinMessageEditor::push(const CString str, const int id)
+void CWinMessageEditor::push(const std::string str, const int id)
 {
 	push(str, id, m_cpair);
 }
-void CWinMessageEditor::push(const CString str, const int id, const int cpair)
+void CWinMessageEditor::push(const std::string str, const int id, const int cpair)
 {
 	m_list.push_back(str);
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.Len())
-		m_maxwidth = str.Len() / 2;
+	if (adjx(m_maxwidth) < str.length())
+		m_maxwidth = str.length() / 2;
 }
-void CWinMessageEditor::change(const CString str, const int id, const int index)
+void CWinMessageEditor::change(const std::string str, const int id, const int index)
 {
 	m_list[index] = str;
 	m_index[index] = id;
 
 	m_maxwidth = 0;
-	for (int i = 0; i < m_list[i].Len(); i++)
+	for (int i = 0; i < m_list[i].length(); i++)
 	{
-		if (adjx(m_maxwidth) < m_list[i].Len())
-			m_maxwidth = m_list[i].Len() / 2;
+		if (adjx(m_maxwidth) < m_list[i].length())
+			m_maxwidth = m_list[i].length() / 2;
 	}
 }
 
@@ -193,7 +196,7 @@ bool CWinMessageEditor::onkeypress_ok()
 		nw_getpath->setsize(400, 200);
 
 		sprintf(tmp_buf, "%06d", m_cur.y);
-		nw_getpath->settitle(CString(tmp_buf));
+		nw_getpath->settitle(std::string(tmp_buf));
 
 		tmp_ms->msg = nw_getpath->startdialog(true);
 		delete(nw_getpath);
@@ -218,7 +221,7 @@ bool CWinMessageEditor::onkeypress_ok()
 		else if (tmp_ret == 1)
 		{
 			sprintf(tmp_buf, "%05d", m_cur.y);
-			change(CString(tmp_buf) + ":" + tmp_ms->msg, m_cur.y, m_cur.y);
+			change(std::string(tmp_buf) + ":" + tmp_ms->msg, m_cur.y, m_cur.y);
 			if (m_cur.y == m_data->m_messnum)
 			{ // 新規追加だった
 				m_data->m_messnum++;
@@ -242,7 +245,7 @@ bool CWinMessageEditor::onkeypress_cancel()
 
 
 
-void CWinMessageEditor::warn(CString tmp_msg)
+void CWinMessageEditor::warn(std::string tmp_msg)
 {
 	CWinMsg*	nw_msg;
 	nw_msg = new CWinMsg;
@@ -256,11 +259,11 @@ void CWinMessageEditor::warn(enum msg_id tmp_msg)
 {
 	warn(msg[tmp_msg].msg);
 }
-void CWinMessageEditor::warn(CString tmp_msg, int num)
+void CWinMessageEditor::warn(std::string tmp_msg, int num)
 {
 	char		tmp_str[128];
 	sprintf(tmp_str, "%d", num);
-	warn(tmp_msg + ":" + CString(tmp_str));
+	warn(tmp_msg + ":" + std::string(tmp_str));
 }
 
 

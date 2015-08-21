@@ -31,18 +31,18 @@ int CWinSelect1Icon::drawwin()
 	return true;
 }
 
-void CWinSelect1Icon::push(const CString str, const int id)
+void CWinSelect1Icon::push(const std::string str, const int id)
 {
 	push(str, m_cpair, id);
 }
-void CWinSelect1Icon::push(const CString str, const int cpair, const int id)
+void CWinSelect1Icon::push(const std::string str, const int cpair, const int id)
 {
 	m_list.push_back(str);
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.Len())
-	m_maxwidth = str.Len() / 2;
+	if (adjx(m_maxwidth) < str.length())
+	m_maxwidth = str.length() / 2;
 }
 
 bool CWinSelect1Icon::onkeypress_left()

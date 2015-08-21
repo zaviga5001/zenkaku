@@ -29,18 +29,18 @@ int CWinSelect1Line::drawwin()
 	return true;
 }
 
-void CWinSelect1Line::push(const CString str, const int id)
+void CWinSelect1Line::push(const std::string str, const int id)
 {
 	push(str, id, m_cpair);
 }
-void CWinSelect1Line::push(const CString str, const int id, const int cpair)
+void CWinSelect1Line::push(const std::string str, const int id, const int cpair)
 {
 	m_list.push_back(str);
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.Len())
-		m_maxwidth = str.Len() / 2;
+	if (adjx(m_maxwidth) < str.length())
+		m_maxwidth = str.length() / 2;
 }
 
 bool CWinSelect1Line::onkeypress_left()
@@ -64,7 +64,7 @@ bool CWinSelect1Line::onkeypress_up()
 bool CWinSelect1Line::onkeypress_right()
 {
 	// 個々のラインの右端までスクロール
-	//if (m_list[m_cur.y].Len() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
+	//if (m_list[m_cur.y].length() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
 	// 最大長ラインの右端までスクロール
 	if (m_winw - m_wpos.x - 1 + m_dpos.x < m_maxwidth)	m_dpos.x++;
 	drawwin();

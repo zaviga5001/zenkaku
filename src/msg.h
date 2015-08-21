@@ -35,7 +35,7 @@ typedef	struct {
 } MsgData;
 
 static MsgData	msg[MY_MSG_DUMMY + 1] = {
-	#include	"msg.euc"
+	#include	"msg.utf8"
 };
 
 

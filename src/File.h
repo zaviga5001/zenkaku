@@ -7,10 +7,10 @@
 #include <time.h>
 #include <signal.h>
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <sstream>
 #include <map>
-#include "CString.h"
 
 #include "Config.h"
 #include "win.h"
@@ -21,7 +21,7 @@ public:
 	CFile();
 	virtual ~CFile();
 
-	void	read_cfg(const CString fname, CConfig* config);
+	void	read_cfg(const std::string fname, CConfig* config);
 
 	int	read_mychar(CData* data);
 	bool	write_mychar(CData* data);
@@ -47,17 +47,17 @@ public:
 	bool	read_mess(CData* data);
 	bool	write_mess(CData* data);
 
-	MapData	get_map_size(const CString fname);
-	int	read_map(const CString fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, CString* fieldname);
-	bool	write_map(const CString fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, CString* fieldname, int tilenum);
+	MapData	get_map_size(const std::string fname);
+	int	read_map(const std::string fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, std::string* fieldname);
+	bool	write_map(const std::string fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, std::string* fieldname, int tilenum);
 
-	ScnList	read_scenario_list(const CString fname);
+	ScnList	read_scenario_list(const std::string fname);
 
-	CString	input_path_dialog();
+	std::string	input_path_dialog();
 
 protected:
-	void	mychop(CString& cs);
-	//void	readcsv(const CString cs, CList<int>* cl);
+	void	mychop(std::string& cs);
+	//void	readcsv(const std::string cs, CList<int>* cl);
 
 private:
 

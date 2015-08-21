@@ -26,7 +26,7 @@ CWinPartyEditor::CWinPartyEditor(CConfig* config)
 
 		char tmp_buf[6];
 		sprintf(tmp_buf, "%05d", m_partynum_in_file);
-		push(CString(tmp_buf), m_partynum_in_file);
+		push(std::string(tmp_buf), m_partynum_in_file);
 	}
 	push("新規作成", m_partynum_in_file);
 }
@@ -42,29 +42,29 @@ int CWinPartyEditor::drawwin()
 	return true;
 }
 
-void CWinPartyEditor::push(const CString str, const int id)
+void CWinPartyEditor::push(const std::string str, const int id)
 {
 	push(str, id, m_cpair);
 }
-void CWinPartyEditor::push(const CString str, const int id, const int cpair)
+void CWinPartyEditor::push(const std::string str, const int id, const int cpair)
 {
 	m_list.push_back(str);
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.Len())
-		m_maxwidth = str.Len() / 2;
+	if (adjx(m_maxwidth) < str.length())
+		m_maxwidth = str.length() / 2;
 }
-void CWinPartyEditor::change(const CString str, const int id, const int index)
+void CWinPartyEditor::change(const std::string str, const int id, const int index)
 {
 	m_list[index] = str;
 	m_index[index] = id;
 
 	m_maxwidth = 0;
-	for (int i = 0; i < m_list[i].Len(); i++)
+	for (int i = 0; i < m_list[i].length(); i++)
 	{
-		if (adjx(m_maxwidth) < m_list[i].Len())
-			m_maxwidth = m_list[i].Len() / 2;
+		if (adjx(m_maxwidth) < m_list[i].length())
+			m_maxwidth = m_list[i].length() / 2;
 	}
 }
 
@@ -148,7 +148,7 @@ bool CWinPartyEditor::onkeypress_up()
 bool CWinPartyEditor::onkeypress_right()
 {
 	// 個々のラインの右端までスクロール
-	//if (m_list[m_cur.y].Len() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
+	//if (m_list[m_cur.y].length() / 2 - m_dpos.x > m_winw - 2)	m_dpos.x++;
 	// 最大長ラインの右端までスクロール
 	if (m_winw - m_wpos.x - 1 + m_dpos.x < m_maxwidth)	m_dpos.x++;
 	drawwin();

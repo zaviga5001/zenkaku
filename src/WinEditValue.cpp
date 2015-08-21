@@ -28,11 +28,11 @@ int CWinEditValue::drawwin()
 	return true;
 }
 
-void CWinEditValue::push(const CString str, void * ptr, const int chr, const int num)
+void CWinEditValue::push(const std::string str, void * ptr, const int chr, const int num)
 {
 	push(str, ptr, chr, num, m_cpair);
 }
-void CWinEditValue::push(const CString str, void * ptr, const int chr, const int num, const int cpair)
+void CWinEditValue::push(const std::string str, void * ptr, const int chr, const int num, const int cpair)
 {
 	m_name.push_back(str);
 	m_ptr.push_back(ptr);
@@ -42,14 +42,14 @@ void CWinEditValue::push(const CString str, void * ptr, const int chr, const int
 	m_cp.push_back(cpair);
 }
 
-CString CWinEditValue::encode(void * ptr, const int chr, const int num)
+std::string CWinEditValue::encode(void * ptr, const int chr, const int num)
 {
 	char	tmp_buf[256];
 
 	switch(chr)
 	{
 		case TT_CST:
-			return (*(CString*)ptr);
+			return (*(std::string*)ptr);
 			break;
 		case TT_SPC:
 			tmp_buf[0] = 0;
@@ -84,35 +84,35 @@ CString CWinEditValue::encode(void * ptr, const int chr, const int num)
 		default:
 			break;
 	}
-	return (CString(tmp_buf));
+	return (std::string(tmp_buf));
 }
 
-void CWinEditValue::decode(CString* str, void *ptr, const int chr)
+void CWinEditValue::decode(std::string* str, void *ptr, const int chr)
 {
 	switch(chr)
 	{
 		case TT_CST:
-			*(CString*)ptr = *(CString*)str;
+			*(std::string*)ptr = *(std::string*)str;
 			break;
 		case TT_BYT:
-			*(BYTE*)ptr = atoi(LPCSTR(*str));
+			*(BYTE*)ptr = atoi(str->c_str());
 			break;
 		case TT_CHR:
-			*(char*)ptr = atoi(LPCSTR(*str));
+			*(char*)ptr = atoi(str->c_str());
 			break;
 		case TT_STR:
-			memcpy(ptr, *str, str->Len());
+			memcpy(ptr, str->c_str(), str->length());
 			break;
 		case TT_INT:
-			*(int*)ptr = atoi(LPCSTR(*str));
+			*(int*)ptr = atoi(str->c_str());
 		case TT_UINT:
-			*(int*)ptr = atoi(LPCSTR(*str));
+			*(int*)ptr = atoi(str->c_str());
 			break;
 		case TT_SHT:
-			*(short*)ptr = atoi(LPCSTR(*str));
+			*(short*)ptr = atoi(str->c_str());
 			break;
 		case TT_LNG:
-			*(long*)ptr = atol(LPCSTR(*str));
+			*(long*)ptr = atol(str->c_str());
 			break;
 		default:
 			break;

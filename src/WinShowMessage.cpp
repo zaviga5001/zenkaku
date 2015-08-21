@@ -34,7 +34,7 @@ int CWinShowMessage::drawwin()
 	splitwin(m_split);
 
 	int dpos = 0, len = 0;
-	for (i = 0; i < m_msg.Len(); )
+	for (i = 0; i < m_msg.length(); )
 	{
 		if (m_msg[i] == 'k')
 		{	// キー入力待ち記号
@@ -44,7 +44,7 @@ int CWinShowMessage::drawwin()
 		if (m_msg[i] == 'p' || m_msg[i] == 'n')
 		{	// 改ページ記号 改行記号
 			i++;
-			m_msgvct.push_back(m_msg.Sub(dpos, i));
+			m_msgvct.push_back(m_msg.substr(dpos, i));
 			dpos = i;
 			len = 0;
 			continue;
@@ -52,7 +52,7 @@ int CWinShowMessage::drawwin()
 		if (len >= m_drawarea.x)
 		{	// 表示エリアの右端まで到達
 			i++;
-			m_msgvct.push_back(m_msg.Sub(dpos, i));
+			m_msgvct.push_back(m_msg.substr(dpos, i));
 			dpos = i;
 			len = 0;
 			continue;
@@ -71,7 +71,7 @@ int CWinShowMessage::drawwin()
 		len += 2;
 		i   += 2;
 	}
-	if (dpos < i)	m_msgvct.push_back(m_msg.Sub(dpos, i));
+	if (dpos < i)	m_msgvct.push_back(m_msg.substr(dpos, i));
 
 	setmessage_n(1, 1, m_msg);
 	return true;
@@ -86,7 +86,7 @@ int CWinShowMessage::drawmsg()
 		// スクロールポジション調整
 		if (m_type == TYPE_SCROLL && i < m_dpos.y)	continue;
 
-		for (int j = 0; j < m_msgvct[i].Len(); j++)
+		for (int j = 0; j < m_msgvct[i].length(); j++)
 		{
 			if (m_msgvct[i][j] == 'k')
 			{	// キー入力待ち記号
@@ -124,7 +124,7 @@ int CWinShowMessage::drawmsg()
 			if (len >= m_drawarea.x)
 			{	// 表示エリアの右端まで到達
 				i++;
-				m_msgvct.push_back(m_msg.Sub(dpos, i));
+				m_msgvct.push_back(m_msg.substr(dpos, i));
 				dpos = i;
 				len = 0;
 				continue;
@@ -155,18 +155,18 @@ int CWinShowMessage::drawitem()
 	return true;
 }
 
-void CWinShowMessage::push(const CString str, const int id)
+void CWinShowMessage::push(const std::string str, const int id)
 {
 	push(str, id, m_cpair);
 }
-void CWinShowMessage::push(const CString str, const int id, const int cpair)
+void CWinShowMessage::push(const std::string str, const int id, const int cpair)
 {
 	m_list.push_back(str);
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.Len())
-		m_maxwidth = str.Len() / 2;
+	if (adjx(m_maxwidth) < str.length())
+		m_maxwidth = str.length() / 2;
 }
 
 bool CWinShowMessage::onkeypress_left()

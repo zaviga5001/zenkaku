@@ -8,8 +8,8 @@
 #include <signal.h>
 #include <vector>
 #include <ncurses.h>
+#include <string>
 #include "Windows.h"
-#include "CString.h"
 
 class CWinEditValue : public CWindows
 {
@@ -18,8 +18,8 @@ public:
 	virtual ~CWinEditValue();
 
 	virtual int	drawwin();
-	void		push(const CString str, void * ptr, const int chr, const int num);
-	void		push(const CString str, void * ptr, const int chr, const int num, const int cpair);
+	void		push(const std::string str, void * ptr, const int chr, const int num);
+	void		push(const std::string str, void * ptr, const int chr, const int num, const int cpair);
 
 	Pos	m_wpos;			// ウィンドウ上の表示位置
 
@@ -33,11 +33,11 @@ public:
 	int	m_disable_cansel;	// キャンセルボタンが効くかどうか
 
 protected:
-	CString	encode(void* ptr, const int chr, const int num);
-	void	decode(CString* str, void* ptr, const int chr);
+	std::string	encode(void* ptr, const int chr, const int num);
+	void	decode(std::string* str, void* ptr, const int chr);
 
-	std::vector<CString>	m_name;	// 要素名
-	std::vector<CString>	m_value;// 値（文字列変換）
+	std::vector<std::string>	m_name;	// 要素名
+	std::vector<std::string>	m_value;// 値（文字列変換）
 	std::vector<void*>	m_ptr;	// ポインタ
 	std::vector<int>	m_my_tt;// 変数の型
 	std::vector<int>	m_size;	// 配列の個数

@@ -7,9 +7,9 @@
 #include <time.h>
 #include <signal.h>
 #include <vector>
+#include <string>
 #include <ncurses.h>
 #include "Windows.h"
-#include "CString.h"
 #include "Config.h"
 #include "Data.h"
 
@@ -42,7 +42,7 @@ public:
 	// マップデータ
 	Pos		m_dpos;			// パッド上の表示領域左上
 	Pos		m_cur;			// カーソル位置
-	CString		m_path;			// ファイル名
+	std::string	m_path;			// ファイル名
 	MapData		m_mapdata;		// マップに付随するデータ
 	PosData*	m_posdata;		// ポジションに付随するデータ
 	PosData		m_spposdata[MAX_SPPOS];	// スペシャルポジションに付随するデータ
@@ -50,7 +50,7 @@ public:
 	int		m_tilenum;		// タイルの種類
 	PosEvent	m_pevent[MAX_MAPEVENT];	// ポイントイベントデータベース
 	PosEvent	m_sevent[MAX_MAPEVENT];	// ストップイベントデータベース
-	CString		m_fieldname[MAX_FNAME];	// 地名
+	std::string	m_fieldname[MAX_FNAME];	// 地名
 
 	PosData		m_posbuf;		// ポジションデータコピー用バッファ
 	PosData		m_posundobuf;		// ポジションデータUNDO用バッファ

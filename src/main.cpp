@@ -4,17 +4,21 @@
 #include <unistd.h>
 #include <locale.h>
 #include <ncurses.h>
-#include "CString.h"
+#include <sstream>
+#include <string>
 
-#include "main.h"
 #include "common.h"
+#include "main.h"
 
 
 
 
 int main(int argc, char *argv[])
 {
+	using namespace std;
 	setlocale(LC_ALL, "");
+
+//	main_debug();
 
 	// パス取得
 	get_zenkaku_home();
@@ -56,7 +60,7 @@ int main(int argc, char *argv[])
 	}
 
 	// 設定ファイル読み込み
-	CString	fname = ZENKAKURC;
+	std::string	fname = ZENKAKURC;
 	CFile*	zenkakurc;
 	zenkakurc	= new CFile;
 	if (zenkakurc == NULL)
@@ -108,7 +112,7 @@ int main(int argc, char *argv[])
 	game->main();
 	// 終了
 	delete game;
-
+	
 	// 端末復帰
 	endwin();
 	return 0;
@@ -116,6 +120,8 @@ int main(int argc, char *argv[])
 
 bool init_cpairs()
 {
+	using namespace std;
+
 	int i, j, num = 0;
 
 	// カラーテーブル
@@ -142,6 +148,8 @@ bool init_cpairs()
 
 void get_zenkaku_home()
 {
+	using namespace std;
+
 	int i;
 	char buf[1024];
 	memset(buf, 0, 1024);
@@ -154,16 +162,55 @@ void get_zenkaku_home()
 	zenkaku_home = buf;
 	
 #ifdef	DEBUG
-	fprintf(stderr, "DEBUG:zenkaku_home=" + zenkaku_home + "\n");
+	cerr << "DEBUG:zenkaku_home=" << zenkaku_home << endl;
 #endif
 }
 
 void get_user_home()
 {
+	using namespace std;
+
 	user_home = getenv("HOME");
 
 #ifdef	DEBUG
-	fprintf(stderr, "DEBUG:user_home=" + user_home + "\n");
+	cerr << "DEBUG:user_home=" << user_home << endl;
 #endif
 }
 
+
+void main_debug()
+{
+	using namespace std;
+
+	string str1 = "あいうえお";
+	string str2 = "ABCDE";
+	string str3 = "ABCDEあいうえお";
+	string str4 = "あAいBうCえDおE";
+	string str5 = "あいうK1えお";
+
+	cout << str1 << endl;
+	cout << str2 << endl;
+	cout << str3 << endl;
+	cout << str4 << endl;
+	cout << str5 << endl;
+
+	cout << mystd::to_string(str1.length()) << endl;
+	cout << mystd::to_string(str2.length()) << endl;
+	cout << mystd::to_string(str3.length()) << endl;
+	cout << mystd::to_string(str4.length()) << endl;
+	cout << mystd::to_string(str5.length()) << endl;
+
+	cout << mystd::to_string(CMyStr::length(str1)) << endl;
+	cout << mystd::to_string(CMyStr::length(str2)) << endl;
+	cout << mystd::to_string(CMyStr::length(str3)) << endl;
+	cout << mystd::to_string(CMyStr::length(str4)) << endl;
+	cout << mystd::to_string(CMyStr::length(str5)) << endl;
+
+	cout << CMyStr::substr(str1, 2, 2) << endl;
+	cout << CMyStr::substr(str2, 1, 3) << endl;
+	cout << CMyStr::substr(str3, 3, 1) << endl;
+	cout << CMyStr::substr(str4, 3, 4) << endl;
+	cout << CMyStr::substr(str5, 3, 2) << endl;
+
+	getchar();
+}

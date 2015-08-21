@@ -2,10 +2,10 @@
 
 CWinTitle::CWinTitle()
 {
-	m_winx = 1;
-	m_winy = 1;
-	m_winw = 20;
-	m_winh = 10;
+	m_winx = 0;
+	m_winy = 0;
+	m_winw = 40;
+	m_winh = 24;
 }
 
 CWinTitle::~CWinTitle()
