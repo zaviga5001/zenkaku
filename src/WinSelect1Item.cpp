@@ -48,7 +48,7 @@ void CWinSelect1Item::push(const std::string str, const int id, const int cpair)
 bool CWinSelect1Item::onkeypress_left()
 {
 	if (m_cur.x > 0)	m_cur.x--;
-	drawwin();
+	setselect(m_wpos.x, m_wpos.y, &m_cur.x, &m_dpos.x, m_list, m_cp);
 	return true;	// キーループ継続
 }
 bool CWinSelect1Item::onkeypress_down()
@@ -62,7 +62,7 @@ bool CWinSelect1Item::onkeypress_up()
 bool CWinSelect1Item::onkeypress_right()
 {
 	if (m_cur.x < m_list.size() - 1)      m_cur.x++;
-	drawwin();
+	setselect(m_wpos.x, m_wpos.y, &m_cur.x, &m_dpos.x, m_list, m_cp);
 	return true;	// キーループ継続
 }
 bool CWinSelect1Item::onkeypress_ok()

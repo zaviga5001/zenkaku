@@ -254,20 +254,20 @@ int CWindows::setmessage_n(int x, int y, std::string message, int cpair)
 			keyloop();
 			continue;
 		}
-		if (messvect[i].compare("p") == 0)
+		else if (messvect[i].compare("p") == 0)
 		{	// 改ページ記号
 			keyloop();
 			i++;
 			break;
 		}
-		if (messvect[i].compare("n") == 0)
+		else if (messvect[i].compare("n") == 0)
 		{	// 改行記号
 			// 改行
 			i++;
 			dposx = 0;
 			y++;
 		}
-		if (messvect[i].compare("t") == 0)
+		else if (messvect[i].compare("t") == 0)
 		{	// ウェイトタイム記号
 			std::string tmpwait;
 			tmpwait = messvect[i+1] + messvect[i+2] + messvect[i+3];
@@ -275,7 +275,7 @@ int CWindows::setmessage_n(int x, int y, std::string message, int cpair)
 			i += 3;
 			continue;
 		}
-		if (messvect[i].compare("c") == 0)
+		else if (messvect[i].compare("c") == 0)
 		{	// 色指定記号
 			int tmp_ch, tmp_bg;
 			if (messvect[i + 1].compare("c") == 0)
@@ -298,6 +298,7 @@ int CWindows::setmessage_n(int x, int y, std::string message, int cpair)
 			i += 2;
 			continue;
 		}
+
 		if (adjx(x) + dposx >= adjx(m_winw - 1))
 		{	// ウィンドゥの右端まで到達
 			// 改行
