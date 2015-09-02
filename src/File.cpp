@@ -27,9 +27,8 @@ void CFile::read_cfg(const std::string fname, CConfig* config)
 	}
 
 	// 設定値の取り出し
-	std::string &value = data["title"];
-	std::istringstream iss(value);
-	iss >> config->m_title;
+	config->m_mode  = atoi(data["mode"].c_str());
+	config->m_title = atoi(data["title"].c_str());
 }
 
 ScnList CFile::read_scenario_list(const std::string fname)

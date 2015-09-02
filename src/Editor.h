@@ -1,5 +1,5 @@
-#ifndef CGAME_H
-#define CGAME_H
+#ifndef CEDITOR_H
+#define CEDITOR_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -11,14 +11,14 @@
 #include "win.h"
 #include "Config.h"
 
-class CGame
+class CEditor
 {
 public:
-	CGame();
-	CGame(CConfig* config);
-	virtual ~CGame();
+	CEditor();
+	CEditor(CConfig* config);
+	virtual ~CEditor();
 
-	bool	main();			// ゲームループ
+	bool	main();			// メインループ
 
 	CConfig* m_config;		// コンフィグ
 
@@ -27,4 +27,4 @@ protected:
 private:
 
 };
-#endif // CGAME_H
+#endif // CEDITOR_H

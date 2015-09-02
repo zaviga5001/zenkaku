@@ -104,7 +104,7 @@ am_zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) Config.$(OBJEXT) \
 	WinSelect1Icon.$(OBJEXT) WinSelect1Item.$(OBJEXT) \
 	WinSelect1Line.$(OBJEXT) WinShopEditor.$(OBJEXT) \
 	WinShowMessage.$(OBJEXT) WinTitle.$(OBJEXT) Windows.$(OBJEXT) \
-	MyStr.$(OBJEXT)
+	MyStr.$(OBJEXT) Editor.$(OBJEXT)
 zenkaku_OBJECTS = $(am_zenkaku_OBJECTS)
 zenkaku_LDADD = $(LDADD)
 zenkaku_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(zenkaku_LDFLAGS) \
@@ -286,7 +286,8 @@ zenkaku_SOURCES = main.cpp CDate.cpp Config.cpp Data.cpp File.cpp \
 	WinMsg.h WinMycharEditor.h WinPGEditor.h WinPartyEditor.h \
 	WinScenarioEditor.h WinSelect1Icon.h WinSelect1Item.h \
 	WinSelect1Line.h WinShopEditor.h WinShowMessage.h WinTitle.h \
-	Windows.h common.h main.h msg.h win.h MyStr.cpp MyStr.h
+	Windows.h common.h main.h msg.h win.h MyStr.cpp MyStr.h \
+	Editor.cpp Editor.h
 zenkaku_LDFLAGS = -lncursesw
 all: all-am
 
@@ -378,6 +379,7 @@ distclean-compile:
 include ./$(DEPDIR)/CDate.Po
 include ./$(DEPDIR)/Config.Po
 include ./$(DEPDIR)/Data.Po
+include ./$(DEPDIR)/Editor.Po
 include ./$(DEPDIR)/File.Po
 include ./$(DEPDIR)/Game.Po
 include ./$(DEPDIR)/Hash.Po

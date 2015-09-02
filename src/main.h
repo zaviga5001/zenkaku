@@ -4,9 +4,10 @@
 #include "File.h"
 #include "Title.h"
 #include "Game.h"
+#include "Editor.h"
 
 
-#define	ZENKAKURC	"/home/randy/.zenkaku/zenkakurc"
+#define	ZENKAKURC	"~/.zenkaku/zenkakurc"
 
 
 int		main(int argc, char *argv[]);

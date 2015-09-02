@@ -2,6 +2,9 @@
 
 CGame::CGame(CConfig* config)
 {
+	// コンフィグ格納
+	m_config = config;
+
 	// 乱数の種
 	srand(time(NULL));
 

@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	}
 
 	// 設定ファイル読み込み
-	std::string	fname = ZENKAKURC;
+	std::string	fname = user_home + "/.zenkaku/zenkakurc";
 	CFile*	zenkakurc;
 	zenkakurc	= new CFile;
 	if (zenkakurc == NULL)
@@ -99,19 +99,38 @@ int main(int argc, char *argv[])
 	// タイトル画面ポインタ解放
 	delete title;
 
-	// ゲーム作成
-	CGame*	game;
-	game = new CGame(config);
-	if (game == NULL)
-	{
-		fprintf(stderr, "ERROR:main010:Out of Memory error(game)\n");
-		endwin();
-		return 0;
+	if (config->m_mode == 0)
+	{	// Game
+		// ゲーム作成
+		CGame*	game;
+		game = new CGame(config);
+		if (game == NULL)
+		{
+			fprintf(stderr, "ERROR:main010:Out of Memory error(game)\n");
+			endwin();
+			return 0;
+		}
+		// ゲームスタート
+		game->main();
+		// 終了
+		delete game;
 	}
-	// ゲームスタート
-	game->main();
-	// 終了
-	delete game;
+	else
+	{	// Editor
+		// エディタ作成
+		CEditor*	editor;
+		editor = new CEditor(config);
+		if (editor == NULL)
+		{
+			fprintf(stderr, "ERROR:main011:Out of Memory error(editor)\n");
+			endwin();
+			return 0;
+		}
+		// エディタスタート
+		editor->main();
+		// 終了
+		delete editor;
+	}
 	
 	// 端末復帰
 	endwin();
