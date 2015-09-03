@@ -10,20 +10,22 @@ CFile::~CFile()
 
 void CFile::read_cfg(const std::string fname, CConfig* config)
 {
+	config->m_mode  = 0;
+
 	std::map<std::string, std::string> data;
-	std::fstream in(fname.c_str(), std::ios::in);
-	if( in.fail() ){
-		fprintf(stderr, "WARN:file001:Read failure(zenkakurc)\n");
+	std::ifstream ifs(fname.c_str());
+	if( ifs.fail() ){
+		std::cerr << "WARN:file001:Read failure(zenkakurc)" << std::endl;
 		return;
 	}
 
-	char buf[512];
-	while (in.getline(buf, 512)){
+	std::string buf, key, value;
+	while (std::getline(ifs, buf)){
 		std::istringstream iss(buf);
-		std::string key, value;
 		iss >> key >> value;
+		if(key[0] == '#')	continue;
 		if(key.length() != 0 && value.length() != 0)
-		data[key] = value;
+			data[key] = value;
 	}
 
 	// 設定値の取り出し
@@ -37,148 +39,213 @@ ScnList CFile::read_scenario_list(const std::string fname)
 	tmp_scn.id = 1;
 
 	std::map<std::string, std::string> data;
-	std::fstream in(fname.c_str(), std::ios::in);
-	if( in.fail() ){
-		fprintf(stderr, "WARN:file002:Read failure(scenario)\n");
+	std::ifstream ifs(fname.c_str());
+	if( ifs.fail() ){
+		std::cerr << "WARN:file002:Read failure(scenario)" << std::endl;
 		tmp_scn.id = 0;
 		return(tmp_scn);
 	}
 
-	char buf[10000];
-	while (in.getline(buf, 10000)){
+	std::string buf, key, value;
+	while (std::getline(ifs, buf)){
 		std::istringstream iss(buf);
-		std::string key, value;
 		iss >> key >> value;
+		if(key[0] == '#')	continue;
 		if(key.length() != 0 && value.length() != 0)
 		data[key] = value;
 	}
 
 	// 設定値の取り出し
-	tmp_scn.name = data["scenario"].c_str();
-	tmp_scn.doc = data["doc"].c_str();
+	tmp_scn.name = data["scenario"];
+	tmp_scn.doc = data["doc"];
 
 	return(tmp_scn);
 }
 
 
-int CFile::read_mychar(CData* data)
+bool CFile::read_mychar(CData* data, int id)
 {
-	FILE*	fp;
-	char	tmp_buf[1024];
-
-	fp = fopen(data->m_scn.mychar[0].c_str(), "r");
-	if (fp == NULL)	return 0;
-
-	fread(&data->m_mychar[0].id,	sizeof(int),		1, fp);
-	fread(&data->m_mychar[0].race,	sizeof(enum e_race),	1, fp);
-	fread(&data->m_mychar[0].job,	sizeof(enum e_job),	1, fp);
-	fread(&data->m_mychar[0].gender,sizeof(enum e_gender),	1, fp);
-	fread( data->m_mychar[0].tile,	sizeof(char),		2, fp);
-	fread(&data->m_mychar[0].ch,	sizeof(char),		1, fp);
-	fread(&data->m_mychar[0].bg,	sizeof(char),		1, fp);
-	fread(&data->m_mychar[0].type,	sizeof(BYTE),		1, fp);
-	fread(&data->m_mychar[0].status,sizeof(enum e_status),	1, fp);
-	fread(&data->m_mychar[0].level,	sizeof(char),		1, fp);
-	fread(&data->m_mychar[0].exp,	sizeof(int),		1, fp);
-	fread(&data->m_mychar[0].hp,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].sp,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].ap,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].gp,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].mp,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].ep,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].fp,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].dp,	sizeof(MyCharValue),	1, fp);
-	fread(&data->m_mychar[0].rweapon,sizeof(short),		1, fp);
-	fread(&data->m_mychar[0].lweapon,sizeof(short),		1, fp);
-	fread(&data->m_mychar[0].helm,	sizeof(short),		1, fp);
-	fread(&data->m_mychar[0].armor,	sizeof(short),		1, fp);
-	fread(&data->m_mychar[0].mant,	sizeof(short),		1, fp);
-	fread(&data->m_mychar[0].boots,	sizeof(short),		1, fp);
-	fread( data->m_mychar[0].equip,	sizeof(short),		MAX_EQUIP, fp);
-	fread(&data->m_mychar[0].food,	sizeof(BYTE),		1, fp);
-	fread(&data->m_mychar[0].magic,	sizeof(BYTE),		MAX_TYPE * MAX_MAGIC, fp);
-	fread(&data->m_mychar[0].magicexp,sizeof(BYTE),		MAX_TYPE * MAX_MAGIC, fp);
-	fread(&data->m_mychar[0].fight,	sizeof(BYTE),		MAX_TYPE * MAX_FIGHT, fp);
-	fread(&data->m_mychar[0].fightexp,sizeof(BYTE),		MAX_TYPE * MAX_FIGHT, fp);
-	fread(&data->m_mychar[0].skill,	sizeof(BYTE),		MAX_TYPE * MAX_SKILL, fp);
-	fread(&data->m_mychar[0].skillexp,sizeof(BYTE),		MAX_TYPE * MAX_SKILL, fp);
-	fread(&data->m_mychar[0].curse,	sizeof(BYTE),		MAX_TYPE, fp);
-
-	for (int j = 0; j < 1024; j++)
-	{
-		if (feof(fp))	break;
-		fread(&tmp_buf[j], sizeof(char), 1, fp);
-		if (tmp_buf[j] == ':')
-		{
-			tmp_buf[j] = 0;
-			data->m_mychar[0].name = tmp_buf;
-			break;
-		}
-	}
-	for (int j = 0; j < 1024; j++)
-	{
-		if (feof(fp))	break;
-		fread(&tmp_buf[j], sizeof(char), 1, fp);
-		if (tmp_buf[j] == ':')
-		{
-			tmp_buf[j] = 0;
-			data->m_mychar[0].prof = tmp_buf;
-			break;
-		}
+	std::ifstream ifs(data->m_scn.mychar[id].c_str());
+	if( ifs.fail() ){
+		std::cerr << "WARN:file003:Read failure(mychar)" << std::endl;
+		return(0);
 	}
 
-	fclose(fp);
+	std::string buf[1000];
+	int count = 0;
+	for (int i = 0; std::getline(ifs, buf[i]); i++){};
+
+	data->m_mychar[id].id		= atoi(buf[count++].c_str());
+	data->m_mychar[id].race		= (e_race)atoi(buf[count++].c_str());
+	data->m_mychar[id].job		= (e_job)atoi(buf[count++].c_str());
+	data->m_mychar[id].gender	= (e_gender)atoi(buf[count++].c_str());
+	data->m_mychar[id].name		= buf[count++];
+	data->m_mychar[id].tile		= buf[count++];
+	data->m_mychar[id].ch		= atoi(buf[count++].c_str());
+	data->m_mychar[id].bg		= atoi(buf[count++].c_str());
+	data->m_mychar[id].type		= atoi(buf[count++].c_str());
+	data->m_mychar[id].status	= (e_status)atoi(buf[count++].c_str());
+	data->m_mychar[id].level	= atoi(buf[count++].c_str());
+	data->m_mychar[id].exp		= atoi(buf[count++].c_str());
+	data->m_mychar[id].hp.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].hp.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].hp.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].sp.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].sp.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].sp.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].ap.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].ap.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].ap.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].gp.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].gp.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].gp.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].mp.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].mp.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].mp.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].ep.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].ep.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].ep.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].fp.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].fp.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].fp.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].dp.p		= atoi(buf[count++].c_str());
+	data->m_mychar[id].dp.t		= atoi(buf[count++].c_str());
+	data->m_mychar[id].dp.m		= atoi(buf[count++].c_str());
+	data->m_mychar[id].rweapon	= atoi(buf[count++].c_str());
+	data->m_mychar[id].lweapon	= atoi(buf[count++].c_str());
+	data->m_mychar[id].helm		= atoi(buf[count++].c_str());
+	data->m_mychar[id].armor	= atoi(buf[count++].c_str());
+	data->m_mychar[id].mant		= atoi(buf[count++].c_str());
+	data->m_mychar[id].boots	= atoi(buf[count++].c_str());
+	for (int i = 0; i < MAX_EQUIP; i++){
+		data->m_mychar[id].equip[i]	= atoi(buf[count++].c_str());
+	}
+	data->m_mychar[id].food		= atoi(buf[count++].c_str());
+
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_MAGIC; j++){
+			data->m_mychar[id].magic[i][j]	= atoi(buf[count++].c_str());
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_MAGIC; j++){
+			data->m_mychar[id].magicexp[i][j]	= atoi(buf[count++].c_str());
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			data->m_mychar[id].fight[i][j]	= atoi(buf[count++].c_str());
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			data->m_mychar[id].fightexp[i][j]	= atoi(buf[count++].c_str());
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_SKILL; j++){
+			data->m_mychar[id].skill[i][j]	= atoi(buf[count++].c_str());
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_SKILL; j++){
+			data->m_mychar[id].skillexp[i][j]	= atoi(buf[count++].c_str());
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		data->m_mychar[id].curse[i]	= atoi(buf[count++].c_str());
+	}
+	data->m_mychar[id].prof		= buf[count++];
 
 	return(1);
 }
 
-bool CFile::write_mychar(CData* data)
+bool CFile::write_mychar(CData* data, int id)
 {
-	FILE*	fp;
-	fp = fopen(data->m_scn.mychar[0].c_str(), "w");
-	if (fp == NULL)	return 0;
+	std::ofstream ofs(data->m_scn.mychar[id].c_str());
+	if( ofs.fail() ){
+		std::cerr << "WARN:file004:Write failure(mychar)" << std::endl;
+		return(0);
+	}
 
-	fwrite(&data->m_mychar[0].id,	sizeof(int),		1, fp);
-	fwrite(&data->m_mychar[0].race,	sizeof(enum e_race),	1, fp);
-	fwrite(&data->m_mychar[0].job,	sizeof(enum e_job),	1, fp);
-	fwrite(&data->m_mychar[0].gender,sizeof(enum e_gender),	1, fp);
-	fwrite( data->m_mychar[0].tile,	sizeof(char),		2, fp);
-	fwrite(&data->m_mychar[0].ch,	sizeof(char),		1, fp);
-	fwrite(&data->m_mychar[0].bg,	sizeof(char),		1, fp);
-	fwrite(&data->m_mychar[0].type,	sizeof(BYTE),		1, fp);
-	fwrite(&data->m_mychar[0].status,sizeof(enum e_status),	1, fp);
-	fwrite(&data->m_mychar[0].level,sizeof(char),		1, fp);
-	fwrite(&data->m_mychar[0].exp,	sizeof(int),		1, fp);
-	fwrite(&data->m_mychar[0].hp,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].sp,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].ap,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].gp,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].mp,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].ep,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].fp,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].dp,	sizeof(MyCharValue),	1, fp);
-	fwrite(&data->m_mychar[0].rweapon,sizeof(short),	1, fp);
-	fwrite(&data->m_mychar[0].lweapon,sizeof(short),	1, fp);
-	fwrite(&data->m_mychar[0].helm,	sizeof(short),		1, fp);
-	fwrite(&data->m_mychar[0].armor,sizeof(short),		1, fp);
-	fwrite(&data->m_mychar[0].mant,	sizeof(short),		1, fp);
-	fwrite(&data->m_mychar[0].boots,sizeof(short),		1, fp);
-	fwrite( data->m_mychar[0].equip,sizeof(short),		MAX_EQUIP, fp);
-	fwrite(&data->m_mychar[0].food,	sizeof(BYTE),		1, fp);
-	fwrite(&data->m_mychar[0].magic,sizeof(BYTE),		MAX_TYPE * MAX_MAGIC, fp);
-	fwrite(&data->m_mychar[0].magicexp,sizeof(BYTE),	MAX_TYPE * MAX_MAGIC, fp);
-	fwrite(&data->m_mychar[0].fight,sizeof(BYTE),		MAX_TYPE * MAX_FIGHT, fp);
-	fwrite(&data->m_mychar[0].fightexp,sizeof(BYTE),	MAX_TYPE * MAX_FIGHT, fp);
-	fwrite(&data->m_mychar[0].skill,sizeof(BYTE),		MAX_TYPE * MAX_SKILL, fp);
-	fwrite(&data->m_mychar[0].skillexp,sizeof(BYTE),	MAX_TYPE * MAX_SKILL, fp);
-	fwrite(&data->m_mychar[0].curse,sizeof(BYTE),		MAX_TYPE, fp);
-
-	fwrite(data->m_mychar[0].name.c_str(),	sizeof(char),	data->m_mychar[0].name.capacity(), fp);
-	fwrite( ":", sizeof(char), 1, fp);
-	fwrite(data->m_mychar[0].prof.c_str(),	sizeof(char),	data->m_mychar[0].prof.capacity(), fp);
-	fwrite( ":", sizeof(char), 1, fp);
-
-	fclose(fp);
+	ofs << data->m_mychar[id].id << std::endl;
+	ofs << data->m_mychar[id].race << std::endl;
+	ofs << data->m_mychar[id].job << std::endl;
+	ofs << data->m_mychar[id].gender << std::endl;
+	ofs << data->m_mychar[id].name << std::endl;
+	ofs << data->m_mychar[id].tile << std::endl;
+	ofs << data->m_mychar[id].ch << std::endl;
+	ofs << data->m_mychar[id].bg << std::endl;
+	ofs << data->m_mychar[id].type << std::endl;
+	ofs << data->m_mychar[id].status << std::endl;
+	ofs << data->m_mychar[id].level << std::endl;
+	ofs << data->m_mychar[id].exp << std::endl;
+	ofs << data->m_mychar[id].hp.p << std::endl;
+	ofs << data->m_mychar[id].hp.t << std::endl;
+	ofs << data->m_mychar[id].hp.m << std::endl;
+	ofs << data->m_mychar[id].sp.p << std::endl;
+	ofs << data->m_mychar[id].sp.t << std::endl;
+	ofs << data->m_mychar[id].sp.m << std::endl;
+	ofs << data->m_mychar[id].ap.p << std::endl;
+	ofs << data->m_mychar[id].ap.t << std::endl;
+	ofs << data->m_mychar[id].ap.m << std::endl;
+	ofs << data->m_mychar[id].gp.p << std::endl;
+	ofs << data->m_mychar[id].gp.t << std::endl;
+	ofs << data->m_mychar[id].gp.m << std::endl;
+	ofs << data->m_mychar[id].mp.p << std::endl;
+	ofs << data->m_mychar[id].mp.t << std::endl;
+	ofs << data->m_mychar[id].mp.m << std::endl;
+	ofs << data->m_mychar[id].ep.p << std::endl;
+	ofs << data->m_mychar[id].ep.t << std::endl;
+	ofs << data->m_mychar[id].ep.m << std::endl;
+	ofs << data->m_mychar[id].fp.p << std::endl;
+	ofs << data->m_mychar[id].fp.t << std::endl;
+	ofs << data->m_mychar[id].fp.m << std::endl;
+	ofs << data->m_mychar[id].dp.p << std::endl;
+	ofs << data->m_mychar[id].dp.t << std::endl;
+	ofs << data->m_mychar[id].dp.m << std::endl;
+	ofs << data->m_mychar[id].rweapon << std::endl;
+	ofs << data->m_mychar[id].lweapon << std::endl;
+	ofs << data->m_mychar[id].helm << std::endl;
+	ofs << data->m_mychar[id].armor << std::endl;
+	ofs << data->m_mychar[id].mant << std::endl;
+	ofs << data->m_mychar[id].boots << std::endl;
+	ofs << data->m_mychar[id].equip << std::endl;
+	ofs << data->m_mychar[id].food << std::endl;
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			ofs << data->m_mychar[id].magic[i][j] << std::endl;
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			ofs << data->m_mychar[id].magicexp[i][j] << std::endl;
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			ofs << data->m_mychar[id].fight[i][j] << std::endl;
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			ofs << data->m_mychar[id].fightexp[i][j] << std::endl;
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			ofs << data->m_mychar[id].skill[i][j] << std::endl;
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		for (int j = 0; j < MAX_FIGHT; j++){
+			ofs << data->m_mychar[id].skillexp[i][j] << std::endl;
+		}
+	}
+	for (int i = 0; i < MAX_TYPE; i++){
+		ofs << data->m_mychar[id].curse[i] << std::endl;
+	}
+	ofs << data->m_mychar[id].prof << std::endl;
 
 	return(true);
 }
@@ -200,7 +267,7 @@ int CFile::read_enemy(CData* data, const int index)
 			return 0;
 		}
 		data->m_enemy[index].name = tmp_buf;
-		fread(&data->m_enemy[index].type,	sizeof(BYTE),		1, fp);
+		fread(&data->m_enemy[index].type,	sizeof(int),		1, fp);
 		fread(&data->m_enemy[index].status,	sizeof(enum e_status),	1, fp);
 		fread(&data->m_enemy[index].hp,		sizeof(EnemyValue),	1, fp);
 		fread(&data->m_enemy[index].ap,		sizeof(EnemyValue),	1, fp);
@@ -211,9 +278,9 @@ int CFile::read_enemy(CData* data, const int index)
 		fread(&data->m_enemy[index].exp,	sizeof(int),		1, fp);
 		fread(&data->m_enemy[index].gold,	sizeof(int),		1, fp);
 		fread(&data->m_enemy[index].item,	sizeof(ItemNum),	ENEMY_ITEM, fp);
-		fread(&data->m_enemy[index].item_r,	sizeof(char),		ENEMY_ITEM, fp);
-		fread(&data->m_enemy[index].fight,	sizeof(short),		ENEMY_FIGHT, fp);
-		fread(&data->m_enemy[index].fight_r,	sizeof(char),		ENEMY_FIGHT, fp);
+		fread(&data->m_enemy[index].item_r,	sizeof(int),		ENEMY_ITEM, fp);
+		fread(&data->m_enemy[index].fight,	sizeof(int),		ENEMY_FIGHT, fp);
+		fread(&data->m_enemy[index].fight_r,	sizeof(int),		ENEMY_FIGHT, fp);
 		fread(&data->m_enemy[index].flg,	sizeof(int),		1, fp);
 		fread(&data->m_enemy[index].next_enemy,	sizeof(int),		1, fp);
 		fread(&data->m_enemy[index].call_enemy,	sizeof(int),		ENEMY_CALL, fp);
@@ -237,7 +304,7 @@ bool CFile::write_enemy(CData* data, const int index)
 
 	fwrite(data->m_enemy[index].name.c_str(),	sizeof(char),		data->m_enemy[index].name.capacity(), fp);
 	fwrite(&nullbuf,				sizeof(char),		MAX_ENEMYNAME - data->m_enemy[index].name.capacity(), fp);
-	fwrite(&data->m_enemy[index].type,		sizeof(BYTE),		1, fp);
+	fwrite(&data->m_enemy[index].type,		sizeof(int),		1, fp);
 	fwrite(&data->m_enemy[index].status,		sizeof(enum e_status),	1, fp);
 	fwrite(&data->m_enemy[index].hp,		sizeof(EnemyValue),	1, fp);
 	fwrite(&data->m_enemy[index].ap,		sizeof(EnemyValue),	1, fp);
@@ -248,9 +315,9 @@ bool CFile::write_enemy(CData* data, const int index)
 	fwrite(&data->m_enemy[index].exp,		sizeof(int),		1, fp);
 	fwrite(&data->m_enemy[index].gold,		sizeof(int),		1, fp);
 	fwrite(&data->m_enemy[index].item,		sizeof(ItemNum),	ENEMY_ITEM, fp);
-	fwrite(&data->m_enemy[index].item_r,		sizeof(char),		ENEMY_ITEM, fp);
-	fwrite(&data->m_enemy[index].fight,		sizeof(short),		ENEMY_FIGHT, fp);
-	fwrite(&data->m_enemy[index].fight_r,		sizeof(char),		ENEMY_FIGHT, fp);
+	fwrite(&data->m_enemy[index].item_r,		sizeof(int),		ENEMY_ITEM, fp);
+	fwrite(&data->m_enemy[index].fight,		sizeof(int),		ENEMY_FIGHT, fp);
+	fwrite(&data->m_enemy[index].fight_r,		sizeof(int),		ENEMY_FIGHT, fp);
 	fwrite(&data->m_enemy[index].flg,		sizeof(int),		1, fp);
 	fwrite(&data->m_enemy[index].next_enemy,	sizeof(int),		1, fp);
 	fwrite(&data->m_enemy[index].call_enemy,	sizeof(int),		ENEMY_CALL, fp);
@@ -278,7 +345,7 @@ int CFile::read_party(CData* data, const int index)
 			return 0;
 		}
 		fread( data->m_enemyparty.item,		sizeof(ItemNum),	ENEMY_ITEM, fp);
-		fread( data->m_enemyparty.item_r,	sizeof(char),		ENEMY_ITEM, fp);
+		fread( data->m_enemyparty.item_r,	sizeof(int),		ENEMY_ITEM, fp);
 		fread(&data->m_enemyparty.flg,		sizeof(int),		1, fp);
 		fclose(fp);
 		return 1;
@@ -298,7 +365,7 @@ bool CFile::write_party(CData* data, const int index)
 
 	fwrite( data->m_enemyparty.enemy,	sizeof(int),		MAX_ENEMY, fp);
 	fwrite( data->m_enemyparty.item,	sizeof(ItemNum),	ENEMY_ITEM, fp);
-	fwrite( data->m_enemyparty.item_r,	sizeof(char),		ENEMY_ITEM, fp);
+	fwrite( data->m_enemyparty.item_r,	sizeof(int),		ENEMY_ITEM, fp);
 	fwrite(&data->m_enemyparty.flg,		sizeof(int),		1, fp);
 
 	fclose(fp);
@@ -592,7 +659,7 @@ MapData CFile::get_map_size(const std::string fname)
 	std::string str;
 	if (ifs.fail())
 	{
-		std::cerr << "失敗" << std::endl;
+		std::cerr << "WARN:file003 get_map_size failure" << std::endl;
 		return(size);
 	}
 	while (getline(ifs, str))

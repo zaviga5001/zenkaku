@@ -87,7 +87,7 @@ void CWinMapEditor::refreshpos(int x, int y)
 
 			int cpair = getcpair((int)m_tiledata[tileno].ch, (int)m_tiledata[tileno].bg);
 			wattrset(m_this, COLOR_PAIR(cpair));
-			mvwaddnstr(m_this, y - m_dpos.y, adjx(x - m_dpos.x), m_tiledata[tileno].tile, 2);
+			mvwaddnstr(m_this, y - m_dpos.y, adjx(x - m_dpos.x), m_tiledata[tileno].tile.c_str(), 2);
 		}
 	}
 }

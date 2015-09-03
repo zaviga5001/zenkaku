@@ -23,8 +23,8 @@ public:
 
 	void	read_cfg(const std::string fname, CConfig* config);
 
-	int	read_mychar(CData* data);
-	bool	write_mychar(CData* data);
+	bool	read_mychar(CData* data, const int index);
+	bool	write_mychar(CData* data, const int index);
 
 	int	read_enemy(CData* data, const int index);
 	bool	write_enemy(CData* data, const int index);

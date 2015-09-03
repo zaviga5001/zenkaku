@@ -18,14 +18,14 @@ typedef		unsigned char	BYTE;
 #define		FLG_BITS	128	// *32 bits個のフラグを扱える
 
 #define		MAX_MYCHAR	8	// ゲーム内のマイキャラ数
-#define		MAX_PARTY	8	// 同時にパーティに加わるマイキャラ数
+#define		MAX_PARTY	4	// 同時にパーティに加わるマイキャラ数
 #define		MAX_ITEM	128	// アイテムの所持上限（一人）
 #define		MAX_SITEM	16	// スペシャルアイテムの所持上限
 #define		MAX_STOCK	99	// １つのアイテムの所持上限
-#define		MAX_FIGHT	8	// 属性奥義の種類
-#define		MAX_MAGIC	8	// 魔法の種類
-#define		MAX_SKILL	8	// スキルの種類
 #define		MAX_TYPE	8	// 属性の種類
+#define		MAX_FIGHT	16	// 属性奥義の種類
+#define		MAX_MAGIC	16	// 魔法の種類
+#define		MAX_SKILL	16	// スキルの種類
 #define		MAX_EQUIP	3	// 装備できる装飾品の数
 #define		ENEMY_ITEM	5	// 敵キャラが所持しているアイテムの種類
 #define		ENEMY_FIGHT	10	// 敵キャラの攻撃手段
@@ -204,19 +204,19 @@ typedef struct typePos{		// キャラクタの位置
 typedef struct typePos3{	// キャラクタの位置(三次元)
 	int	x;		// マップ上のX座標
 	int	y;		// マップ上のY座標
-	char	h;		// マップ上の高さ
+	int	h;		// マップ上の高さ
 } Pos3;
 
 typedef struct typeScnData{	// シナリオに付随するデータ
 	int	id;			// シナリオID（インストールする順番によって変わる）
-	std::string path;			// シナリオディレクトリ名（インストール時乱数で決まる）
+	std::string path;		// シナリオディレクトリ名（インストール時乱数で決まる）
 	std::string mychar[MAX_MYCHAR];	// マイキャラファイル名
 } ScnData;
 
 typedef struct typeScnList{	// シナリオリスト用データ
 	int	id;			// シナリオID（インストールする順番によって変わる）
-	std::string name;			// シナリオ名
-	std::string doc;			// シナリオ概要
+	std::string name;		// シナリオ名
+	std::string doc;		// シナリオ概要
 } ScnList;
 
 typedef struct typeMyCharValue{	// マイキャラの値型
@@ -230,15 +230,15 @@ typedef struct typeMyChar{	// マイキャラに付随するデータ
 	enum e_race	race;			// 種族
 	enum e_job	job;			// 職業
 	enum e_gender	gender;			// 性別
-	std::string		name;			// 名前
-	char		tile[2];		// 文字
-	char		ch;			// 文字色
-	char		bg;			// 背景色
+	std::string	name;			// 名前
+	std::string	tile;			// 文字
+	int		ch;			// 文字色
+	int		bg;			// 背景色
 
-	BYTE		type;			// 属性
+	int		type;			// 属性
 	enum e_status	status;			// ステータス
-	unsigned char	level;			// レベル
-	unsigned int	exp;			// 経験値
+	int		level;			// レベル
+	int		exp;			// 経験値
 
 	MyCharValue	hp;			// 体力
 	MyCharValue	sp;			// スキルポイント
@@ -248,48 +248,48 @@ typedef struct typeMyChar{	// マイキャラに付随するデータ
 	MyCharValue	ep;			// 回避力
 	MyCharValue	fp;			// 素早さ
 	MyCharValue	dp;			// 器用さ
-	unsigned short	rweapon;		// 右手武器
-	unsigned short	lweapon;		// 左手武器
-	unsigned short	helm;			// 頭防具
-	unsigned short	armor;			// 体防具
-	unsigned short	mant;			// 体防具
-	unsigned short	boots;			// 足防具
-	unsigned short	equip[MAX_EQUIP];	// 装飾品
-	BYTE		food;			// 満腹度
+	int		rweapon;		// 右手武器
+	int		lweapon;		// 左手武器
+	int		helm;			// 頭防具
+	int		armor;			// 体防具
+	int		mant;			// 体防具
+	int		boots;			// 足防具
+	int		equip[MAX_EQUIP];	// 装飾品
+	int		food;			// 満腹度
 
-	BYTE		magic[MAX_TYPE][MAX_MAGIC];	// 魔法レベル
-	BYTE		magicexp[MAX_TYPE][MAX_MAGIC];	// 魔法経験値
-	BYTE		fight[MAX_TYPE][MAX_FIGHT];	// 属性奥義レベル
-	BYTE		fightexp[MAX_TYPE][MAX_FIGHT];	// 属性奥義経験値
-	BYTE		skill[MAX_TYPE][MAX_SKILL];	// スキルレベル
-	BYTE		skillexp[MAX_TYPE][MAX_SKILL];	// スキル経験値
-	BYTE		curse[MAX_TYPE];		// 呪い（属性毎）
+	int		magic[MAX_TYPE][MAX_MAGIC];	// 魔法レベル
+	int		magicexp[MAX_TYPE][MAX_MAGIC];	// 魔法経験値
+	int		fight[MAX_TYPE][MAX_FIGHT];	// 属性奥義レベル
+	int		fightexp[MAX_TYPE][MAX_FIGHT];	// 属性奥義経験値
+	int		skill[MAX_TYPE][MAX_SKILL];	// スキルレベル
+	int		skillexp[MAX_TYPE][MAX_SKILL];	// スキル経験値
+	int		curse[MAX_TYPE];		// 呪い（属性毎）
 
-	std::string		prof;			// プロフィール
+	std::string	prof;			// プロフィール
 } MyChar;
 
 typedef struct typeItemNum{	// 所持アイテム型
-	unsigned short	id;		// アイテムID
-	char		num;		// 所持数
+	int		id;		// アイテムID
+	int		num;		// 所持数
 } ItemNum;
 
 typedef struct typeMyParty{	// パーティに付随するデータ
-	char		mychar[MAX_PARTY];	// パーティメンバー
-	char		map;			// マップ番号
+	int		mychar[MAX_PARTY];	// パーティメンバー
+	int		map;			// マップ番号
 	Pos3		pos;			// 現在地
 	ItemNum		item[MAX_ITEM];		// 所持アイテム
 	ItemNum		spitem[MAX_SITEM];	// 所持スペシャルアイテム
-	unsigned int	gold;			// 所持金
-	char		status;			// ステータス（乗り物に乗っているなど）
+	int		gold;			// 所持金
+	int		status;			// ステータス（乗り物に乗っているなど）
 } MyParty;
 
 typedef struct typeMapData{	// マップに付随するデータ
 	int	width;		// 横幅
 	int	height;		// 縦幅
-	char	nextmap_u;	// 次マップ（上）
-	char	nextmap_d;	// 次マップ（下）
-	char	nextmap_l;	// 次マップ（左）
-	char	nextmap_r;	// 次マップ（右）
+	int	nextmap_u;	// 次マップ（上）
+	int	nextmap_d;	// 次マップ（下）
+	int	nextmap_l;	// 次マップ（左）
+	int	nextmap_r;	// 次マップ（右）
 
 } MapData;
 
@@ -298,19 +298,19 @@ typedef struct typePosData{	// ポジションに付随するデータ
 	int	falseid;	// タイルID、もしくは参照スペシャルポジション
 	int	trueid;		// タイルID、もしくは参照スペシャルポジション
 	int	enemy;		// 出現敵
-	char	encount;	// エンカウント率(0-100%)
-	char	name;		// 地名ID
+	int	encount;	// エンカウント率(0-100%)
+	int	name;		// 地名ID
 } PosData;
 // [x][y]      マップワークエリア
 // [MAX_SPPOS] スペシャルポジション
 
 typedef struct typeTileData{	// タイルに付随するデータ
-	char	tile[2];	// 文字
-	char	ch;		// 文字色
-	char	bg;		// 背景色
-	char	attr;		// 属性
-	char	height;		// 高さ
-	char	move;		// 移動属性
+	std::string	tile;	// 文字
+	int	ch;		// 文字色
+	int	bg;		// 背景色
+	int	attr;		// 属性
+	int	height;		// 高さ
+	int	move;		// 移動属性
 } TileData;
 // [MAX_TILE] ワークエリア
 
@@ -319,7 +319,7 @@ typedef struct typePosEvent{	// ポジションイベントデータ
 	bool	torf;		// 発生確認フラグBit
 	int	x;		// 発生場所X
 	int	y;		// 発生場所Y
-	char	h;		// 発生高さ
+	int	h;		// 発生高さ
 	int	event;		// 発生イベント番号
 } PosEvent;
 // [MAX_MAPEVENT] ワークエリア
@@ -331,7 +331,7 @@ typedef struct typeEnemyValue{	// 敵キャラの値型
 
 typedef struct typeEnemy{	// 敵キャラに付随するデータ
 	std::string	name;			// 名前
-	BYTE		type;			// 属性
+	int		type;			// 属性
 	enum e_status	status;			// ステータス
 
 	EnemyValue	hp;			// 体力
@@ -341,12 +341,12 @@ typedef struct typeEnemy{	// 敵キャラに付随するデータ
 	EnemyValue	ep;			// 回避力
 	EnemyValue	fp;			// 素早さ
 
-	unsigned int	exp;			// 所持経験値
-	unsigned int	gold;			// 所持金
+	int		exp;			// 所持経験値
+	int		gold;			// 所持金
 	ItemNum		item[ENEMY_ITEM];	// 所持アイテム
-	char		item_r[ENEMY_ITEM];	// 所持確率
-	unsigned short	fight[ENEMY_FIGHT];	// 攻撃方法
-	char		fight_r[ENEMY_FIGHT];	// 攻撃確率
+	int		item_r[ENEMY_ITEM];	// 所持確率
+	int		fight[ENEMY_FIGHT];	// 攻撃方法
+	int		fight_r[ENEMY_FIGHT];	// 攻撃確率
 
 	int		flg;			// 倒された時立てるフラグ番号
 	int		next_enemy;		// 倒された時、次に読み込む敵ID
@@ -358,13 +358,13 @@ typedef struct typeEnemy{	// 敵キャラに付随するデータ
 typedef struct typeEnemyParty{	// 敵パーティに付随するデータ
 	int		enemy[MAX_ENEMY];	// パーティメンバー
 	ItemNum		item[ENEMY_ITEM];	// 所持アイテム（パーティ固有）
-	char		item_r[ENEMY_ITEM];	// 所持確率（パーティ固有）
+	int		item_r[ENEMY_ITEM];	// 所持確率（パーティ固有）
 	int		flg;			// 倒された時立てるフラグ番号
 } EnemyParty;
 
 typedef struct typeEnemyPGValue{	// 敵パーティ群の値型
 	int		party;		// パーティ
-	char		party_r;	// 出現確率
+	int		party_r;	// 出現確率
 } EnemyPGValue;
 
 typedef struct typeEnemyPG{	// 敵パーティ群に付随するデータ

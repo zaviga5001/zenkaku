@@ -27,24 +27,24 @@ int main(int argc, char *argv[])
 	// 画面初期化
 	if(initscr() == NULL)
 	{
-		fprintf(stderr, "ERROR:main001:initscr failure\n");
+		cerr << "ERROR:main001:initscr failure" << endl;
 		return 0;
 	}
 	if(has_colors() == false)
 	{
-		fprintf(stderr, "ERROR:main002:has_colors failure\n");
+		cerr << "ERROR:main002:has_colors failure" << endl;
 		endwin();
 		return 0;
 	}
 	if(start_color() == ERR)
 	{
-		fprintf(stderr, "ERROR:main003:start_color failure\n");
+		cerr << "ERROR:main003:start_color failure" << endl;
 		endwin();
 		return 0;
 	}
 	if (init_cpairs() == false)
 	{
-		fprintf(stderr, "ERROR:main004:init_cpairs failure\n");
+		cerr << "ERROR:main004:init_cpairs failure" << endl;
 		endwin();
 		return 0;
 	}
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 	config	= new CConfig();
 	if (config == NULL)
 	{
-		fprintf(stderr, "ERROR:main005:Out of Memory error(config)\n");
+		cerr << "ERROR:main005:Out of Memory error(config)" << endl;
 		endwin();
 		return 0;
 	}
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 	zenkakurc	= new CFile;
 	if (zenkakurc == NULL)
 	{
-		fprintf(stderr, "ERROR:main006:Out of Memory error(zenkakurc)\n");
+		cerr << "ERROR:main006:Out of Memory error(zenkakurc)" << endl;
 		endwin();
 		return 0;
 	}
@@ -78,21 +78,21 @@ int main(int argc, char *argv[])
 	title = new CTitle;
 	if (title == NULL)
 	{
-		fprintf(stderr, "ERROR:main007:Out of Memory error(title)\n");
+		cerr << "ERROR:main007:Out of Memory error(title)" << endl;
 		endwin();
 		return 0;
 	}
 	// タイトル画面表示
 	if (title->disp_title(config) == false)
 	{
-		fprintf(stderr, "ERROR:main008:disp_title failure\n");
+		cerr << "ERROR:main008:disp_title failure" << endl;
 		endwin();
 		return 0;
 	}
 	// シナリオ選択
 	if (title->select_game(config) == false)
 	{
-		fprintf(stderr, "ERROR:main009:select_game failure\n");
+		cerr << "ERROR:main009:select_game failure" << endl;
 		endwin();
 		return 0;
 	}
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 		game = new CGame(config);
 		if (game == NULL)
 		{
-			fprintf(stderr, "ERROR:main010:Out of Memory error(game)\n");
+			cerr << "ERROR:main010:Out of Memory error(game)" << endl;
 			endwin();
 			return 0;
 		}
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 		editor = new CEditor(config);
 		if (editor == NULL)
 		{
-			fprintf(stderr, "ERROR:main011:Out of Memory error(editor)\n");
+			cerr << "ERROR:main011:Out of Memory error(editor)" << endl;
 			endwin();
 			return 0;
 		}

@@ -15,7 +15,7 @@ public:
 	CConfig();
 	virtual ~CConfig();
 
-	int	m_mode = 0;		// 動作モード（0:Game 1:Editor）
+	int	m_mode;			// 動作モード（0:Game 1:Editor）
 
 	bool	m_title;		// タイトル画面表示有無
 	int	m_scenario;		// プレイするシナリオ
