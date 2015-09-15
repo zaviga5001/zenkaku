@@ -24,7 +24,7 @@ bool CTitle::disp_title(CConfig* config)
 
 // シナリオを選択する
 //
-bool CTitle::select_game(CConfig* config)
+bool CTitle::select_game(CData* data, CConfig* config, CFile* file)
 {
 	char	tmp_buf[10];
 	std::string	sname;
@@ -33,8 +33,6 @@ bool CTitle::select_game(CConfig* config)
 	std::string	dentcs;
 	ScnList	tmp_scn;
 
-	CFile*			scenario;
-	scenario		= new CFile;
 	CWinSelect1Line*	nw_select1line;
 	nw_select1line		= new CWinSelect1Line;
 
@@ -55,7 +53,7 @@ bool CTitle::select_game(CConfig* config)
 			dentcs = dent->d_name;
 			if (dentcs == "." || dentcs == "..")	continue;
 
-			tmp_scn = scenario->read_scenario_list(path + dentcs);
+			tmp_scn = file->read_scenario_list(path + dentcs);
 			tmp_scn.id = atoi(dentcs.c_str());
 			if (tmp_scn.id != 0)
 			{
@@ -84,7 +82,7 @@ bool CTitle::select_game(CConfig* config)
 	while(1)
 	{
 		// シナリオ一覧を表示する
-		config->m_scenario = nw_select1line->startwin(true);
+		data->m_scn_index = nw_select1line->startwin(true);
 
 		if (config->m_mode == 0)
 		{	// Game
@@ -93,10 +91,10 @@ bool CTitle::select_game(CConfig* config)
 			nw_select1item = new CWinSelect1Item;
 			nw_select1item->setsize(38, 22);
 			nw_select1item->movewin(5, 0);  // 中央
-			nw_select1item->m_msg = m_scnlist[config->m_scenario - 1].doc;
+			nw_select1item->m_msg = m_scnlist[data->m_scn_index - 1].doc;
 			nw_select1item->m_split = 19;
 			nw_select1item->m_wpos.y = 20;
-			nw_select1item->settitle(m_scnlist[config->m_scenario - 1].name);
+			nw_select1item->settitle(m_scnlist[data->m_scn_index - 1].name);
 			nw_select1item->push(msg[MY_MSG_SYS_YES].msg, 1);
 			nw_select1item->push(msg[MY_MSG_SYS_NO].msg,  2);
 			int tmp_ret = nw_select1item->startwin(true);
@@ -111,7 +109,6 @@ bool CTitle::select_game(CConfig* config)
 
 	// ポインタ解放
 	delete(nw_select1line);
-	delete(scenario);
 
 	refresh();
 	return true;

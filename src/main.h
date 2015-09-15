@@ -7,9 +7,6 @@
 #include "Editor.h"
 
 
-#define	ZENKAKURC	"~/.zenkaku/zenkakurc"
-
-
 int		main(int argc, char *argv[]);
 bool		init_cpairs();
 void		get_zenkaku_home();

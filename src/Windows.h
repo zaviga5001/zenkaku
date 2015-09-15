@@ -51,12 +51,12 @@ enum	my_tt {
 	TT_SPC,
 	TT_CHR,
 	TT_STR,
-	TT_BYT,
-	TT_CST,
+//	TT_BYT,
+//	TT_CST,
 	TT_INT,
-	TT_UINT,
-	TT_SHT,
-	TT_LNG,
+//	TT_UINT,
+//	TT_SHT,
+//	TT_LNG,
 	TT_VCT
 };
 

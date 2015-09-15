@@ -19,7 +19,7 @@
 class CWinScenarioEditor : public CWindows
 {
 public:
-	CWinScenarioEditor(CConfig* config);
+	CWinScenarioEditor(CData* data, CConfig* config, CFile* file);
 	virtual ~CWinScenarioEditor();
 
 	virtual int	drawwin();
@@ -35,7 +35,9 @@ public:
 	std::string	m_path;			// データ格納パス
 	int		m_mcnum;		// マイキャラデータの数
 
-	CData*		m_data;			// ゲーム内のあらゆる情報
+	CConfig*	m_config;		// コンフィグ
+	CData*		m_data;			// データ
+	CFile*		m_file;			// ファイルハンドラ
 
 protected:
 	void		warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示

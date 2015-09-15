@@ -31,12 +31,18 @@ typedef		unsigned char	BYTE;
 #define		ENEMY_FIGHT	10	// 敵キャラの攻撃手段
 #define		ENEMY_CALL	5	// 敵キャラが呼ぶ仲間の種類
 #define		MAX_ENEMY	16	// １つのパーティ内の最大敵キャラ数
-//#define		MAX_ENEMYCACHE	16	// 一度に読み込める最大敵キャラ数
 #define		MAX_ENEMYCACHE	1024	// 一度に読み込める最大敵キャラ数
 #define		MAX_ENEMYNAME	40	// 敵キャラの名前の長さ
 #define		MAX_ENEMYPROF	256	// 敵キャラのプロフィールの長さ
 #define		EVENT_ELM	5	// イベント内容
 #define		ITEM_ELM	5	// アイテム内容
+#define		MAX_SPPOS	256	// スペシャルポジションの最大数
+#define		MAX_TILE	256	// 読み込めるタイルの最大数
+#define		MAX_MAPEVENT	128	// マップイベントの最大数
+#define		MAX_FNAME	64	// 地名の最大数
+
+
+#define	ZENKAKURC	"/.zenkaku/zenkakurc"
 
 extern std::string	zenkaku_home;
 extern std::string	user_home;
@@ -329,17 +335,43 @@ typedef struct typeEnemyValue{	// 敵キャラの値型
 	int	m;		// 最大値
 } EnemyValue;
 
-typedef struct typeEnemy{	// 敵キャラに付随するデータ
+typedef struct typeEnemyWork{	// 敵キャラデータを読み込むワーク
 	std::string	name;			// 名前
 	int		type;			// 属性
 	enum e_status	status;			// ステータス
 
 	EnemyValue	hp;			// 体力
 	EnemyValue	ap;			// 攻撃力
-	EnemyValue	gp;			// 防御力
+	EnemyValue	ag;			// 防御力
 	EnemyValue	mp;			// 魔法力
+	EnemyValue	mg;			// 魔法防御力
 	EnemyValue	ep;			// 回避力
 	EnemyValue	fp;			// 素早さ
+
+	int		exp;			// 所持経験値
+	int		gold;			// 所持金
+	ItemNum		item;			// 所持アイテム
+	int		fight[ENEMY_FIGHT];	// 攻撃方法
+	int		fight_r[ENEMY_FIGHT];	// 攻撃確率
+
+	int		flg;			// 倒された時立てるフラグ番号
+	int		next_enemy;		// 倒された時、次に読み込む敵ID
+	int		call_enemy[ENEMY_CALL];	// 呼ぶ敵ID
+
+	std::string	prof;			// プロフィール
+} EnemyWork;
+
+typedef struct typeEnemy{	// 敵キャラデータ（ファイル書き込み用）
+	char		name[MAX_ENEMYNAME];	// 名前（40bytes）
+	int		type;			// 属性
+
+	int		hp;			// 体力
+	int		ap;			// 攻撃力
+	int		ag;			// 防御力
+	int		mp;			// 魔法力
+	int		mg;			// 魔法防御力
+	int		ep;			// 回避力
+	int		fp;			// 素早さ
 
 	int		exp;			// 所持経験値
 	int		gold;			// 所持金
@@ -352,8 +384,10 @@ typedef struct typeEnemy{	// 敵キャラに付随するデータ
 	int		next_enemy;		// 倒された時、次に読み込む敵ID
 	int		call_enemy[ENEMY_CALL];	// 呼ぶ敵ID
 
-	std::string	prof;			// プロフィール
-} Enemy;
+	char		prof[MAX_ENEMYPROF];	// プロフィール（256bytes）
+} Enemy;	// 合計504bytes
+#define	ENEMYFILE_BLOCK	600	// 敵キャラファイルに書き込むブロックサイズ
+
 
 typedef struct typeEnemyParty{	// 敵パーティに付随するデータ
 	int		enemy[MAX_ENEMY];	// パーティメンバー

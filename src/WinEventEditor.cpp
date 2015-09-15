@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinEventEditor::CWinEventEditor(CConfig* config)
+CWinEventEditor::CWinEventEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -15,7 +15,9 @@ CWinEventEditor::CWinEventEditor(CConfig* config)
 	m_winh   = LINES;	// 窓の高さ
 	m_maxwidth = 0;		// 文字列の最大幅
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 
 	m_data->m_eventnum = 0;
 
@@ -35,7 +37,6 @@ CWinEventEditor::CWinEventEditor(CConfig* config)
 
 CWinEventEditor::~CWinEventEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinEventEditor::drawwin()
@@ -74,23 +75,13 @@ void CWinEventEditor::change(const std::string str, const int id, const int inde
 // イベントファイル読み込み
 void CWinEventEditor::read_event()
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->read_event(m_data);
-
-	delete(fp);
+	m_file->read_event(m_data);
 }
 
 // イベントファイル書き込み
 void CWinEventEditor::write_event(int index)
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->write_event(m_data, index);
-
-	delete(fp);
+	m_file->write_event(m_data, index);
 }
 
 void CWinEventEditor::keyloop()

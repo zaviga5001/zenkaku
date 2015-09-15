@@ -18,7 +18,7 @@ CWinSelect1Icon::CWinSelect1Icon()
 	m_disable_cansel = false;
 	m_cols   = 10;
 	setsize(0, 0);		// Windowサイズ（デフォルト）
-	movewin(5, 2);		// Window位置（デフォルト）（中央、マージン１）
+	movewin(5, 0);		// Window位置（デフォルト）（中央、マージンなし）
 }
 
 CWinSelect1Icon::~CWinSelect1Icon()

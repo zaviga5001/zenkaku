@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinPartyEditor::CWinPartyEditor(CConfig* config)
+CWinPartyEditor::CWinPartyEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -15,7 +15,9 @@ CWinPartyEditor::CWinPartyEditor(CConfig* config)
 	m_winh   = LINES;	// 窓の高さ
 	m_maxwidth = 0;		// 文字列の最大幅
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 
 	// ここでシナリオを読み込め
 
@@ -33,7 +35,6 @@ CWinPartyEditor::CWinPartyEditor(CConfig* config)
 
 CWinPartyEditor::~CWinPartyEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinPartyEditor::drawwin()
@@ -72,12 +73,7 @@ void CWinPartyEditor::change(const std::string str, const int id, const int inde
 // パーティファイル読み込み
 bool CWinPartyEditor::read_party(int index)
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	int ret = fp->read_party(m_data, index);
-
-	delete(fp);
+	int ret = m_file->read_party(m_data, index);
 
 	return(ret);
 }
@@ -85,12 +81,7 @@ bool CWinPartyEditor::read_party(int index)
 // パーティファイル書き込み
 void CWinPartyEditor::write_party(int index)
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->write_party(m_data, index);
-
-	delete(fp);
+	m_file->write_party(m_data, index);
 }
 
 void CWinPartyEditor::keyloop()

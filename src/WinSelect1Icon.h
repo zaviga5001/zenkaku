@@ -35,8 +35,8 @@ public:
 
 protected:
 	std::vector<std::string>	m_list;		// 要素
-	std::vector<int>	m_cp;		// 色
-	std::vector<int>	m_index;	// 値
+	std::vector<int>		m_cp;		// 色
+	std::vector<int>		m_index;	// 値
 	int	m_maxwidth;		// リスト文字列の最大幅
 	Pos	m_cur;			// カーソルの位置
 	Pos	m_dpos;			// リストの表示開始位置（横長対応）

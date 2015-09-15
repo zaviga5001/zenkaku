@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinPGEditor::CWinPGEditor(CConfig* config)
+CWinPGEditor::CWinPGEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -15,7 +15,9 @@ CWinPGEditor::CWinPGEditor(CConfig* config)
 	m_winh   = LINES;	// 窓の高さ
 	m_maxwidth = 0;		// 文字列の最大幅
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 
 	// ここでシナリオを読み込め
 
@@ -33,7 +35,6 @@ CWinPGEditor::CWinPGEditor(CConfig* config)
 
 CWinPGEditor::~CWinPGEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinPGEditor::drawwin()
@@ -72,12 +73,7 @@ void CWinPGEditor::change(const std::string str, const int id, const int index)
 // パーティ群ファイル読み込み
 bool CWinPGEditor::read_pg(int index)
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	int ret = fp->read_pg(m_data, index);
-
-	delete(fp);
+	int ret = m_file->read_pg(m_data, index);
 
 	return(ret);
 }
@@ -85,12 +81,7 @@ bool CWinPGEditor::read_pg(int index)
 // パーティ群ファイル書き込み
 void CWinPGEditor::write_pg(int index)
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->write_pg(m_data, index);
-
-	delete(fp);
+	m_file->write_pg(m_data, index);
 }
 
 void CWinPGEditor::keyloop()
@@ -188,7 +179,7 @@ bool CWinPGEditor::onkeypress_ok()
 			sprintf(tmp_str, "%02d", i);
 			tmp_cs = tmp_str;
 			nw_editvalue->push("パーティID" + tmp_cs,	&tmp_pg->elm[i].party,		TT_INT, 1);
-			nw_editvalue->push("パーティ率" + tmp_cs,	&tmp_pg->elm[i].party_r,	TT_CHR, 1);
+			nw_editvalue->push("パーティ率" + tmp_cs,	&tmp_pg->elm[i].party_r,	TT_INT, 1);
 		}
 		nw_editvalue->push("パーティ追加", &tmp_vct, TT_VCT, 1);
 

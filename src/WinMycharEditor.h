@@ -19,14 +19,14 @@
 class CWinMycharEditor : public CWindows
 {
 public:
-	CWinMycharEditor(CConfig* config);
+	CWinMycharEditor(CData* data, CConfig* config, CFile* file);
 	virtual ~CWinMycharEditor();
 
 	virtual int	drawwin();
 	void		push(const std::string str, void * ptr, const int chr, const int num);
 	void		push(const std::string str, void * ptr, const int chr, const int num, const int cpair);
-	void		read_mychar();		// マイキャラ読み込み
-	void		write_mychar();		// マイキャラ書き込み
+	void		read_mychar(int id);	// マイキャラ読み込み
+	void		write_mychar(int id);	// マイキャラ書き込み
 
 
 	void		keyloop();		// キー入力ループ
@@ -37,8 +37,11 @@ public:
 	virtual bool	onkeypress_ok();	// ＯＫキー押下
 	virtual bool	onkeypress_cancel();	// キャンセルキー押下
 
-	CData*	m_data;				// ゲーム内のあらゆる情報
-	Pos	m_wpos;				// ウィンドウ上の表示位置
+	CConfig*	m_config;		// コンフィグ
+	CData*		m_data;			// データ
+	CFile*		m_file;			// ファイルハンドラ
+
+	Pos		m_wpos;			// ウィンドウ上の表示位置
 
 protected:
 	std::string	encode(void* ptr, const int chr, const int num);

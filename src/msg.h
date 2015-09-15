@@ -30,8 +30,8 @@ enum msg_id {
 };
 
 typedef	struct {
-	char*	tile;
-	char*	msg;
+	const char*	tile;
+	const char*	msg;
 } MsgData;
 
 static MsgData	msg[MY_MSG_DUMMY + 1] = {

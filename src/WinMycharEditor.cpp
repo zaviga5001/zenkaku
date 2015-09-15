@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinMycharEditor::CWinMycharEditor(CConfig* config)
+CWinMycharEditor::CWinMycharEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -14,26 +14,28 @@ CWinMycharEditor::CWinMycharEditor(CConfig* config)
 	m_winw   = COLS / 2;	// 窓の幅（全角でカウント）
 	m_winh   = LINES;	// 窓の高さ
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 
 	// ここでシナリオを読み込め
 
 	// マイキャラ読み込み
-	read_mychar();
+	read_mychar(0);
 
 	// 表示
 	push("シナリオID",		&m_data->m_mychar[0].id,	TT_INT,	1);
 	push("種族",			&m_data->m_mychar[0].race,	TT_INT,	1);
 	push("職業",			&m_data->m_mychar[0].job,	TT_INT,	1);
-	push("属性",			&m_data->m_mychar[0].type,	TT_BYT,	1);
+	push("属性",			&m_data->m_mychar[0].type,	TT_INT,	1);
 	push("性別",			&m_data->m_mychar[0].gender,	TT_INT,	1);
-	push("名前",			&m_data->m_mychar[0].name,	TT_CST,	1);
-	push("タイル",			&m_data->m_mychar[0].tile,	TT_CHR,	2);
-	push("文字色",			&m_data->m_mychar[0].ch,	TT_CHR,	1);
-	push("背景色",			&m_data->m_mychar[0].bg,	TT_CHR,	1);
+	push("名前",			&m_data->m_mychar[0].name,	TT_STR,	1);
+	push("タイル",			&m_data->m_mychar[0].tile,	TT_STR,	1);
+	push("文字色",			&m_data->m_mychar[0].ch,	TT_INT,	1);
+	push("背景色",			&m_data->m_mychar[0].bg,	TT_INT,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
 	push("ステータス",		&m_data->m_mychar[0].status,	TT_INT,	1);
-	push("レベル",			&m_data->m_mychar[0].level,	TT_CHR,	1);
+	push("レベル",			&m_data->m_mychar[0].level,	TT_INT,	1);
 	push("経験値",			&m_data->m_mychar[0].exp,	TT_INT,	1);
 	push("体力（現在）",		&m_data->m_mychar[0].hp.p,	TT_INT,	1);
 	push("体力（一時的最大）",	&m_data->m_mychar[0].hp.t,	TT_INT,	1);
@@ -59,31 +61,30 @@ CWinMycharEditor::CWinMycharEditor(CConfig* config)
 	push("器用さ（現在）",		&m_data->m_mychar[0].dp.p,	TT_INT,	1);
 	push("器用さ（一時的最大）",	&m_data->m_mychar[0].dp.t,	TT_INT,	1);
 	push("器用さ（最大）",		&m_data->m_mychar[0].dp.m,	TT_INT,	1);
-	push("満腹度",			&m_data->m_mychar[0].food,	TT_BYT,	1);
+	push("満腹度",			&m_data->m_mychar[0].food,	TT_INT,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
-	push("右手武器",		&m_data->m_mychar[0].rweapon,	TT_SHT,	1);
-	push("左手武器",		&m_data->m_mychar[0].lweapon,	TT_SHT,	1);
-	push("兜",			&m_data->m_mychar[0].helm,	TT_SHT,	1);
-	push("防具",			&m_data->m_mychar[0].armor,	TT_SHT,	1);
-	push("マント",			&m_data->m_mychar[0].mant,	TT_SHT,	1);
-	push("靴",			&m_data->m_mychar[0].boots,	TT_SHT,	1);
-	push("装飾品",			&m_data->m_mychar[0].equip,	TT_SHT,	1);
+	push("右手武器",		&m_data->m_mychar[0].rweapon,	TT_INT,	1);
+	push("左手武器",		&m_data->m_mychar[0].lweapon,	TT_INT,	1);
+	push("兜",			&m_data->m_mychar[0].helm,	TT_INT,	1);
+	push("防具",			&m_data->m_mychar[0].armor,	TT_INT,	1);
+	push("マント",			&m_data->m_mychar[0].mant,	TT_INT,	1);
+	push("靴",			&m_data->m_mychar[0].boots,	TT_INT,	1);
+	push("装飾品",			&m_data->m_mychar[0].equip,	TT_INT,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
-	push("習得魔法",		&m_data->m_mychar[0].magic,	TT_BYT,	1);
-	push("魔法経験値",		&m_data->m_mychar[0].magicexp,	TT_BYT,	1);
-	push("属性奥義",		&m_data->m_mychar[0].fight,	TT_BYT,	1);
-	push("属性経験値",		&m_data->m_mychar[0].fightexp,	TT_BYT,	1);
-	push("習得スキル",		&m_data->m_mychar[0].skill,	TT_BYT,	1);
-	push("スキル経験値",		&m_data->m_mychar[0].skillexp,	TT_BYT,	1);
-	push("呪い",			&m_data->m_mychar[0].curse,	TT_BYT,	1);
+	push("習得魔法",		&m_data->m_mychar[0].magic,	TT_INT,	1);
+	push("魔法経験値",		&m_data->m_mychar[0].magicexp,	TT_INT,	1);
+	push("属性奥義",		&m_data->m_mychar[0].fight,	TT_INT,	1);
+	push("属性経験値",		&m_data->m_mychar[0].fightexp,	TT_INT,	1);
+	push("習得スキル",		&m_data->m_mychar[0].skill,	TT_INT,	1);
+	push("スキル経験値",		&m_data->m_mychar[0].skillexp,	TT_INT,	1);
+	push("呪い",			&m_data->m_mychar[0].curse,	TT_INT,	1);
 	push("------------------",	NULL,				TT_SPC,	1);
-	push("プロフィール",		&m_data->m_mychar[0].prof,	TT_CST,	1);
+	push("プロフィール",		&m_data->m_mychar[0].prof,	TT_STR,	1);
 
 }
 
 CWinMycharEditor::~CWinMycharEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinMycharEditor::drawwin()
@@ -108,71 +109,35 @@ void CWinMycharEditor::push(const std::string str, void * ptr, const int chr, co
 
 std::string CWinMycharEditor::encode(void * ptr, const int chr, const int num)
 {
-	char	tmp_buf[256];
+	std::string	tmp_buf;
 
 	switch(chr)
 	{
-		case TT_CST:
-			return (*(std::string*)ptr);
+		case TT_STR:	// Char型が連結した文字列
+			tmp_buf = *(std::string*)ptr;
 			break;
-		case TT_SPC:
-			tmp_buf[0] = 0;
+		case TT_SPC:	// スペーサー
+		case TT_VCT:	// ベクタ追加
+			tmp_buf = "";
 			break;
-		case TT_BYT:
-			sprintf(tmp_buf, "%d", *(BYTE*)ptr);
-			break;
-		case TT_CHR:
-			sprintf(tmp_buf, "%d", *(char*)ptr);
-			break;
-		case TT_STR:
-			memcpy(tmp_buf, (char*)ptr, num);
-			tmp_buf[num] = 0;
-			break;
-		case TT_INT:
-			sprintf(tmp_buf, "%d", *(int*)ptr);
-			break;
-		case TT_UINT:
-			sprintf(tmp_buf, "%u", *(int*)ptr);
-			break;
-		case TT_SHT:
-			sprintf(tmp_buf, "%d", *(short*)ptr);
-			break;
-		case TT_LNG:
-			sprintf(tmp_buf, "%ld", *(long*)ptr);
+		case TT_INT:	// Int型
+			tmp_buf = mystd::to_string(*(int*)ptr);
 			break;
 		default:
 			break;
 	}
-	return (std::string(tmp_buf));
+	return (tmp_buf);
 }
 
 void CWinMycharEditor::decode(std::string* str, void *ptr, const int chr)
 {
 	switch(chr)
 	{
-		case TT_CST:
-			*(std::string*)ptr = *(std::string*)str;
-			break;
-		case TT_BYT:
-			*(BYTE*)ptr = atoi(str->c_str());
-			break;
-		case TT_CHR:
-			*(char*)ptr = atoi(str->c_str());
-			break;
 		case TT_STR:
-			memcpy(ptr, str->c_str(), str->length());
+			*(std::string*)ptr = *(std::string*)str;
 			break;
 		case TT_INT:
 			*(int*)ptr = atoi(str->c_str());
-		case TT_UINT:
-			*(int*)ptr = atoi(str->c_str());
-			break;
-		case TT_SHT:
-			*(short*)ptr = atoi(str->c_str());
-			break;
-		case TT_LNG:
-			*(long*)ptr = atol(str->c_str());
-			break;
 		default:
 			break;
 	}
@@ -180,27 +145,15 @@ void CWinMycharEditor::decode(std::string* str, void *ptr, const int chr)
 
 
 // マイキャラファイル読み込み
-void CWinMycharEditor::read_mychar()
+void CWinMycharEditor::read_mychar(int id)
 {
-	CFile*	mycharfp;
-	mycharfp = new CFile;
-
-	mycharfp->read_mychar(m_data);
-
-
-	delete(mycharfp);
+	m_file->read_mychar(m_data, id);
 }
 
 // マイキャラファイル書き込み
-void CWinMycharEditor::write_mychar()
+void CWinMycharEditor::write_mychar(int id)
 {
-	CFile*	mycharfp;
-	mycharfp = new CFile;
-
-	mycharfp->write_mychar(m_data);
-
-
-	delete(mycharfp);
+	m_file->write_mychar(m_data, id);
 }
 
 void CWinMycharEditor::keyloop()
@@ -294,7 +247,7 @@ bool CWinMycharEditor::onkeypress_cancel()
 
 	if (tmp_ret == 1)
 	{
-		write_mychar();
+		write_mychar(0);
 		return false;
 	}
 	else if (tmp_ret == 2)

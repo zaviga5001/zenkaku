@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinMessageEditor::CWinMessageEditor(CConfig* config)
+CWinMessageEditor::CWinMessageEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -15,7 +15,9 @@ CWinMessageEditor::CWinMessageEditor(CConfig* config)
 	m_winh   = LINES;	// 窓の高さ
 	m_maxwidth = 0;		// 文字列の最大幅
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 
 	m_data->m_messnum = 0;
 
@@ -39,7 +41,6 @@ CWinMessageEditor::CWinMessageEditor(CConfig* config)
 
 CWinMessageEditor::~CWinMessageEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinMessageEditor::drawwin()
@@ -78,23 +79,13 @@ void CWinMessageEditor::change(const std::string str, const int id, const int in
 // メッセージファイル読み込み
 void CWinMessageEditor::read_mess()
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->read_mess(m_data);
-
-	delete(fp);
+	m_file->read_mess(m_data);
 }
 
 // メッセージファイル書き込み
 void CWinMessageEditor::write_mess()
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->write_mess(m_data);
-
-	delete(fp);
+	m_file->write_mess(m_data);
 }
 
 void CWinMessageEditor::keyloop()

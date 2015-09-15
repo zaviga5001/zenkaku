@@ -183,7 +183,7 @@ bool CWinShopEditor::onkeypress_ok()
 
 		nw_editvalue = new CWinEditValue;
 		// ポインタセット
-		nw_editvalue->push("名前",	&tmp_sh->name,		TT_CST, 1);
+		nw_editvalue->push("名前",	&tmp_sh->name,		TT_STR, 1);
 		nw_editvalue->push("種類",	&tmp_sh->type,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
 		for (int i = 0; i < tmp_sh->elm.size(); i++)

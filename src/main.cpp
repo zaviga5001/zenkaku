@@ -49,48 +49,57 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
+	// ゲームデータ格納エリア作成
+	CData*	data;
+	data	= new CData();
+	if (data == NULL)
+	{
+		cerr << "ERROR:main005:Out of Memory error(data)" << endl;
+		endwin();
+		return 0;
+	}
+
 	// コンフィグ情報格納エリア作成
 	CConfig*	config;
 	config	= new CConfig();
 	if (config == NULL)
 	{
-		cerr << "ERROR:main005:Out of Memory error(config)" << endl;
+		cerr << "ERROR:main006:Out of Memory error(config)" << endl;
+		endwin();
+		return 0;
+	}
+
+	// ファイルハンドラクラス作成
+	CFile*	file;
+	file	= new CFile();
+	if (file == NULL)
+	{
+		cerr << "ERROR:main007:Out of Memory error(file)" << endl;
 		endwin();
 		return 0;
 	}
 
 	// 設定ファイル読み込み
-	std::string	fname = user_home + "/.zenkaku/zenkakurc";
-	CFile*	zenkakurc;
-	zenkakurc	= new CFile;
-	if (zenkakurc == NULL)
-	{
-		cerr << "ERROR:main006:Out of Memory error(zenkakurc)" << endl;
-		endwin();
-		return 0;
-	}
-	zenkakurc->read_cfg(fname, config);
-	// ポインタ解放
-	delete zenkakurc;
+	file->read_cfg(config);
 
 	// タイトル画面
 	CTitle*	title;
 	title = new CTitle;
 	if (title == NULL)
 	{
-		cerr << "ERROR:main007:Out of Memory error(title)" << endl;
+		cerr << "ERROR:main008:Out of Memory error(title)" << endl;
 		endwin();
 		return 0;
 	}
 	// タイトル画面表示
 	if (title->disp_title(config) == false)
 	{
-		cerr << "ERROR:main008:disp_title failure" << endl;
+		cerr << "ERROR:main009:disp_title failure" << endl;
 		endwin();
 		return 0;
 	}
 	// シナリオ選択
-	if (title->select_game(config) == false)
+	if (title->select_game(data, config, file) == false)
 	{
 		cerr << "ERROR:main009:select_game failure" << endl;
 		endwin();
@@ -103,7 +112,7 @@ int main(int argc, char *argv[])
 	{	// Game
 		// ゲーム作成
 		CGame*	game;
-		game = new CGame(config);
+		game = new CGame(data, config, file);
 		if (game == NULL)
 		{
 			cerr << "ERROR:main010:Out of Memory error(game)" << endl;
@@ -119,7 +128,7 @@ int main(int argc, char *argv[])
 	{	// Editor
 		// エディタ作成
 		CEditor*	editor;
-		editor = new CEditor(config);
+		editor = new CEditor(data, config, file);
 		if (editor == NULL)
 		{
 			cerr << "ERROR:main011:Out of Memory error(editor)" << endl;

@@ -12,6 +12,7 @@
 #include "common.h"
 #include "win.h"
 #include "Config.h"
+#include "Data.h"
 
 class CTitle
 {
@@ -20,7 +21,7 @@ public:
 	virtual ~CTitle();
 	
 	bool	disp_title(CConfig* config);
-	bool	select_game(CConfig* config);
+	bool	select_game(CData* data, CConfig* config, CFile* file);
 
 	std::vector<ScnList>	m_scnlist;	// シナリオリスト
 

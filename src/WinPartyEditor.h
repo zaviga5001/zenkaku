@@ -19,7 +19,7 @@
 class CWinPartyEditor : public CWindows
 {
 public:
-	CWinPartyEditor(CConfig* config);
+	CWinPartyEditor(CData* data, CConfig* config, CFile* file);
 	virtual ~CWinPartyEditor();
 
 	virtual int	drawwin();
@@ -39,7 +39,10 @@ public:
 	virtual bool	onkeypress_ok();	// ＯＫキー押下
 	virtual bool	onkeypress_cancel();	// キャンセルキー押下
 
-	CData*		m_data;			// ゲーム内のあらゆる情報
+	CConfig*	m_config;		// コンフィグ
+	CData*		m_data;			// データ
+	CFile*		m_file;			// ファイルハンドラ
+
 	int		m_partynum_in_file;	// パーティファイルの数
 
 protected:

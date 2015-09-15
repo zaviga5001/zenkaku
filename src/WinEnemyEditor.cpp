@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinEnemyEditor::CWinEnemyEditor(CConfig* config)
+CWinEnemyEditor::CWinEnemyEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -16,24 +16,24 @@ CWinEnemyEditor::CWinEnemyEditor(CConfig* config)
 	m_maxwidth = 0;		// 文字列の最大幅
 	m_enemynum = 0;
 
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 
-	m_data = new CData;
+	// ここでシナリオを読み込め（不要）
 
-	// ここでシナリオを読み込め
-
-	// 敵キャラ読み込み
-	read_enemy();
+	// 敵キャラ名のみ一括読み込み
+	read_enemy_list();
 
 	for (int i = 0; i < m_enemynum; i++)
 	{
-		push(m_data->m_enemy[i].name, i);
+		push(std::string(m_data->m_enemy[i].name), i);
 	}
 	push("新規作成", m_enemynum);
 }
 
 CWinEnemyEditor::~CWinEnemyEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinEnemyEditor::drawwin()
@@ -52,46 +52,38 @@ void CWinEnemyEditor::push(const std::string str, const int id, const int cpair)
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.length())
-		m_maxwidth = str.length() / 2;
+	if (m_maxwidth < CMyStr::length(str))
+		m_maxwidth = CMyStr::length(str);
 }
 void CWinEnemyEditor::change(const std::string str, const int id, const int index)
 {
 	m_list[index] = str;
 	m_index[index] = id;
 
-	m_maxwidth = 0;
-	for (int i = 0; i < m_list[i].length(); i++)
-	{
-		if (adjx(m_maxwidth) < m_list[i].length())
-			m_maxwidth = m_list[i].length() / 2;
-	}
+	if (m_maxwidth < CMyStr::length(m_list[index]))
+		m_maxwidth = CMyStr::length(m_list[index]);
 }
 
 
-// 敵キャラファイル読み込み
-void CWinEnemyEditor::read_enemy()
+// 敵キャラ名のみ読み込み
+void CWinEnemyEditor::read_enemy_list()
 {
-	CFile*	fp;
-	fp = new CFile;
-
 	for (m_enemynum = 0; ; m_enemynum++)
 	{
-		if (!fp->read_enemy(m_data, m_enemynum))	break;
+		if (!m_file->read_enemy(m_data, m_enemynum))	break;
 	}
+}
 
-	delete(fp);
+// 敵キャラファイル読み込み
+void CWinEnemyEditor::read_enemy(int index)
+{
+	m_file->read_enemy(m_data, index);
 }
 
 // 敵キャラファイル書き込み
 void CWinEnemyEditor::write_enemy(int index)
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->write_enemy(m_data, index);
-
-	delete(fp);
+	m_file->write_enemy(m_data, index);
 }
 
 void CWinEnemyEditor::keyloop()
@@ -158,77 +150,112 @@ bool CWinEnemyEditor::onkeypress_right()
 bool CWinEnemyEditor::onkeypress_ok()
 {
 	CWinEditValue*	nw_editvalue;
+	if (m_cur.y == m_enemynum)
+	{	// 新規作成
+		Enemy tmp_enemy;
+		int i;
+		for (i = 0; i < MAX_ENEMYNAME; i++)
+		{
+			tmp_enemy.name[i] = '\0';
+		}
+		tmp_enemy.type = 1;
+		tmp_enemy.hp = 0;
+		tmp_enemy.ap = 0;
+		tmp_enemy.ag = 0;
+		tmp_enemy.mp = 0;
+		tmp_enemy.mg = 0;
+		tmp_enemy.ep = 0;
+		tmp_enemy.fp = 0;
+		tmp_enemy.exp = 0;
+		tmp_enemy.gold = 0;
+		for (i = 0; i < ENEMY_ITEM; i++)
+		{
+			tmp_enemy.item[i].id = 0;
+			tmp_enemy.item[i].num = 0;
+			tmp_enemy.item_r[i] = 0;
+		}
+		for (i = 0; i < ENEMY_FIGHT; i++)
+		{
+			tmp_enemy.fight[i] = 0;
+			tmp_enemy.fight_r[i] = 0;
+		}
+		tmp_enemy.flg = 0;
+		tmp_enemy.next_enemy = 0;
+		for (i = 0; i < ENEMY_CALL; i++)
+		{
+			tmp_enemy.call_enemy[i] = 0;
+		}
+		for (i = 0; i < MAX_ENEMYPROF; i++)
+		{
+			tmp_enemy.prof[i] = 0;
+		}
+		m_data->m_enemy.push_back(tmp_enemy);
+	}
 
 	for ( ; ; )
 	{
 		nw_editvalue = new CWinEditValue;
 		// ポインタセット
-		nw_editvalue->push("名前",		&m_data->m_enemy[m_cur.y].name,		TT_CST, 1);
-		nw_editvalue->push("属性",		&m_data->m_enemy[m_cur.y].type,		TT_BYT, 1);
-		nw_editvalue->push("ステータス",	&m_data->m_enemy[m_cur.y].status,	TT_INT, 1);
+		nw_editvalue->push("名前",		 m_data->m_enemy[m_cur.y].name,		TT_CHR, 1);
+		nw_editvalue->push("属性",		&m_data->m_enemy[m_cur.y].type,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("体力（現在）",	&m_data->m_enemy[m_cur.y].hp.p,		TT_INT, 1);
-		nw_editvalue->push("体力（最大）",	&m_data->m_enemy[m_cur.y].hp.m,		TT_INT, 1);
-		nw_editvalue->push("攻撃力（現在）",	&m_data->m_enemy[m_cur.y].ap.p,		TT_INT, 1);
-		nw_editvalue->push("攻撃力（最大）",	&m_data->m_enemy[m_cur.y].ap.m,		TT_INT, 1);
-		nw_editvalue->push("防御力（現在）",	&m_data->m_enemy[m_cur.y].gp.p,		TT_INT, 1);
-		nw_editvalue->push("防御力（最大）",	&m_data->m_enemy[m_cur.y].gp.m,		TT_INT, 1);
-		nw_editvalue->push("魔法力（現在）",	&m_data->m_enemy[m_cur.y].mp.p,		TT_INT, 1);
-		nw_editvalue->push("魔法力（最大）",	&m_data->m_enemy[m_cur.y].mp.m,		TT_INT, 1);
-		nw_editvalue->push("回避力（現在）",	&m_data->m_enemy[m_cur.y].ep.p,		TT_INT, 1);
-		nw_editvalue->push("回避力（最大）",	&m_data->m_enemy[m_cur.y].ep.m,		TT_INT, 1);
-		nw_editvalue->push("素早さ（現在）",	&m_data->m_enemy[m_cur.y].fp.p,		TT_INT, 1);
-		nw_editvalue->push("素早さ（最大）",	&m_data->m_enemy[m_cur.y].fp.m,		TT_INT, 1);
+		nw_editvalue->push("体力（最大）",	&m_data->m_enemy[m_cur.y].hp,		TT_INT, 1);
+		nw_editvalue->push("攻撃力（最大）",	&m_data->m_enemy[m_cur.y].ap,		TT_INT, 1);
+		nw_editvalue->push("防御力（最大）",	&m_data->m_enemy[m_cur.y].ag,		TT_INT, 1);
+		nw_editvalue->push("魔法力（最大）",	&m_data->m_enemy[m_cur.y].mp,		TT_INT, 1);
+		nw_editvalue->push("魔法防御力（最大）",&m_data->m_enemy[m_cur.y].mg,		TT_INT, 1);
+		nw_editvalue->push("回避力（最大）",	&m_data->m_enemy[m_cur.y].ep,		TT_INT, 1);
+		nw_editvalue->push("素早さ（最大）",	&m_data->m_enemy[m_cur.y].fp,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
 		nw_editvalue->push("経験値",		&m_data->m_enemy[m_cur.y].exp,		TT_INT, 1);
 		nw_editvalue->push("所持金",		&m_data->m_enemy[m_cur.y].gold,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("所持アイテムID：０",&m_data->m_enemy[m_cur.y].item[0].id,	TT_SHT, 1);
-		nw_editvalue->push("所持アイテム数：０",&m_data->m_enemy[m_cur.y].item[0].num,	TT_CHR, 1);
-		nw_editvalue->push("所持アイテム率：０",&m_data->m_enemy[m_cur.y].item_r[0],	TT_CHR, 1);
-		nw_editvalue->push("所持アイテムID：１",&m_data->m_enemy[m_cur.y].item[1].id,	TT_SHT, 1);
-		nw_editvalue->push("所持アイテム数：１",&m_data->m_enemy[m_cur.y].item[1].num,	TT_CHR, 1);
-		nw_editvalue->push("所持アイテム率：１",&m_data->m_enemy[m_cur.y].item_r[1],	TT_CHR, 1);
-		nw_editvalue->push("所持アイテムID：２",&m_data->m_enemy[m_cur.y].item[2].id,	TT_SHT, 1);
-		nw_editvalue->push("所持アイテム数：２",&m_data->m_enemy[m_cur.y].item[2].num,	TT_CHR, 1);
-		nw_editvalue->push("所持アイテム率：２",&m_data->m_enemy[m_cur.y].item_r[2],	TT_CHR, 1);
-		nw_editvalue->push("所持アイテムID：３",&m_data->m_enemy[m_cur.y].item[3].id,	TT_SHT, 1);
-		nw_editvalue->push("所持アイテム数：３",&m_data->m_enemy[m_cur.y].item[3].num,	TT_CHR, 1);
-		nw_editvalue->push("所持アイテム率：３",&m_data->m_enemy[m_cur.y].item_r[3],	TT_CHR, 1);
-		nw_editvalue->push("所持アイテムID：４",&m_data->m_enemy[m_cur.y].item[4].id,	TT_SHT, 1);
-		nw_editvalue->push("所持アイテム数：４",&m_data->m_enemy[m_cur.y].item[4].num,	TT_CHR, 1);
-		nw_editvalue->push("所持アイテム率：４",&m_data->m_enemy[m_cur.y].item_r[4],	TT_CHR, 1);
+		nw_editvalue->push("所持アイテムID：０",&m_data->m_enemy[m_cur.y].item[0].id,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム数：０",&m_data->m_enemy[m_cur.y].item[0].num,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム率：０",&m_data->m_enemy[m_cur.y].item_r[0],	TT_INT, 1);
+		nw_editvalue->push("所持アイテムID：１",&m_data->m_enemy[m_cur.y].item[1].id,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム数：１",&m_data->m_enemy[m_cur.y].item[1].num,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム率：１",&m_data->m_enemy[m_cur.y].item_r[1],	TT_INT, 1);
+		nw_editvalue->push("所持アイテムID：２",&m_data->m_enemy[m_cur.y].item[2].id,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム数：２",&m_data->m_enemy[m_cur.y].item[2].num,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム率：２",&m_data->m_enemy[m_cur.y].item_r[2],	TT_INT, 1);
+		nw_editvalue->push("所持アイテムID：３",&m_data->m_enemy[m_cur.y].item[3].id,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム数：３",&m_data->m_enemy[m_cur.y].item[3].num,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム率：３",&m_data->m_enemy[m_cur.y].item_r[3],	TT_INT, 1);
+		nw_editvalue->push("所持アイテムID：４",&m_data->m_enemy[m_cur.y].item[4].id,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム数：４",&m_data->m_enemy[m_cur.y].item[4].num,	TT_INT, 1);
+		nw_editvalue->push("所持アイテム率：４",&m_data->m_enemy[m_cur.y].item_r[4],	TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("攻撃ID：０",	&m_data->m_enemy[m_cur.y].fight[0],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：０",	&m_data->m_enemy[m_cur.y].fight_r[0],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：１",	&m_data->m_enemy[m_cur.y].fight[1],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：１",	&m_data->m_enemy[m_cur.y].fight_r[1],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：２",	&m_data->m_enemy[m_cur.y].fight[2],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：２",	&m_data->m_enemy[m_cur.y].fight_r[2],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：３",	&m_data->m_enemy[m_cur.y].fight[3],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：３",	&m_data->m_enemy[m_cur.y].fight_r[3],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：４",	&m_data->m_enemy[m_cur.y].fight[4],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：４",	&m_data->m_enemy[m_cur.y].fight_r[4],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：５",	&m_data->m_enemy[m_cur.y].fight[5],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：５",	&m_data->m_enemy[m_cur.y].fight_r[5],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：６",	&m_data->m_enemy[m_cur.y].fight[6],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：６",	&m_data->m_enemy[m_cur.y].fight_r[6],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：７",	&m_data->m_enemy[m_cur.y].fight[7],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：７",	&m_data->m_enemy[m_cur.y].fight_r[7],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：８",	&m_data->m_enemy[m_cur.y].fight[8],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：８",	&m_data->m_enemy[m_cur.y].fight_r[8],	TT_CHR, 1);
-		nw_editvalue->push("攻撃ID：９",	&m_data->m_enemy[m_cur.y].fight[9],	TT_SHT, 1);
-		nw_editvalue->push("攻撃率：９",	&m_data->m_enemy[m_cur.y].fight_r[9],	TT_CHR, 1);
+		nw_editvalue->push("攻撃ID：０",	&m_data->m_enemy[m_cur.y].fight[0],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：０",	&m_data->m_enemy[m_cur.y].fight_r[0],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：１",	&m_data->m_enemy[m_cur.y].fight[1],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：１",	&m_data->m_enemy[m_cur.y].fight_r[1],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：２",	&m_data->m_enemy[m_cur.y].fight[2],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：２",	&m_data->m_enemy[m_cur.y].fight_r[2],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：３",	&m_data->m_enemy[m_cur.y].fight[3],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：３",	&m_data->m_enemy[m_cur.y].fight_r[3],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：４",	&m_data->m_enemy[m_cur.y].fight[4],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：４",	&m_data->m_enemy[m_cur.y].fight_r[4],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：５",	&m_data->m_enemy[m_cur.y].fight[5],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：５",	&m_data->m_enemy[m_cur.y].fight_r[5],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：６",	&m_data->m_enemy[m_cur.y].fight[6],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：６",	&m_data->m_enemy[m_cur.y].fight_r[6],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：７",	&m_data->m_enemy[m_cur.y].fight[7],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：７",	&m_data->m_enemy[m_cur.y].fight_r[7],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：８",	&m_data->m_enemy[m_cur.y].fight[8],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：８",	&m_data->m_enemy[m_cur.y].fight_r[8],	TT_INT, 1);
+		nw_editvalue->push("攻撃ID：９",	&m_data->m_enemy[m_cur.y].fight[9],	TT_INT, 1);
+		nw_editvalue->push("攻撃率：９",	&m_data->m_enemy[m_cur.y].fight_r[9],	TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("フラグ",		&m_data->m_enemy[m_cur.y].flg,		TT_INT, 1);
-		nw_editvalue->push("次の敵ID",		&m_data->m_enemy[m_cur.y].next_enemy,	TT_INT, 1);
+		nw_editvalue->push("死後フラグ",	&m_data->m_enemy[m_cur.y].flg,		TT_INT, 1);
+		nw_editvalue->push("死後次の敵ID",	&m_data->m_enemy[m_cur.y].next_enemy,	TT_INT, 1);
 		nw_editvalue->push("呼ぶ敵ID：０",	&m_data->m_enemy[m_cur.y].call_enemy[0],TT_INT, 1);
 		nw_editvalue->push("呼ぶ敵ID：１",	&m_data->m_enemy[m_cur.y].call_enemy[1],TT_INT, 1);
 		nw_editvalue->push("呼ぶ敵ID：２",	&m_data->m_enemy[m_cur.y].call_enemy[2],TT_INT, 1);
 		nw_editvalue->push("呼ぶ敵ID：３",	&m_data->m_enemy[m_cur.y].call_enemy[3],TT_INT, 1);
 		nw_editvalue->push("呼ぶ敵ID：４",	&m_data->m_enemy[m_cur.y].call_enemy[4],TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("プロフィール",	&m_data->m_enemy[m_cur.y].prof,		TT_CST, 1);
+		nw_editvalue->push("プロフィール",	 m_data->m_enemy[m_cur.y].prof,		TT_CHR, 1);
 
 		nw_editvalue->startwin(true);
 		delete(nw_editvalue);
@@ -252,7 +279,7 @@ bool CWinEnemyEditor::onkeypress_ok()
 		else if (tmp_ret == 1)
 		{
 			write_enemy(m_cur.y);
-			change(m_data->m_enemy[m_cur.y].name, m_cur.y, m_cur.y);
+			change(std::string(m_data->m_enemy[m_cur.y].name), m_cur.y, m_cur.y);
 			if (m_cur.y == m_enemynum)
 			{ // 新規追加だった
 				m_enemynum++;

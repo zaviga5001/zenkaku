@@ -19,7 +19,7 @@
 class CWinPGEditor : public CWindows
 {
 public:
-	CWinPGEditor(CConfig* config);
+	CWinPGEditor(CData* data, CConfig* config, CFile* file);
 	virtual ~CWinPGEditor();
 
 	virtual int	drawwin();
@@ -39,7 +39,9 @@ public:
 	virtual bool	onkeypress_ok();	// ＯＫキー押下
 	virtual bool	onkeypress_cancel();	// キャンセルキー押下
 
-	CData*		m_data;			// ゲーム内のあらゆる情報
+	CConfig*	m_config;		// コンフィグ
+	CData*		m_data;			// データ
+	CFile*		m_file;			// ファイルハンドラ
 
 protected:
 	void	warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示

@@ -28,7 +28,6 @@ uname -v = #102-Ubuntu SMP Tue Aug 11 14:28:35 UTC 2015
 /bin/universe          = unknown
 
 PATH: .
-PATH: /home/sasagawa/bin
 PATH: /usr/local/sbin
 PATH: /usr/local/bin
 PATH: /usr/sbin

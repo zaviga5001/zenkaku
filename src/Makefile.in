@@ -76,7 +76,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = zenkaku$(EXEEXT)
+bin_PROGRAMS = $(top_builddir)/zenkaku$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp
@@ -90,9 +90,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) Config.$(OBJEXT) \
-	Data.$(OBJEXT) File.$(OBJEXT) Game.$(OBJEXT) Hash.$(OBJEXT) \
-	Title.$(OBJEXT) WinEditValue.$(OBJEXT) \
+am___top_builddir__zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) \
+	Config.$(OBJEXT) Data.$(OBJEXT) File.$(OBJEXT) Game.$(OBJEXT) \
+	Hash.$(OBJEXT) Title.$(OBJEXT) WinEditValue.$(OBJEXT) \
 	WinEditValue_Cmask.$(OBJEXT) WinEditValue_Event.$(OBJEXT) \
 	WinEditValue_Flg.$(OBJEXT) WinEditValue_Pos.$(OBJEXT) \
 	WinEditValue_Tile.$(OBJEXT) WinEnemyEditor.$(OBJEXT) \
@@ -105,10 +105,12 @@ am_zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) Config.$(OBJEXT) \
 	WinSelect1Line.$(OBJEXT) WinShopEditor.$(OBJEXT) \
 	WinShowMessage.$(OBJEXT) WinTitle.$(OBJEXT) Windows.$(OBJEXT) \
 	MyStr.$(OBJEXT) Editor.$(OBJEXT)
-zenkaku_OBJECTS = $(am_zenkaku_OBJECTS)
-zenkaku_LDADD = $(LDADD)
-zenkaku_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(zenkaku_LDFLAGS) \
-	$(LDFLAGS) -o $@
+__top_builddir__zenkaku_OBJECTS =  \
+	$(am___top_builddir__zenkaku_OBJECTS)
+__top_builddir__zenkaku_LDADD = $(LDADD)
+__top_builddir__zenkaku_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
+	$(__top_builddir__zenkaku_LDFLAGS) $(LDFLAGS) -o $@
+am__dirstamp = $(am__leading_dot)dirstamp
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -150,8 +152,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(zenkaku_SOURCES)
-DIST_SOURCES = $(zenkaku_SOURCES)
+SOURCES = $(__top_builddir__zenkaku_SOURCES)
+DIST_SOURCES = $(__top_builddir__zenkaku_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -268,8 +270,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-zenkaku_SOURCES = main.cpp CDate.cpp Config.cpp Data.cpp File.cpp \
-	Game.cpp Hash.cpp Title.cpp WinEditValue.cpp \
+__top_builddir__zenkaku_SOURCES = main.cpp CDate.cpp Config.cpp \
+	Data.cpp File.cpp Game.cpp Hash.cpp Title.cpp WinEditValue.cpp \
 	WinEditValue_Cmask.cpp WinEditValue_Event.cpp \
 	WinEditValue_Flg.cpp WinEditValue_Pos.cpp \
 	WinEditValue_Tile.cpp WinEnemyEditor.cpp WinEventEditor.cpp \
@@ -288,7 +290,7 @@ zenkaku_SOURCES = main.cpp CDate.cpp Config.cpp Data.cpp File.cpp \
 	WinSelect1Line.h WinShopEditor.h WinShowMessage.h WinTitle.h \
 	Windows.h common.h main.h msg.h win.h MyStr.cpp MyStr.h \
 	Editor.cpp Editor.h
-zenkaku_LDFLAGS = -lncursesw
+__top_builddir__zenkaku_LDFLAGS = -lncursesw
 all: all-am
 
 .SUFFIXES:
@@ -365,10 +367,13 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+$(top_builddir)/$(am__dirstamp):
+	@$(MKDIR_P) $(top_builddir)
+	@: > $(top_builddir)/$(am__dirstamp)
 
-zenkaku$(EXEEXT): $(zenkaku_OBJECTS) $(zenkaku_DEPENDENCIES) $(EXTRA_zenkaku_DEPENDENCIES) 
-	@rm -f zenkaku$(EXEEXT)
-	$(AM_V_CXXLD)$(zenkaku_LINK) $(zenkaku_OBJECTS) $(zenkaku_LDADD) $(LIBS)
+$(top_builddir)/zenkaku$(EXEEXT): $(__top_builddir__zenkaku_OBJECTS) $(__top_builddir__zenkaku_DEPENDENCIES) $(EXTRA___top_builddir__zenkaku_DEPENDENCIES) $(top_builddir)/$(am__dirstamp)
+	@rm -f $(top_builddir)/zenkaku$(EXEEXT)
+	$(AM_V_CXXLD)$(__top_builddir__zenkaku_LINK) $(__top_builddir__zenkaku_OBJECTS) $(__top_builddir__zenkaku_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -540,6 +545,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(top_builddir)/$(am__dirstamp)" || rm -f $(top_builddir)/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

@@ -12,8 +12,11 @@
 #include <sstream>
 #include <map>
 
+#include "common.h"
 #include "Config.h"
-#include "win.h"
+#include "Data.h"
+#include "WinGetPath.h"
+
 
 class CFile
 {
@@ -21,12 +24,12 @@ public:
 	CFile();
 	virtual ~CFile();
 
-	void	read_cfg(const std::string fname, CConfig* config);
+	void	read_cfg(CConfig* config);
 
 	bool	read_mychar(CData* data, const int index);
 	bool	write_mychar(CData* data, const int index);
 
-	int	read_enemy(CData* data, const int index);
+	bool	read_enemy(CData* data, const int index);
 	bool	write_enemy(CData* data, const int index);
 
 	int	read_party(CData* data, const int index);
@@ -54,6 +57,10 @@ public:
 	ScnList	read_scenario_list(const std::string fname);
 
 	std::string	input_path_dialog();
+
+	// ƒpƒX‚Ì•Û‘¶—Ìˆæ
+	std::string	m_zenkaku_home;
+	std::string	m_user_home;
 
 protected:
 	void	mychop(std::string& cs);

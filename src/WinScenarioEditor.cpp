@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinScenarioEditor::CWinScenarioEditor(CConfig* config)
+CWinScenarioEditor::CWinScenarioEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -9,12 +9,13 @@ CWinScenarioEditor::CWinScenarioEditor(CConfig* config)
 	m_winw   = COLS / 2;	// 窓の幅（全角でカウント）
 	m_winh   = LINES;	// 窓の高さ
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 }
 
 CWinScenarioEditor::~CWinScenarioEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinScenarioEditor::drawwin()
@@ -31,7 +32,6 @@ void CWinScenarioEditor::keyloop()
 
 	CWinMsg*		nw_msg;
 	CWinGetPath*		nw_getpath;
-	CFile*			mycharfp;
 
 	for( ; ; )
 	{
@@ -63,18 +63,12 @@ void CWinScenarioEditor::keyloop()
 // マイキャラファイルから読み込み
 int CWinScenarioEditor::read_mychar()
 {
-	CFile*	mycharfp;
-	mycharfp = new CFile;
-
 //	for (int i = 1; ; i++)
 //	{
 //		char	tmp_str[10];
 //		sprintf(tmp_str, "%d", i);
 //		m_path = "mychar/" + tmp_str + ".bin";
 //	}
-
-	delete(mycharfp);
-
 	return 0;
 }
 

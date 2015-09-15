@@ -19,7 +19,7 @@
 class CWinItemEditor : public CWindows
 {
 public:
-	CWinItemEditor(CConfig* config);
+	CWinItemEditor(CData* data, CConfig* config, CFile* file);
 	virtual ~CWinItemEditor();
 
 	virtual int	drawwin();
@@ -39,7 +39,9 @@ public:
 	virtual bool	onkeypress_ok();	// ＯＫキー押下
 	virtual bool	onkeypress_cancel();	// キャンセルキー押下
 
-	CData*		m_data;			// ゲーム内のあらゆる情報
+	CConfig*	m_config;		// コンフィグ
+	CData*		m_data;			// データ
+	CFile*		m_file;			// ファイルハンドラ
 
 protected:
 	void	warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示

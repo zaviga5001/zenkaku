@@ -24,21 +24,24 @@ public:
 
 	int		m_flg[FLG_NUM_BY_INT];		// フラグ
 	
+	int		m_scn_index;			// プレイするシナリオのindex
 	ScnData		m_scn;				// シナリオデータ
 	MyChar		m_mychar[MAX_MYCHAR];		// マイキャラ構造体
-	char		m_mycharnum;			// シナリオで有効なマイキャラの数
+	int		m_mycharnum;			// シナリオで有効なマイキャラの数
 	MyParty		m_myparty;			// マイパーティ構造体
 
-	Enemy		m_enemy[MAX_ENEMYCACHE];	// 敵キャラ構造体
-	char		m_enemynum;			// １パーティの敵キャラの数
+	std::vector<Enemy>	m_enemy;		// 敵キャラ構造体
 	EnemyParty	m_enemyparty;			// 敵パーティ構造体
-	ShopData	m_shop;				// ショップ構造体
-
+//	std::vector<EnemyParty>	m_enemyparty;		// 敵パーティ構造体
 	std::vector<EnemyPG>	m_enemypg;		// 敵パーティ群構造体
+
 	std::vector<EventData>	m_event;		// イベント構造体
 	std::vector<ItemData>	m_item;			// アイテム構造体
 	std::vector<MessData>	m_mess;			// メッセージ構造体
 
+	ShopData		m_shop;			// ショップ構造体
+
+	int			m_enemynum;		// １パーティの敵キャラの数
 	int			m_enemypgnum;		// 敵パーティ構造体の数
 	int			m_eventnum;		// イベント構造体の数
 	int			m_itemnum;		// アイテム構造体の数

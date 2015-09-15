@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinItemEditor::CWinItemEditor(CConfig* config)
+CWinItemEditor::CWinItemEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -15,7 +15,9 @@ CWinItemEditor::CWinItemEditor(CConfig* config)
 	m_winh   = LINES;	// 窓の高さ
 	m_maxwidth = 0;		// 文字列の最大幅
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 
 	m_data->m_itemnum = 0;
 
@@ -33,7 +35,6 @@ CWinItemEditor::CWinItemEditor(CConfig* config)
 
 CWinItemEditor::~CWinItemEditor()
 {
-	if (m_data != NULL)	delete(m_data);
 }
 
 int CWinItemEditor::drawwin()
@@ -72,23 +73,13 @@ void CWinItemEditor::change(const std::string str, const int id, const int index
 // アイテムファイル読み込み
 void CWinItemEditor::read_item()
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->read_item(m_data);
-
-	delete(fp);
+	m_file->read_item(m_data);
 }
 
 // アイテムファイル書き込み
 void CWinItemEditor::write_item()
 {
-	CFile*	fp;
-	fp = new CFile;
-
-	fp->write_item(m_data);
-
-	delete(fp);
+	m_file->write_item(m_data);
 }
 
 void CWinItemEditor::keyloop()
@@ -173,7 +164,7 @@ bool CWinItemEditor::onkeypress_ok()
 	{
 		nw_editvalue = new CWinEditValue;
 		// ポインタセット
-		nw_editvalue->push("名前",	&tmp_it->name,		TT_CST, 1);
+		nw_editvalue->push("名前",	&tmp_it->name,		TT_STR, 1);
 		nw_editvalue->push("種類",	&tmp_it->type,		TT_INT, 1);
 		nw_editvalue->push("価格",	&tmp_it->price,		TT_INT, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);

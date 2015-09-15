@@ -8,8 +8,9 @@ CFile::~CFile()
 {
 }
 
-void CFile::read_cfg(const std::string fname, CConfig* config)
+void CFile::read_cfg(CConfig* config)
 {
+	std::string fname = user_home + ZENKAKURC;
 	config->m_mode  = 0;
 
 	std::map<std::string, std::string> data;
@@ -250,83 +251,45 @@ bool CFile::write_mychar(CData* data, int id)
 	return(true);
 }
 
-int CFile::read_enemy(CData* data, const int index)
+bool CFile::read_enemy(CData* data, const int index)
 {
-	FILE*	fp;
-	char	tmp_buf[1024];
+	std::string fname = zenkaku_home + "/system/enemy.dat";	// 敵キャラファイル
+	Enemy tmp_enemy;
 
-	fp = fopen("system/enemy.dat", "r");
-	if (fp == NULL)	return 0;
+	std::fstream ifs(fname.c_str(), std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ifs.fail() )	return(FALSE);
 
-	if (fseek(fp, 440 * index, SEEK_SET) == 0)
-	{
-		fread(tmp_buf, sizeof(char), MAX_ENEMYNAME, fp);
-		if (feof(fp))
-		{
-			fclose(fp);
-			return 0;
-		}
-		data->m_enemy[index].name = tmp_buf;
-		fread(&data->m_enemy[index].type,	sizeof(int),		1, fp);
-		fread(&data->m_enemy[index].status,	sizeof(enum e_status),	1, fp);
-		fread(&data->m_enemy[index].hp,		sizeof(EnemyValue),	1, fp);
-		fread(&data->m_enemy[index].ap,		sizeof(EnemyValue),	1, fp);
-		fread(&data->m_enemy[index].gp,		sizeof(EnemyValue),	1, fp);
-		fread(&data->m_enemy[index].mp,		sizeof(EnemyValue),	1, fp);
-		fread(&data->m_enemy[index].ep,		sizeof(EnemyValue),	1, fp);
-		fread(&data->m_enemy[index].fp,		sizeof(EnemyValue),	1, fp);
-		fread(&data->m_enemy[index].exp,	sizeof(int),		1, fp);
-		fread(&data->m_enemy[index].gold,	sizeof(int),		1, fp);
-		fread(&data->m_enemy[index].item,	sizeof(ItemNum),	ENEMY_ITEM, fp);
-		fread(&data->m_enemy[index].item_r,	sizeof(int),		ENEMY_ITEM, fp);
-		fread(&data->m_enemy[index].fight,	sizeof(int),		ENEMY_FIGHT, fp);
-		fread(&data->m_enemy[index].fight_r,	sizeof(int),		ENEMY_FIGHT, fp);
-		fread(&data->m_enemy[index].flg,	sizeof(int),		1, fp);
-		fread(&data->m_enemy[index].next_enemy,	sizeof(int),		1, fp);
-		fread(&data->m_enemy[index].call_enemy,	sizeof(int),		ENEMY_CALL, fp);
-		fread(tmp_buf, sizeof(char), MAX_ENEMYPROF, fp);
-		data->m_enemy[index].prof = tmp_buf;
-		fclose(fp);
-		return 1;
-	}
-	fclose(fp);
-	return 0;
+	ifs.seekg(index * ENEMYFILE_BLOCK, std::ios::beg);	// 頭出し
+	ifs.read((char*) &tmp_enemy, sizeof(Enemy));		// 1ブロック読み出し
+	if (ifs.eof())	return FALSE;				// 読み出し失敗した
+
+	data->m_enemy.push_back(tmp_enemy);			// data に格納
+	ifs.close();
+	return TRUE;						// 成功
 }
 
+// 敵キャラ情報書き出し（敵キャラエディタからしか呼ばれない前提）
+// data->m_enemyのindexと、ファイル上のindexがずれているとファイルが壊れるので要注意
 bool CFile::write_enemy(CData* data, const int index)
 {
-	char	nullbuf = 0;
-	FILE*	fp;
-	fp = fopen("system/enemy.dat", "r+");
-	if (fp == NULL)	return 0;
+	std::string fname = zenkaku_home + "/system/enemy.dat";	// 敵キャラファイル
+	std::fstream ofs(fname.c_str(), std::ios::out | std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ofs.fail() )	return(FALSE);
 
-	fseek(fp, 440 * index, 0);
+	if(ofs.seekp(index * ENEMYFILE_BLOCK, std::ios::beg))	// 頭出し
+	{
+		ofs.write(reinterpret_cast<char *>(&data->m_enemy[index]), sizeof(Enemy));
 
-	fwrite(data->m_enemy[index].name.c_str(),	sizeof(char),		data->m_enemy[index].name.capacity(), fp);
-	fwrite(&nullbuf,				sizeof(char),		MAX_ENEMYNAME - data->m_enemy[index].name.capacity(), fp);
-	fwrite(&data->m_enemy[index].type,		sizeof(int),		1, fp);
-	fwrite(&data->m_enemy[index].status,		sizeof(enum e_status),	1, fp);
-	fwrite(&data->m_enemy[index].hp,		sizeof(EnemyValue),	1, fp);
-	fwrite(&data->m_enemy[index].ap,		sizeof(EnemyValue),	1, fp);
-	fwrite(&data->m_enemy[index].gp,		sizeof(EnemyValue),	1, fp);
-	fwrite(&data->m_enemy[index].mp,		sizeof(EnemyValue),	1, fp);
-	fwrite(&data->m_enemy[index].ep,		sizeof(EnemyValue),	1, fp);
-	fwrite(&data->m_enemy[index].fp,		sizeof(EnemyValue),	1, fp);
-	fwrite(&data->m_enemy[index].exp,		sizeof(int),		1, fp);
-	fwrite(&data->m_enemy[index].gold,		sizeof(int),		1, fp);
-	fwrite(&data->m_enemy[index].item,		sizeof(ItemNum),	ENEMY_ITEM, fp);
-	fwrite(&data->m_enemy[index].item_r,		sizeof(int),		ENEMY_ITEM, fp);
-	fwrite(&data->m_enemy[index].fight,		sizeof(int),		ENEMY_FIGHT, fp);
-	fwrite(&data->m_enemy[index].fight_r,		sizeof(int),		ENEMY_FIGHT, fp);
-	fwrite(&data->m_enemy[index].flg,		sizeof(int),		1, fp);
-	fwrite(&data->m_enemy[index].next_enemy,	sizeof(int),		1, fp);
-	fwrite(&data->m_enemy[index].call_enemy,	sizeof(int),		ENEMY_CALL, fp);
-	fwrite(data->m_enemy[index].prof.c_str(),	sizeof(char),		data->m_enemy[index].prof.capacity(), fp);
-	fwrite(&nullbuf,				sizeof(char),		MAX_ENEMYPROF - data->m_enemy[index].prof.capacity(), fp);
-
-	fclose(fp);
-
-	return(true);
+		// 予備用領域書き込み
+		char tmp_char[ENEMYFILE_BLOCK - sizeof(Enemy)];
+		ofs.write(reinterpret_cast<char *>(tmp_char), ENEMYFILE_BLOCK - sizeof(Enemy));
+		ofs.close();
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
 }
 
 int CFile::read_party(CData* data, const int index)
@@ -665,45 +628,45 @@ MapData CFile::get_map_size(const std::string fname)
 	while (getline(ifs, str))
 	{
 		size.height++;
-		if (str.length() > size.width)		size.width = str.length();
+		if (CMyStr::length(str) > size.width)		size.width = CMyStr::length(str);
 	}
 	return(size);
 }
 
 int CFile::read_map(const std::string fname, MapData* mapdata, PosData* posdata, PosData* spposdata, TileData* tiledata, PosEvent* pevent, PosEvent* sevent, std::string* fieldname)
 {
-/*	FILE*	fp;
-	std::string fname_t = fname + ".txt";
-	std::string fname_b = fname + ".bin";
+	FILE*	fp;
+	std::string fname_t = fname + ".txt";	// マップファイル
+	std::string fname_b = fname + ".bin";	// タイルファイル
 	std::string tmp_cs;
-	//tmp_cs.setDefaultCharset(std::string::EUC_JP);
 	int	i, j, k, num = 0, flg;
 
-	fp = fopen(fname_b.c_str(), "r");
-	if (fp == NULL)
+	std::ifstream ifs(fname_b.c_str(), std::ios::binary);
+	if( ifs.fail() )
 	{ // タイルファイルなし マップから新規作成
-		fp = fopen(fname_t.c_str(), "r");
-		if (fp == NULL)	return 0;	// タイルもマップもなし
-		for (k = 0; ; k++)
-        	{ // 行単位ループ
-			if(tmp_cs.ReadLine(fp) == EOF)        break;
-			for(i = 0; i < tmp_cs.length(); i = i + 2)
+		std::ifstream ifs(fname_t.c_str());
+		if( ifs.fail() )	return 0;	// タイルもマップもなし
+
+		k = 0;
+		while (std::getline(ifs, tmp_cs))
+		{ // 行単位ループ
+			std::vector< std::string > tmp_csvect;
+			tmp_csvect = CMyStr::separate(tmp_cs);
+			for(i = 0; i < tmp_csvect.size(); i++)
 			{ // 文字単位ループ
 				flg = false;
 				for(j = 0; j < num; j++)
 				{ // 既に読んだ文字と比較
-					if (tmp_cs[i]     == tiledata[j].tile[0] &&
-					    tmp_cs[i + 1] == tiledata[j].tile[1]   )
+					if (tmp_csvect[i] == tiledata[j].tile)
 					{ // 既に登録があった
-						posdata[k * mapdata->width + (i / 2)].falseid = (char)j;
+						posdata[k * mapdata->width + i].falseid = j;
 						flg = true;
 						break;
 					}
 				}
 				if (!flg)
 				{	// 登録がなかった
-					tiledata[num].tile[0]	= tmp_cs[i];
-					tiledata[num].tile[1]	= tmp_cs[i + 1];
+					tiledata[num].tile	= tmp_csvect[i];
 					tiledata[num].ch	= 7;
 					tiledata[num].bg	= 0;
 					tiledata[num].attr	= 0;
@@ -711,18 +674,20 @@ int CFile::read_map(const std::string fname, MapData* mapdata, PosData* posdata,
 					tiledata[num].move	= 0;
 
 					// ポジションデータ保存
-					posdata[k * mapdata->width + (i / 2)].falseid = (char)num;
+					posdata[k * mapdata->width + i].falseid = num;
 					num++;
 				}
-				posdata[k * mapdata->width + (i / 2)].flg     = 0;
-				posdata[k * mapdata->width + (i / 2)].trueid  = 0;
-				posdata[k * mapdata->width + (i / 2)].name    = 0;
-				posdata[k * mapdata->width + (i / 2)].enemy   = 0;
-				posdata[k * mapdata->width + (i / 2)].encount = 10;
+				posdata[k * mapdata->width + i].flg     = 0;
+				posdata[k * mapdata->width + i].trueid  = 0;
+				posdata[k * mapdata->width + i].name    = 0;
+				posdata[k * mapdata->width + i].enemy   = 0;
+				posdata[k * mapdata->width + i].encount = 10;
 
 				// PADに描画
 				//wattrset(map, COLOR_PAIR(0));
-				//mvwaddstr(map, k, i, (LPCSTR)tmp_cs.Sub(i, i + 2));
+				//mvwaddstr(map, k, i, CMyStr::substr(tmp_csvect[i], i, 1));
+				
+				k++;
 			}
 		}
 		// NextMap初期化
@@ -743,38 +708,36 @@ int CFile::read_map(const std::string fname, MapData* mapdata, PosData* posdata,
 	}
 	else
 	{ // タイルファイルあり 読み込み
-		fread(mapdata,   sizeof(MapData), 1, fp);
-		fread(posdata,   sizeof(struct typePosData), mapdata->height * mapdata->width, fp);
-		fread(spposdata, sizeof(PosData), MAX_SPPOS, fp);
-		fread(&num,      sizeof(int    ), 1, fp);
+		ifs.read( (char*)&mapdata, sizeof( MapData ) );
+		ifs.read( (char*)posdata, sizeof( PosData ) * mapdata->height * mapdata->width );
+		ifs.read( (char*)spposdata, sizeof( PosData ) * MAX_SPPOS );
+		ifs.read( (char*)&num,    sizeof( int ) );
+		
 		for (int i = 0; i < num; i++)
 		{
-			fread(&tiledata[i],  sizeof(TileData), 1, fp);
+			ifs.read( (char*)&tiledata[i],  sizeof(TileData));
 		}
-		fread(pevent,    sizeof(PosEvent), MAX_MAPEVENT, fp);
-		fread(sevent,    sizeof(PosEvent), MAX_MAPEVENT, fp);
+		ifs.read( (char*)pevent,    sizeof( PosEvent ) * MAX_MAPEVENT );
+		ifs.read( (char*)sevent,    sizeof( PosEvent ) * MAX_MAPEVENT );
 
 		char tmp_buf[1024];
+		ifs.read( (char*)tmp_buf, sizeof( char ) * MAX_FNAME );
 		for (int i = 0; i < MAX_FNAME; i++)
 		{
-			if (feof(fp))	break;
 			for (int j = 0; j < 1024; j++)
 			{
-				if (feof(fp))	break;
-				fread(&tmp_buf[j], sizeof(char), 1, fp);
 				if (tmp_buf[j] == ':')
 				{
 					tmp_buf[j] = 0;
-					fieldname[i] = tmp_buf;
+					fieldname[i] = std::string(tmp_buf);
 					break;
 				}
 			}
 		}
 	}
-	fclose(fp);
 
 	return(num);	// タイルの数を返す
-*/
+
 	return(0);	// タイルの数を返す
 }
 

@@ -1,6 +1,6 @@
 #include "win.h"
 
-CWinMapEditor::CWinMapEditor(CConfig* config)
+CWinMapEditor::CWinMapEditor(CData* data, CConfig* config, CFile* file)
 {
 	// 以下はデフォルト値です。
 	// オブジェクト作成後に調整してください。
@@ -40,13 +40,14 @@ CWinMapEditor::CWinMapEditor(CConfig* config)
 		m_fieldname[i] = "　";
 	}
 
-	m_data = new CData;
+	m_data	 = data;	// データ格納
+	m_config = config;	// コンフィグ格納
+	m_file	 = file;	// ファイルハンドラ格納
 }
 
 CWinMapEditor::~CWinMapEditor()
 {
 	if (m_this != NULL)	delwin(m_this);
-	if (m_data != NULL)	delete(m_data);
 	if (m_posdata != NULL)	delete[] m_posdata;
 }
 
@@ -135,7 +136,6 @@ void CWinMapEditor::keyloop()
 	CWinSelect1Item*	nw_select1item;
 	CWinMsg*		nw_msg;
 	CWinGetPath*		nw_getpath;
-	CFile*			mapfp;
 
 	for( ; ; )
 	{
@@ -254,7 +254,7 @@ void CWinMapEditor::keyloop()
 						{
 							nw_editvalue_event->push("StopEvent:ID",	&tmp_id,			TT_INT, 1);
 							nw_editvalue_event->push("StopEvent:FLG ",	&m_sevent[tmp_id].flg,		TT_INT, 1);
-							nw_editvalue_event->push("StopEvent:FLG BIT ",	&m_sevent[tmp_id].torf,		TT_CHR, 1);
+							nw_editvalue_event->push("StopEvent:FLG BIT ",	&m_sevent[tmp_id].torf,		TT_INT, 1);
 							nw_editvalue_event->push("StopEvent:HEIGHT",	&m_sevent[tmp_id].h,		TT_INT, 1);
 							nw_editvalue_event->push("StopEvent:EVENT NO",	&m_sevent[tmp_id].event,	TT_INT, 1);
 						}
@@ -262,7 +262,7 @@ void CWinMapEditor::keyloop()
 						{
 							nw_editvalue_event->push("PointEvent:ID ",	&tmp_id,			TT_INT, 1);
 							nw_editvalue_event->push("PointEvent:FLG",	&m_pevent[tmp_id].flg,		TT_INT, 1);
-							nw_editvalue_event->push("PointEvent:FLG BIT",	&m_pevent[tmp_id].torf,		TT_CHR, 1);
+							nw_editvalue_event->push("PointEvent:FLG BIT",	&m_pevent[tmp_id].torf,		TT_INT, 1);
 							nw_editvalue_event->push("PointEvent:HEIGHT ",	&m_pevent[tmp_id].h,		TT_INT, 1);
 							nw_editvalue_event->push("PointEvent:EVENT NO ",&m_pevent[tmp_id].event,	TT_INT, 1);
 						}
@@ -297,14 +297,13 @@ void CWinMapEditor::keyloop()
 			case 'h':
 				nw_msg = new CWinMsg;
 				nw_msg->m_msg = "Ａ：タイル追加nＢ：フラグビットエディタnＣ：コピーnＶ：ペーストnＵ：アンドゥnＱ：コピーマスクエディタnＥ：イベントエディタnＬ：ロードnＭ：マップ情報エディタnＮ：地名エディタnＰ：パレット表示nＴ：タイルエディタnＳ：スペシャルポジションエディタnＸ：ポジションエディタnＺ：セーブ終了";
-				nw_msg->setsize(20,100);
+				nw_msg->setsize(20,16);
 				nw_msg->startwin(true);
 				delete(nw_msg);
 				refreshwin();
 				drawwin();
 				break;
 			case 'l':
-				mapfp = new CFile;
 				// マップ番号を入力する
 				nw_getpath = new CWinGetPath;
 				nw_getpath->settitle(std::string(msg[MY_MSG_SYS_INP_MAPNO].msg));
@@ -314,7 +313,7 @@ void CWinMapEditor::keyloop()
 			
 			
 				// マップサイズ、NextMapを取得
-				m_mapdata = mapfp->get_map_size(m_path);
+				m_mapdata = m_file->get_map_size(m_path);
 				if (m_mapdata.height > 0 && m_mapdata.width > 0)
 				{
 					// 以前のポジションテーブルがあれば、まず破棄する
@@ -322,11 +321,10 @@ void CWinMapEditor::keyloop()
 					// ポジションテーブル再生成
 					m_posdata = new PosData[m_mapdata.height * m_mapdata.width];
 					// マップの中身を読み込み
-					m_tilenum = mapfp->read_map(m_path, &m_mapdata, m_posdata, m_spposdata, m_tiledata, m_pevent, m_sevent, m_fieldname);
+					m_tilenum = m_file->read_map(m_path, &m_mapdata, m_posdata, m_spposdata, m_tiledata, m_pevent, m_sevent, m_fieldname);
 				}
-				delete(mapfp);
-				m_cur.x = 0;
-				m_cur.y = 0;
+				m_cur.x = 1;
+				m_cur.y = 1;
 				refreshwin();
 				drawwin();
 				break;
@@ -334,10 +332,10 @@ void CWinMapEditor::keyloop()
 				// マップ情報エディタ
 				nw_editvalue = new CWinEditValue;
 
-				nw_editvalue->push("NEXTMAP 上", &m_mapdata.nextmap_u, TT_CHR, 1);
-				nw_editvalue->push("NEXTMAP 下", &m_mapdata.nextmap_d, TT_CHR, 1);
-				nw_editvalue->push("NEXTMAP 左", &m_mapdata.nextmap_l, TT_CHR, 1);
-				nw_editvalue->push("NEXTMAP 右", &m_mapdata.nextmap_r, TT_CHR, 1);
+				nw_editvalue->push("NEXTMAP 上", &m_mapdata.nextmap_u, TT_INT, 1);
+				nw_editvalue->push("NEXTMAP 下", &m_mapdata.nextmap_d, TT_INT, 1);
+				nw_editvalue->push("NEXTMAP 左", &m_mapdata.nextmap_l, TT_INT, 1);
+				nw_editvalue->push("NEXTMAP 右", &m_mapdata.nextmap_r, TT_INT, 1);
 
 				nw_editvalue->startwin(true);
 				delete(nw_editvalue);
@@ -352,7 +350,7 @@ void CWinMapEditor::keyloop()
 				for (int i = 0; i < MAX_FNAME; i++)
 				{
 					sprintf(tmp_str, "%02d", i);
-					nw_editvalue->push(std::string(tmp_str), &m_fieldname[i], TT_CST, 1);
+					nw_editvalue->push(std::string(tmp_str), &m_fieldname[i], TT_STR, 1);
 				}
 				nw_editvalue->startwin(true);
 				delete(nw_editvalue);
@@ -368,7 +366,7 @@ void CWinMapEditor::keyloop()
 					for (int i = 0; i < COLOR_NUM * COLOR_NUM; i++)
 					{
 						nw_select1icon->m_cols = 8;
-						nw_select1icon->push("●", i, i);
+						nw_select1icon->push("● ", i, i);
 					}
 					nw_select1icon->startwin(true);
 					delete(nw_select1icon);
@@ -389,9 +387,9 @@ void CWinMapEditor::keyloop()
 					nw_editvalue_cmask->push("FLG ",	&m_posmsk.flg,		TT_INT, 1);
 					nw_editvalue_cmask->push("FALSE ID",	&m_posmsk.falseid,	TT_INT, 1);
 					nw_editvalue_cmask->push("TRUE  ID",	&m_posmsk.trueid,	TT_INT, 1);
-					nw_editvalue_cmask->push("NAME",	&m_posmsk.name,		TT_CHR, 1);
+					nw_editvalue_cmask->push("NAME",	&m_posmsk.name,		TT_STR, 1);
 					nw_editvalue_cmask->push("ENEMY ",	&m_posmsk.enemy,	TT_INT, 1);
-					nw_editvalue_cmask->push("ENCOUNT ",	&m_posmsk.encount,	TT_CHR, 1);
+					nw_editvalue_cmask->push("ENCOUNT ",	&m_posmsk.encount,	TT_INT, 1);
 					nw_editvalue_cmask->setsize(20, 8);
 					tmp_ret = nw_editvalue_cmask->startwin(true);
 					delete(nw_editvalue_cmask);
@@ -412,12 +410,12 @@ void CWinMapEditor::keyloop()
 					{
 						nw_editvalue_tile = new CWinEditValue_Tile;
 						nw_editvalue_tile->push("FALSE ID",	&tmp_id,			TT_INT, 1);
-						nw_editvalue_tile->push("FALSE CHAR",	 m_tiledata[tmp_id].tile,	TT_STR, 2, getcpair(m_tiledata[tmp_id].ch, m_tiledata[tmp_id].bg));
-						nw_editvalue_tile->push("FALSE CH",	&m_tiledata[tmp_id].ch,		TT_CHR, 1, getcpair(m_tiledata[tmp_id].ch, 0));
-						nw_editvalue_tile->push("FALSE BG",	&m_tiledata[tmp_id].bg,		TT_CHR, 1, getcpair(m_tiledata[tmp_id].bg, 0));
-						nw_editvalue_tile->push("FALSE ATTR",	&m_tiledata[tmp_id].attr,	TT_CHR, 1);
-						nw_editvalue_tile->push("FALSE HEIGHT",	&m_tiledata[tmp_id].height,	TT_CHR, 1);
-						nw_editvalue_tile->push("FALSE MOVE",	&m_tiledata[tmp_id].move,	TT_CHR, 1);
+						nw_editvalue_tile->push("FALSE CHAR",	&m_tiledata[tmp_id].tile,	TT_STR, 1, getcpair(m_tiledata[tmp_id].ch, m_tiledata[tmp_id].bg));
+						nw_editvalue_tile->push("FALSE CH",	&m_tiledata[tmp_id].ch,		TT_INT, 1, getcpair(m_tiledata[tmp_id].ch, 0));
+						nw_editvalue_tile->push("FALSE BG",	&m_tiledata[tmp_id].bg,		TT_INT, 1, getcpair(m_tiledata[tmp_id].bg, 0));
+						nw_editvalue_tile->push("FALSE ATTR",	&m_tiledata[tmp_id].attr,	TT_INT, 1);
+						nw_editvalue_tile->push("FALSE HEIGHT",	&m_tiledata[tmp_id].height,	TT_INT, 1);
+						nw_editvalue_tile->push("FALSE MOVE",	&m_tiledata[tmp_id].move,	TT_INT, 1);
 
 						int tmp_ret_id	= nw_editvalue_tile->startwin(true);
 						delete(nw_editvalue_tile);
@@ -484,20 +482,20 @@ void CWinMapEditor::keyloop()
 						nw_editvalue_pos->push("TRUE  ID",	&tmp_posdata->trueid,	TT_INT, 1);
 						nw_editvalue_pos->push("F NAME",	&tmp_posdata->name,	TT_INT, 1);
 						nw_editvalue_pos->push("ENEMY ",	&tmp_posdata->enemy,	TT_INT, 1);
-						nw_editvalue_pos->push("ENCOUNT ",	&tmp_posdata->encount,	TT_CHR, 1);
+						nw_editvalue_pos->push("ENCOUNT ",	&tmp_posdata->encount,	TT_INT, 1);
 						nw_editvalue_pos->push("--------------",	NULL,	TT_SPC, 1);
 
 						if (tmp_posdata->falseid >= 100000)
 							nw_editvalue_pos->push("FALSE CHAR",	 &tmp_posdata->falseid,	TT_INT, 1);
 						else
-							nw_editvalue_pos->push("FALSE CHAR",	 m_tiledata[tmp_posdata->falseid].tile,	TT_STR, 2, getcpair(m_tiledata[tmp_posdata->falseid].ch, m_tiledata[tmp_posdata->falseid].bg));
+							nw_editvalue_pos->push("FALSE CHAR",	 &m_tiledata[tmp_posdata->falseid].tile,	TT_STR, 1, getcpair(m_tiledata[tmp_posdata->falseid].ch, m_tiledata[tmp_posdata->falseid].bg));
 
 						if (tmp_posdata->trueid >= 100000)
 							nw_editvalue_pos->push("TRUE  CHAR",	 &tmp_posdata->trueid,	TT_INT, 1);
 						else
-							nw_editvalue_pos->push("TRUE  CHAR",	 m_tiledata[tmp_posdata->trueid ].tile,	TT_STR, 2, getcpair(m_tiledata[tmp_posdata->trueid ].ch, m_tiledata[tmp_posdata->trueid ].bg));
+							nw_editvalue_pos->push("TRUE  CHAR",	 &m_tiledata[tmp_posdata->trueid ].tile,	TT_STR, 1, getcpair(m_tiledata[tmp_posdata->trueid ].ch, m_tiledata[tmp_posdata->trueid ].bg));
 
-						nw_editvalue_pos->push("F NAMESTR ",	 &m_fieldname[(int)tmp_posdata->name],	TT_CST, 1);
+						nw_editvalue_pos->push("F NAMESTR ",	 &m_fieldname[(int)tmp_posdata->name],	TT_STR, 1);
 
 						int tmp_ret = nw_editvalue_pos->startwin(true);
 						delete(nw_editvalue_pos);
@@ -565,9 +563,7 @@ void CWinMapEditor::keyloop()
 
 					if (tmp_ret == 1)
 					{
-						mapfp = new CFile;
-						mapfp->write_map( m_path, &m_mapdata, m_posdata, m_spposdata, m_tiledata, m_pevent, m_sevent, m_fieldname, m_tilenum );
-						delete(mapfp);
+						m_file->write_map( m_path, &m_mapdata, m_posdata, m_spposdata, m_tiledata, m_pevent, m_sevent, m_fieldname, m_tilenum );
 						return;
 					}
 					else if (tmp_ret == 2)

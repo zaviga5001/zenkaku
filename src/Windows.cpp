@@ -76,44 +76,46 @@ void CWindows::movewin(int pos, int from)
 	switch(pos)
 	{
 		case 1:		// 左下
-			if (m_winx > from)	m_winx = from;
-			if (m_winy > from)	m_winy = LINES    - from - m_winh;
+			m_winx = 0 + from;
+			m_winy = LINES - m_winh - from;
 			break;
 		case 2:		// 下
-			if (m_winy > from)	m_winy = LINES    - from - m_winh;
+			m_winx = ((COLS / 2) - m_winw) / 2;
+			m_winy = LINES - m_winh - from;
 			break;
 		case 3:		// 右下
-			if (m_winx > from)	m_winx = COLS / 2 - from - m_winw;
-			if (m_winy > from)	m_winy = LINES    - from - m_winh;
+			m_winx = (COLS / 2) - m_winw - from;
+			m_winy = LINES - m_winh - from;
 			break;
 		case 4:		// 左
-			if (m_winx > from)	m_winx = from;
-			break;
-		case 5:		// 中央
-			m_winx = (COLS/2 - m_winw) / 2;
-			if (m_winx < from)	m_winx = from;
-			if (m_winw + m_winx > COLS/2 - from)	m_winw = COLS/2 - from - m_winx;
+			m_winx = 0 + from;
 			m_winy = (LINES - m_winh) / 2;
-			if (m_winy < from)	m_winy = from;
-			if (m_winh + m_winy > LINES - from)	m_winh = LINES - from - m_winy;
+			break;
+		case 5:		// 中央（fromは無視）
+			m_winx = ((COLS / 2) - m_winw) / 2;
+			m_winy = (LINES - m_winh) / 2;
 			break;
 		case 6:		// 右
-			if (m_winx > from)	m_winx = COLS / 2 - from - m_winw;
+			m_winx = (COLS / 2) - m_winw - from;
+			m_winy = (LINES - m_winh) / 2;
 			break;
 		case 7:		// 左上
-			if (m_winx > from)	m_winx = from;
-			if (m_winy > from)	m_winy = from;
+			m_winx = 0 + from;
+			m_winy = 0 + from;
 			break;
 		case 8:		// 上
-			if (m_winy > from)	m_winy = from;
+			m_winx = ((COLS / 2) - m_winw) / 2;
+			m_winy = 0 + from;
 			break;
 		case 9:		// 右上
-			if (m_winx > from)	m_winx = COLS / 2 - from - m_winw;
-			if (m_winy > from)	m_winy = from;
+			m_winx = (COLS / 2) - m_winw - from;
+			m_winy = 0 + from;
 			break;
 		default:
 			break;
 	};
+	if (m_winx < 0)	m_winx = 0;
+	if (m_winy < 0)	m_winy = 0;
 }
 
 // カラーペア番号を取得する

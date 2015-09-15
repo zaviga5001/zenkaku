@@ -12,20 +12,13 @@
 #include "Windows.h"
 #include "Config.h"
 #include "Data.h"
-
-#define	MAX_SPPOS	256
-#define	MAX_TILE	256
-#define	MAX_MAPEVENT	128
-#define	MAX_FNAME	64
-
 #include "File.h"
-
 
 
 class CWinMapEditor : public CWindows
 {
 public:
-	CWinMapEditor(CConfig* config);
+	CWinMapEditor(CData* data, CConfig* config, CFile* file);
 	virtual ~CWinMapEditor();
 
 	virtual int	drawwin();
@@ -56,7 +49,9 @@ public:
 	PosData		m_posundobuf;		// ポジションデータUNDO用バッファ
 	PosData		m_posmsk;		// ポジションデータコピー用マスク
 
-	CData*		m_data;			// ゲーム内のあらゆる情報
+	CConfig*	m_config;		// コンフィグ
+	CData*		m_data;			// データ
+	CFile*		m_file;			// ファイルハンドラ
 
 protected:
 	void		warn_no_map();		// マップが読み込まれていない警告

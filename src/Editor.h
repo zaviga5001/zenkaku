@@ -10,17 +10,20 @@
 #include "common.h"
 #include "win.h"
 #include "Config.h"
+#include "Data.h"
 
 class CEditor
 {
 public:
 	CEditor();
-	CEditor(CConfig* config);
+	CEditor(CData* data, CConfig* config, CFile* file);
 	virtual ~CEditor();
 
 	bool	main();			// メインループ
 
 	CConfig* m_config;		// コンフィグ
+	CData*	m_data;			// データ
+	CFile*	m_file;			// ファイルハンドラ
 
 protected:
 

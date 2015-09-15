@@ -30,7 +30,7 @@
 { "sys_inp_mapno",	"マップ番号を入力してください"},	// MY_MSG_SYS_INP_MAPNO
 { "sys_inp_spos",	"スペシャルポジション番号を入れてください（０−２５５）"},	// MY_MSG_SYS_INP_SPOS
 { "sys_save_yn",	"セーブ終了します"},			// MY_MSG_SYS_SAVE_YN
-{ "sys_no_map",		"t100マップがc24読み込まれてc56いません"},	// MY_MSG_SYS_NO_MAP
+{ "sys_no_map",		"マップが読み込まれていません"},	// MY_MSG_SYS_NO_MAP
 { "sys_add_tile",	"タイルを追加しました"},		// MY_MSG_SYS_ADD_TILE
 
 

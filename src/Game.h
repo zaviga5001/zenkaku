@@ -10,17 +10,20 @@
 #include "common.h"
 #include "win.h"
 #include "Config.h"
+#include "Data.h"
 
 class CGame
 {
 public:
 	CGame();
-	CGame(CConfig* config);
+	CGame(CData* data, CConfig* config, CFile* file);
 	virtual ~CGame();
 
 	bool	main();			// ゲームループ
 
 	CConfig* m_config;		// コンフィグ
+	CData*	m_data;			// データ
+	CFile*	m_file;			// ファイルハンドラ
 
 protected:
 

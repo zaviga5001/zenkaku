@@ -44,76 +44,41 @@ void CWinEditValue::push(const std::string str, void * ptr, const int chr, const
 
 std::string CWinEditValue::encode(void * ptr, const int chr, const int num)
 {
-	char	tmp_buf[256];
+	std::string	tmp_buf;
 
 	switch(chr)
 	{
-		case TT_CST:
-			return (*(std::string*)ptr);
+		case TT_STR:	// String
+			tmp_buf = *(std::string*)ptr;
 			break;
-		case TT_SPC:
-			tmp_buf[0] = 0;
+		case TT_CHR:	// CharString
+			tmp_buf = std::string((char*)ptr);
 			break;
-		case TT_BYT:
-			sprintf(tmp_buf, "%d", *(BYTE*)ptr);
+		case TT_SPC:	// スペーサー
+		case TT_VCT:	// ベクタ追加
+			tmp_buf = "";
 			break;
-		case TT_CHR:
-			sprintf(tmp_buf, "%d", *(char*)ptr);
-			break;
-		case TT_STR:
-			memcpy(tmp_buf, (char*)ptr, num);
-			tmp_buf[num] = 0;
-			break;
-		case TT_INT:
-			sprintf(tmp_buf, "%d", *(int*)ptr);
-			break;
-		case TT_UINT:
-			sprintf(tmp_buf, "%u", *(int*)ptr);
-			break;
-		case TT_SHT:
-			sprintf(tmp_buf, "%d", *(short*)ptr);
-			break;
-		case TT_LNG:
-			sprintf(tmp_buf, "%ld", *(long*)ptr);
-			break;
-		case TT_VCT:
-			tmp_buf[0] = ' ';
-			tmp_buf[1] = ' ';
-			tmp_buf[2] = 0;
+		case TT_INT:	// Int型
+			tmp_buf = mystd::to_string(*(int*)ptr);
 			break;
 		default:
 			break;
 	}
-	return (std::string(tmp_buf));
+	return (tmp_buf);
 }
 
 void CWinEditValue::decode(std::string* str, void *ptr, const int chr)
 {
 	switch(chr)
 	{
-		case TT_CST:
-			*(std::string*)ptr = *(std::string*)str;
-			break;
-		case TT_BYT:
-			*(BYTE*)ptr = atoi(str->c_str());
+		case TT_STR:
+			*(std::string*)ptr = *str;
 			break;
 		case TT_CHR:
-			*(char*)ptr = atoi(str->c_str());
-			break;
-		case TT_STR:
-			memcpy(ptr, str->c_str(), str->length());
+			memcpy(ptr, str->c_str(), str->length()+1); // lengthは間違ってるけど影響ないからこのまま
 			break;
 		case TT_INT:
 			*(int*)ptr = atoi(str->c_str());
-		case TT_UINT:
-			*(int*)ptr = atoi(str->c_str());
-			break;
-		case TT_SHT:
-			*(short*)ptr = atoi(str->c_str());
-			break;
-		case TT_LNG:
-			*(long*)ptr = atol(str->c_str());
-			break;
 		default:
 			break;
 	}
