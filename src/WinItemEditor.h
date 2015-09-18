@@ -26,8 +26,9 @@ public:
 	void		push(const std::string str, const int id);
 	void		push(const std::string str, const int id, const int cpair);
 	void		change(const std::string str, const int id, const int index);
-	void		read_item();		// アイテム読み込み
-	void		write_item();		// アイテム書き込み
+	void            read_item_list();       // アイテム名のみ読み込み
+	void		read_item(int index);	// アイテム読み込み
+	void		write_item(int index);	// アイテム書き込み
 
 	Pos		m_wpos;			// ウィンドウ上の表示位置
 
@@ -43,6 +44,7 @@ public:
 	CData*		m_data;			// データ
 	CFile*		m_file;			// ファイルハンドラ
 
+	int             m_itemnum;             // 読み込んだアイテム数
 protected:
 	void	warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示
 

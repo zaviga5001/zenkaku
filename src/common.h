@@ -20,6 +20,9 @@ typedef		unsigned char	BYTE;
 #define		MAX_MYCHAR	8	// ゲーム内のマイキャラ数
 #define		MAX_PARTY	4	// 同時にパーティに加わるマイキャラ数
 #define		MAX_ITEM	128	// アイテムの所持上限（一人）
+#define		MAX_ITEMCACHE	1024	// 一度に読み込める最大アイテム数
+#define		MAX_ITEMNAME	41	// アイテムの名前の長さ
+#define		MAX_ITEMPROF	128	// アイテムの説明文の長さ
 #define		MAX_SITEM	16	// スペシャルアイテムの所持上限
 #define		MAX_STOCK	99	// １つのアイテムの所持上限
 #define		MAX_TYPE	8	// 属性の種類
@@ -32,14 +35,15 @@ typedef		unsigned char	BYTE;
 #define		ENEMY_CALL	5	// 敵キャラが呼ぶ仲間の種類
 #define		MAX_ENEMY	16	// １つのパーティ内の最大敵キャラ数
 #define		MAX_ENEMYCACHE	1024	// 一度に読み込める最大敵キャラ数
-#define		MAX_ENEMYNAME	40	// 敵キャラの名前の長さ
-#define		MAX_ENEMYPROF	256	// 敵キャラのプロフィールの長さ
+#define		MAX_ENEMYNAME	81	// 敵キャラの名前の長さ
+#define		MAX_ENEMYPROF	512	// 敵キャラのプロフィールの長さ
 #define		EVENT_ELM	5	// イベント内容
 #define		ITEM_ELM	5	// アイテム内容
 #define		MAX_SPPOS	256	// スペシャルポジションの最大数
 #define		MAX_TILE	256	// 読み込めるタイルの最大数
 #define		MAX_MAPEVENT	128	// マップイベントの最大数
 #define		MAX_FNAME	64	// 地名の最大数
+#define		MAX_INTNUM	36	// INT入力時の桁数：12桁（1文字3byteで計算）
 
 
 #define	ZENKAKURC	"/.zenkaku/zenkakurc"
@@ -384,9 +388,9 @@ typedef struct typeEnemy{	// 敵キャラデータ（ファイル書き込み用
 	int		next_enemy;		// 倒された時、次に読み込む敵ID
 	int		call_enemy[ENEMY_CALL];	// 呼ぶ敵ID
 
-	char		prof[MAX_ENEMYPROF];	// プロフィール（256bytes）
-} Enemy;	// 合計504bytes
-#define	ENEMYFILE_BLOCK	600	// 敵キャラファイルに書き込むブロックサイズ
+	char		prof[MAX_ENEMYPROF];	// プロフィール（512bytes）
+} Enemy;	// 合計801bytes
+#define	ENEMYFILE_BLOCK	1000	// 敵キャラファイルに書き込むブロックサイズ
 
 
 typedef struct typeEnemyParty{	// 敵パーティに付随するデータ
@@ -413,12 +417,15 @@ typedef struct typeEventData{	// イベントデータ
 	int		trueid;			// Trueの時遷移するイベント
 } EventData;
 
-typedef struct typeItemData{	// アイテムデータ
-	std::string	name;			// 名前
+typedef struct typeItem{	// アイテムデータ
+	char		name[MAX_ITEMNAME];	// 名前
 	e_item		type;			// 種類
 	int		price;			// 価格
 	int		elm[ITEM_ELM];		// 内容（種類によって格納する値の意味は違う）
-} ItemData;
+	char		prof[MAX_ITEMPROF];	// 説明文
+} Item; // 309bytes
+#define	ITEMFILE_BLOCK	400	// アイテムファイルに書き込むブロックサイズ
+
 
 typedef struct typeShopValue{	// ショップの値型
 	int		item;			// 商品（アイテムID）

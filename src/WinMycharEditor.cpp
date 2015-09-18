@@ -89,7 +89,7 @@ CWinMycharEditor::~CWinMycharEditor()
 
 int CWinMycharEditor::drawwin()
 {
-	setedit(m_wpos.x, m_wpos.y, &m_cur.y, &m_dpos.y, m_name, m_value, m_cp);
+	setedit(m_wpos.x, m_wpos.y, &m_cur.y, &m_dpos.y, m_name, m_value, m_cp, m_size);
 	return true;
 }
 

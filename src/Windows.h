@@ -94,7 +94,7 @@ public:
 							// セレクトタブを表示する
 	void	setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vector<std::string> list, std::vector<int> cpair);
 							// リストを表示する
-	void	setedit(int x, int y, int* posy, int* dposy, std::vector<std::string> name, std::vector<std::string> value, std::vector<int> cpair);
+	void	setedit(int x, int y, int* posy, int* dposy, std::vector<std::string> name, std::vector<std::string> value, std::vector<int> cpair, std::vector<int> max_num);
 							// リストを表示する
 	void	wclrtorborder();			// 1行クリア
 	void	clearwin();				// ウィンドゥ内部を全クリア（罫線は残す）
@@ -132,6 +132,8 @@ public:
 
 
 	void signal_handler(int sig);
+	void	warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示
+	void	warn(std::string tmp_msg);	// 警告ウィンドゥ表示
 
 protected:
 	int	adjx(int x);		// 全角X座標を実際の座標に変換する

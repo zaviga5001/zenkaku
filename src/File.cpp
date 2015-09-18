@@ -251,7 +251,17 @@ bool CFile::write_mychar(CData* data, int id)
 	return(true);
 }
 
-bool CFile::read_enemy(CData* data, const int index)
+int CFile::read_enemy(CData* data)
+{
+	return read_enemy(data, 0, 99999999);
+}
+
+int CFile::read_enemy(CData* data, const int index)
+{
+	return read_enemy(data, index, index);
+}
+
+int CFile::read_enemy(CData* data, const int from, const int to)
 {
 	std::string fname = zenkaku_home + "/system/enemy.dat";	// 敵キャラファイル
 	Enemy tmp_enemy;
@@ -259,13 +269,17 @@ bool CFile::read_enemy(CData* data, const int index)
 	std::fstream ifs(fname.c_str(), std::ios::in | std::ios::binary);	// バイナリファイル
 	if( ifs.fail() )	return(FALSE);
 
-	ifs.seekg(index * ENEMYFILE_BLOCK, std::ios::beg);	// 頭出し
-	ifs.read((char*) &tmp_enemy, sizeof(Enemy));		// 1ブロック読み出し
-	if (ifs.eof())	return FALSE;				// 読み出し失敗した
+	int count;
+	for (int i = from, count = 0; i <= to; i++, count++)
+	{
+		ifs.seekg(i * ENEMYFILE_BLOCK, std::ios::beg);	// 頭出し
+		ifs.read((char*) &tmp_enemy, sizeof(Enemy));		// 1ブロック読み出し
+		if (ifs.eof())	return count;				// ファイルの最後まで到達
 
-	data->m_enemy.push_back(tmp_enemy);			// data に格納
+		data->m_enemy.push_back(tmp_enemy);			// data に格納
+	}
 	ifs.close();
-	return TRUE;						// 成功
+	return count;		// 成功
 }
 
 // 敵キャラ情報書き出し（敵キャラエディタからしか呼ばれない前提）
@@ -436,61 +450,57 @@ bool CFile::write_event(CData* data, const int index)
 	return(true);
 }
 
-bool CFile::read_item(CData* data)
+int CFile::read_item(CData* data)
 {
-	FILE*		fp;
-	ItemData	tmp_it;
-	char		tmp_buf[1024];
-	int		i;
-
-	fp = fopen("system/item.dat", "r");
-	if (fp == NULL)	return 0;
-
-	while(!feof(fp))
-	{
-		for (i = 0; ; i++)
-		{
-			fread(&tmp_buf[i], sizeof(char), 1, fp);
-			if (feof(fp))
-			{
-				fclose(fp);
-				return 0;
-			}
-			if (tmp_buf[i] == ':')
-			{
-				tmp_buf[i] = 0;
-				break;
-			}
-		}
-		tmp_it.name = tmp_buf;
-		fread(&tmp_it.type,	sizeof(enum e_item),	1, fp);
-		fread(&tmp_it.price,	sizeof(int),		1, fp);
-		fread( tmp_it.elm,	sizeof(int),		ITEM_ELM, fp);
-		if (feof(fp))	break;
-		data->m_item.push_back(tmp_it);
-		data->m_itemnum++;
-	}
-	fclose(fp);
-	return(true);
+	return read_item(data, 0, 99999999);
 }
 
-bool CFile::write_item(CData* data)
+int CFile::read_item(CData* data, const int index)
 {
-	FILE*		fp;
-	fp = fopen("system/item.dat", "w");
-	if (fp == NULL)	return 0;
+	return read_item(data, index, index);
+}
 
-	for (int i = 0; i < data->m_itemnum; i++)
+int CFile::read_item(CData* data, const int from, const int to)
+{
+	std::string fname = zenkaku_home + "/system/item.dat";	// アイテムファイル
+	Item tmp_item;
+
+	std::fstream ifs(fname.c_str(), std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ifs.fail() )	return(FALSE);
+
+	int count;
+	for (int i = from, count = 0; i <= to; i++, count++)
 	{
-		fwrite(data->m_item[i].name.c_str(),sizeof(char),	data->m_item[i].name.capacity(), fp);
-		fwrite(":",			sizeof(char),		1, fp);
-		fwrite(&data->m_item[i].type,	sizeof(enum e_item),	1, fp);
-		fwrite(&data->m_item[i].price,	sizeof(int),		1, fp);
-		fwrite( data->m_item[i].elm,	sizeof(int),		ITEM_ELM, fp);
-	}
+		ifs.seekg(i * ITEMFILE_BLOCK, std::ios::beg);	// 頭出し
+		ifs.read((char*) &tmp_item, sizeof(Item));	// 1ブロック読み出し
+		if (ifs.eof())	return count;			// ファイルの最後まで到達
 
-	fclose(fp);
-	return(true);
+		data->m_item.push_back(tmp_item);		// data に格納
+	}
+	ifs.close();
+	return count;		// 成功
+}
+
+bool CFile::write_item(CData* data, const int index)
+{
+	std::string fname = zenkaku_home + "/system/item.dat";	// アイテムファイル
+	std::fstream ofs(fname.c_str(), std::ios::out | std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ofs.fail() )	return(FALSE);
+
+	if(ofs.seekp(index * ITEMFILE_BLOCK, std::ios::beg))	// 頭出し
+	{
+		ofs.write(reinterpret_cast<char *>(&data->m_item[index]), sizeof(Item));
+
+		// 予備用領域書き込み
+		char tmp_char[ITEMFILE_BLOCK - sizeof(Item)];
+		ofs.write(reinterpret_cast<char *>(tmp_char), ITEMFILE_BLOCK - sizeof(Item));
+		ofs.close();
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
 }
 
 bool CFile::read_shop(CData* data, const int index)

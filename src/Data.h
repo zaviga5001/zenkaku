@@ -36,7 +36,7 @@ public:
 	std::vector<EnemyPG>	m_enemypg;		// 敵パーティ群構造体
 
 	std::vector<EventData>	m_event;		// イベント構造体
-	std::vector<ItemData>	m_item;			// アイテム構造体
+	std::vector<Item>	m_item;			// アイテム構造体
 	std::vector<MessData>	m_mess;			// メッセージ構造体
 
 	ShopData		m_shop;			// ショップ構造体

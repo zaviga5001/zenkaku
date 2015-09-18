@@ -47,8 +47,6 @@ public:
 	int		m_enemynum;		// 読み込んだ敵キャラ数
 
 protected:
-	void	warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示
-
 	std::vector<std::string>	m_list;		// 要素
 	std::vector<int>		m_cp;		// 色
 	std::vector<int>		m_index;	// 値

@@ -16,7 +16,10 @@ public:
 	virtual ~CWinGetPath();
 
 	virtual int	drawwin();
+	void	setcharbytes(int num);
 	void	keyloop();
+
+	int	m_charbytes;
 
 protected:
 

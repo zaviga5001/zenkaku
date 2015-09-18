@@ -29,7 +29,9 @@ public:
 	bool	read_mychar(CData* data, const int index);
 	bool	write_mychar(CData* data, const int index);
 
-	bool	read_enemy(CData* data, const int index);
+	int	read_enemy(CData* data);
+	int	read_enemy(CData* data, const int index);
+	int	read_enemy(CData* data, const int from, const int to);
 	bool	write_enemy(CData* data, const int index);
 
 	int	read_party(CData* data, const int index);
@@ -41,8 +43,10 @@ public:
 	bool	read_event(CData* data);
 	bool	write_event(CData* data, const int index);
 
-	bool	read_item(CData* data);
-	bool	write_item(CData* data);
+	int	read_item(CData* data);
+	int	read_item(CData* data, const int index);
+	int	read_item(CData* data, const int from, const int to);
+	bool	write_item(CData* data, const int index);
 
 	bool	read_shop(CData* data, const int index);
 	bool	write_shop(CData* data, const int index);

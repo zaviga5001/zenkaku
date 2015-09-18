@@ -383,7 +383,7 @@ void CWindows::setselect(int x, int y, int* posx, int* dposx, std::vector<std::s
 	mvwaddstrtoeol(x, y, str.substr(adjx(*dposx)));
 
 	// 選択中アイテム反転
-	mvwchgat(m_this, y, adjx(pos_l - *dposx + x), list[*posx].length(), WA_REVERSE, 0, NULL);
+	mvwchgat(m_this, y, adjx(pos_l - *dposx + x), adjx(CMyStr::length(list[*posx])), WA_REVERSE, 0, NULL);
 
 	wrefresh(m_this);
 }
@@ -415,7 +415,7 @@ void CWindows::setlist(int x, int y, int* dposx, int* posy, int* dposy, std::vec
 
 // 上下に選択できるエディットフィールドを表示
 // 
-void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<std::string> name, std::vector<std::string> value, std::vector<int> cpair)
+void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<std::string> name, std::vector<std::string> value, std::vector<int> cpair, std::vector<int> max_num)
 {
 	std::string	tmp_str;
 	int	num = name.size();
@@ -434,7 +434,10 @@ void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<std::str
 
 	for (i = 0; i < num; i++)
 	{
-		if (max_size < name[i].length())	max_size = name[i].length();
+		if (max_size < CMyStr::length(name[i]) && name[i] != "--------------")
+		{
+			max_size = CMyStr::length(name[i]);
+		}
 	}
 	max_size += 2;
 
@@ -443,7 +446,7 @@ void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<std::str
 		if (i + y >= m_winh - 1)	break;
 
 		tmp_str = name[i + *dposy];
-		for (j = 0; j < (max_size - name[i + *dposy].length()) / 2; j++)
+		for (j = 0; j < (max_size - CMyStr::length(name[i + *dposy])); j++)
 		{
 			tmp_str = tmp_str + "　";
 		}
@@ -452,7 +455,7 @@ void CWindows::setedit(int x, int y, int* posy, int* dposy, std::vector<std::str
 		if (*posy == *dposy + i)	wattron(m_this,  A_REVERSE | COLOR_PAIR(cpair[i]));
 		else				wattrset(m_this, A_NORMAL | COLOR_PAIR(cpair[i]));
 
-		mvwaddstrtoeol((max_size) / 2 + 1, y + i, value[i + *dposy]);
+		mvwaddstrtoeol(max_size + 1, y + i, value[i + *dposy]);
 	}
 	wrefresh(m_this);
 }
@@ -481,10 +484,10 @@ void CWindows::clearwin()
 // 
 bool CWindows::mvwaddstrtoeol(int cur_x, int cur_y, const std::string str)
 {
-	std::string tmp_str = str.substr(0, adjx(m_winw - cur_x - 1));
+	std::string tmp_str = CMyStr::substr(str, 0, m_winw - cur_x - 1);
 	mvwprintw(m_this, cur_y, adjx(cur_x), "%s", tmp_str.c_str());
 	wclrtorborder();
-	if (adjx(m_winw - cur_x - 1) > str.length())
+	if (m_winw - cur_x - 1 > CMyStr::length(str))
 	{
 		return false;
 	}
@@ -604,5 +607,35 @@ int CWindows::xyton(int x, int y){
 void CWindows::signal_handler(int sig){
 	endwin();
 	//exit(EXIT_FAILURE);
+}
+
+void CWindows::warn(enum msg_id tmp_msg)
+{
+	WINDOW* warn_win;
+	warn_win = newwin(20, 40, 10, 10);
+	refresh();
+
+	wattrset(warn_win, COLOR_PAIR(getcpair(1, 7)));
+
+	mvwprintw(warn_win, 1, 1, "%s", msg[tmp_msg].msg);
+	wrefresh(warn_win);
+
+	getchar();
+	delwin(warn_win);
+}
+
+void CWindows::warn(std::string tmp_msg)
+{
+	WINDOW* warn_win;
+	warn_win = newwin(20, 40, 10, 10);
+	refresh();
+
+	wattrset(warn_win, COLOR_PAIR(getcpair(1, 7)));
+
+	mvwprintw(warn_win, 1, 1, "%s", tmp_msg.c_str());
+	wrefresh(warn_win);
+
+	getchar();
+	delwin(warn_win);
 }
 

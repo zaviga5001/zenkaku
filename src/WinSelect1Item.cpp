@@ -41,8 +41,8 @@ void CWinSelect1Item::push(const std::string str, const int id, const int cpair)
 	m_cp.push_back(cpair);
 	m_index.push_back(id);
 
-	if (adjx(m_maxwidth) < str.length())
-		m_maxwidth = str.length() / 2;
+	if (adjx(m_maxwidth) < CMyStr::length(str))
+		m_maxwidth = CMyStr::length(str);
 }
 
 bool CWinSelect1Item::onkeypress_left()

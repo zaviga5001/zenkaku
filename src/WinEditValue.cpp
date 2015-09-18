@@ -24,7 +24,7 @@ CWinEditValue::~CWinEditValue()
 
 int CWinEditValue::drawwin()
 {
-	setedit(m_wpos.x, m_wpos.y, &m_cur.y, &m_dpos.y, m_name, m_value, m_cp);
+	setedit(m_wpos.x, m_wpos.y, &m_cur.y, &m_dpos.y, m_name, m_value, m_cp, m_size);
 	return true;
 }
 
@@ -75,7 +75,7 @@ void CWinEditValue::decode(std::string* str, void *ptr, const int chr)
 			*(std::string*)ptr = *str;
 			break;
 		case TT_CHR:
-			memcpy(ptr, str->c_str(), str->length()+1); // lengthは間違ってるけど影響ないからこのまま
+			memcpy(ptr, str->c_str(), str->length()+1); // 終端文字を足す
 			break;
 		case TT_INT:
 			*(int*)ptr = atoi(str->c_str());
@@ -116,6 +116,21 @@ bool CWinEditValue::onkeypress_ok()
 
 		nw_getpath = new CWinGetPath;
 		nw_getpath->settitle(m_name[m_cur.y]);
+		// 入力フィールドの大きさを計算する（とりあえず1文字3byteで計算）
+		int tmp_w = 0, tmp_h = 0;
+		if (m_size[m_cur.y] / 3 > 40)
+		{
+			tmp_w = 40 + 2;
+			tmp_h = m_size[m_cur.y] / (40*3) + 3; // 端数と罫線分
+		}
+		else
+		{
+			tmp_w = m_size[m_cur.y] / 3 + 2;
+			tmp_h = 3;
+		}
+		nw_getpath->setsize(tmp_w, tmp_h);
+		nw_getpath->movewin(5, 1);
+		nw_getpath->setcharbytes(m_size[m_cur.y]);
 		m_value[m_cur.y] = nw_getpath->startdialog(true);
 		decode(&m_value[m_cur.y], m_ptr[m_cur.y], m_my_tt[m_cur.y]);
 		delete(nw_getpath);

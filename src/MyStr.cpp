@@ -95,4 +95,3 @@ std::string CMyStr::substr(std::string tmpstr, int start, int len)
 	return(retbuf);
 }
 
-
