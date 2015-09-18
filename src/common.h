@@ -19,12 +19,6 @@ typedef		unsigned char	BYTE;
 
 #define		MAX_MYCHAR	8	// ゲーム内のマイキャラ数
 #define		MAX_PARTY	4	// 同時にパーティに加わるマイキャラ数
-#define		MAX_ITEM	128	// アイテムの所持上限（一人）
-#define		MAX_ITEMCACHE	1024	// 一度に読み込める最大アイテム数
-#define		MAX_ITEMNAME	41	// アイテムの名前の長さ
-#define		MAX_ITEMPROF	128	// アイテムの説明文の長さ
-#define		MAX_SITEM	16	// スペシャルアイテムの所持上限
-#define		MAX_STOCK	99	// １つのアイテムの所持上限
 #define		MAX_TYPE	8	// 属性の種類
 #define		MAX_FIGHT	16	// 属性奥義の種類
 #define		MAX_MAGIC	16	// 魔法の種類
@@ -33,17 +27,38 @@ typedef		unsigned char	BYTE;
 #define		ENEMY_ITEM	5	// 敵キャラが所持しているアイテムの種類
 #define		ENEMY_FIGHT	10	// 敵キャラの攻撃手段
 #define		ENEMY_CALL	5	// 敵キャラが呼ぶ仲間の種類
+
 #define		MAX_ENEMY	16	// １つのパーティ内の最大敵キャラ数
 #define		MAX_ENEMYCACHE	1024	// 一度に読み込める最大敵キャラ数
-#define		MAX_ENEMYNAME	81	// 敵キャラの名前の長さ
+#define		MAX_ENEMYNAME	82	// 敵キャラの名前の長さ
 #define		MAX_ENEMYPROF	512	// 敵キャラのプロフィールの長さ
-#define		EVENT_ELM	5	// イベント内容
+
+#define		MAX_WEAPON	50	// 武器の所持上限（一人）
+#define		MAX_WEAPONCACHE	1024	// 一度に読み込める最大武器数
+#define		MAX_WEAPONNAME	40	// 武器の名前の長さ
+#define		MAX_WEAPONPROF	128	// 武器の説明文の長さ
+
+#define		MAX_ARMOR	50	// 防具の所持上限（一人）
+#define		MAX_ARMORCACHE	1024	// 一度に読み込める最大防具数
+#define		MAX_ARMORNAME	40	// 防具の名前の長さ
+#define		MAX_ARMORPROF	128	// 防具の説明文の長さ
+
+#define		MAX_ITEM	128	// アイテムの所持上限（一人）
+#define		MAX_ITEMCACHE	1024	// 一度に読み込める最大アイテム数
+#define		MAX_ITEMNAME	40	// アイテムの名前の長さ
+#define		MAX_ITEMPROF	128	// アイテムの説明文の長さ
+#define		MAX_SITEM	16	// スペシャルアイテムの所持上限
+#define		MAX_STOCK	99	// １つのアイテムの所持上限
 #define		ITEM_ELM	5	// アイテム内容
+
+#define		EVENT_ELM	5	// イベント内容
+
 #define		MAX_SPPOS	256	// スペシャルポジションの最大数
 #define		MAX_TILE	256	// 読み込めるタイルの最大数
 #define		MAX_MAPEVENT	128	// マップイベントの最大数
 #define		MAX_FNAME	64	// 地名の最大数
-#define		MAX_INTNUM	36	// INT入力時の桁数：12桁（1文字3byteで計算）
+
+#define		MAX_INTNUM	30	// INT入力時の桁数：10桁（1文字3byteで計算）
 
 
 #define	ZENKAKURC	"/.zenkaku/zenkakurc"
@@ -127,6 +142,18 @@ enum e_weapon {
 		W_WIP		// 鞭（空）
 };
 
+enum e_armor {
+		A_UPPER,	// 上半身
+		A_BOTTOM,	// 下半身
+		A_ONEPIECE,	// ワンピース
+		A_MANT,		// マント
+		A_HERMET,	// 兜
+		A_GAUNTLET,	// 篭手
+		A_BOOTS,	// ブーツ
+		A_RING,		// 指輪
+		A_INNER		// 下着
+};
+
 enum e_status {
 		ST_NORMAL	= 0x0000,	// 普通
 		ST_POISON	= 0x0001,	// 毒   土属性はかからない
@@ -177,12 +204,6 @@ enum e_event {
 enum e_item {
 	IT_FOOD,		// 食料
 	IT_DRUG,		// 薬
-	IT_WEAPON,		// 武器
-	IT_SHIELD,		// 盾
-	IT_HELM,		// 兜
-	IT_ARMOR,		// 防具
-	IT_MANT,		// マント
-	IT_BOOTS,		// 靴
 	IT_EQUIP,		// 装飾品
 	IT_RIDE,		// 乗り物
 	IT_BOOK,		// 本
@@ -371,10 +392,13 @@ typedef struct typeEnemy{	// 敵キャラデータ（ファイル書き込み用
 
 	int		hp;			// 体力
 	int		ap;			// 攻撃力
+	int		an;			// 攻撃回数
 	int		ag;			// 防御力
 	int		mp;			// 魔法力
+	int		mn;			// 魔法回数
 	int		mg;			// 魔法防御力
-	int		ep;			// 回避力
+	int		hr;			// 命中率
+	int		er;			// 回避率
 	int		fp;			// 素早さ
 
 	int		exp;			// 所持経験値
@@ -389,7 +413,7 @@ typedef struct typeEnemy{	// 敵キャラデータ（ファイル書き込み用
 	int		call_enemy[ENEMY_CALL];	// 呼ぶ敵ID
 
 	char		prof[MAX_ENEMYPROF];	// プロフィール（512bytes）
-} Enemy;	// 合計801bytes
+} Enemy;	// 合計814bytes
 #define	ENEMYFILE_BLOCK	1000	// 敵キャラファイルに書き込むブロックサイズ
 
 
@@ -416,6 +440,41 @@ typedef struct typeEventData{	// イベントデータ
 	int		falseid;		// Falseの時遷移するイベント
 	int		trueid;			// Trueの時遷移するイベント
 } EventData;
+
+typedef struct typeWeapon{	// 武器データ
+	char		name[MAX_WEAPONNAME];	// 名前
+	int		type;			// 属性
+	int		kind;			// 種類
+	int		rare;			// レアリティ
+	int		ap;			// 攻撃力
+	int		an;			// 攻撃回数
+	int		ag;			// 防御力
+	int		mp;			// 魔法力
+	int		mn;			// 魔法回数
+	int		mg;			// 魔法防御力
+	int		hr;			// 命中率
+	int		er;			// 回避率
+	int		fp;			// 素早さ
+	int		option;			// 追加効果
+	int		price;			// 価格
+	char		prof[MAX_WEAPONPROF];	// 説明文
+} Weapon; // 224bytes
+#define	WEAPONFILE_BLOCK	300	// 武器ファイルに書き込むブロックサイズ
+
+typedef struct typeArmor{	// 防具データ
+	char		name[MAX_ARMORNAME];	// 名前
+	int		type;			// 属性
+	int		kind;			// 種類
+	int		rare;			// レアリティ
+	int		ag;			// 防御力
+	int		mg;			// 魔法防御力
+	int		er;			// 回避率
+	int		fp;			// 素早さ
+	int		option;			// 追加効果
+	int		price;			// 価格
+	char		prof[MAX_ARMORPROF];	// 説明文
+} Armor; // 204bytes
+#define	ARMORFILE_BLOCK	250	// 武器ファイルに書き込むブロックサイズ
 
 typedef struct typeItem{	// アイテムデータ
 	char		name[MAX_ITEMNAME];	// 名前
