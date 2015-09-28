@@ -18,6 +18,8 @@
 #include "WinScenarioEditor.h"
 #include "WinEventEditor.h"
 #include "WinItemEditor.h"
+#include "WinWeaponEditor.h"
+#include "WinArmorEditor.h"
 #include "WinShopEditor.h"
 #include "WinMessageEditor.h"
 #include "WinShowMessage.h"

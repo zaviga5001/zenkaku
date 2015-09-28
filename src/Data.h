@@ -37,6 +37,8 @@ public:
 
 	std::vector<EventData>	m_event;		// イベント構造体
 	std::vector<Item>	m_item;			// アイテム構造体
+	std::vector<Weapon>	m_weapon;		// 武器構造体
+	std::vector<Armor>	m_armor;		// 防具構造体
 	std::vector<MessData>	m_mess;			// メッセージ構造体
 
 	ShopData		m_shop;			// ショップ構造体
@@ -45,6 +47,8 @@ public:
 	int			m_enemypgnum;		// 敵パーティ構造体の数
 	int			m_eventnum;		// イベント構造体の数
 	int			m_itemnum;		// アイテム構造体の数
+	int			m_weaponnum;		// 武器構造体の数
+	int			m_armornum;		// 防具構造体の数
 	int			m_messnum;		// メッセージ構造体の数
 
 protected:

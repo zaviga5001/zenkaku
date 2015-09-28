@@ -57,7 +57,8 @@ enum	my_tt {
 //	TT_UINT,
 //	TT_SHT,
 //	TT_LNG,
-	TT_VCT
+	TT_VCT,
+	TT_LST
 };
 
 class CWindows

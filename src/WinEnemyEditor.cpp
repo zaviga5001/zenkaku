@@ -22,8 +22,17 @@ CWinEnemyEditor::CWinEnemyEditor(CData* data, CConfig* config, CFile* file)
 
 	// ここでシナリオを読み込め（不要）
 
-	// 敵キャラ名のみ一括読み込み
+	// 敵キャラ一括読み込みして、ついでにセレクトリスト用に保存する
 	read_enemy_list();
+
+	// アイテム一括読み込みしてセレクトリスト用に保存する
+	read_item_list();
+
+	// 属性リストをセレクトリスト用に保存する
+	read_type_list();
+
+	// 攻撃方法リストをセレクトリスト用に保存する
+	read_fight_list();
 
 	for (int i = 0; i < m_enemynum; i++)
 	{
@@ -65,10 +74,24 @@ void CWinEnemyEditor::change(const std::string str, const int id, const int inde
 }
 
 
+// アイテム全て読み込み
+void CWinEnemyEditor::read_item_list()
+{
+	m_itemnum = m_file->read_item(m_data);
+	for (int i = 0; i < m_itemnum; i++)
+	{
+		m_itemlist.push_back(std::string(m_data->m_item[i].name));
+	}
+}
+
 // 敵キャラ全て読み込み
 void CWinEnemyEditor::read_enemy_list()
 {
 	m_enemynum = m_file->read_enemy(m_data);
+	for (int i = 0; i < m_enemynum; i++)
+	{
+		m_enemylist.push_back(std::string(m_data->m_enemy[i].name));
+	}
 }
 
 // 敵キャラファイル読み込み
@@ -115,6 +138,26 @@ void CWinEnemyEditor::keyloop()
 				break;
 		}
 	}
+}
+
+// 属性リスト作成
+void CWinEnemyEditor::read_type_list()
+{
+	m_typenum = 8;
+
+	m_typelist.push_back(Str_e_type(T_FIRE));
+	m_typelist.push_back(Str_e_type(T_WATER));
+	m_typelist.push_back(Str_e_type(T_WIND));
+	m_typelist.push_back(Str_e_type(T_EARTH));
+	m_typelist.push_back(Str_e_type(T_LIGHT));
+	m_typelist.push_back(Str_e_type(T_DARK));
+	m_typelist.push_back(Str_e_type(T_TIME));
+	m_typelist.push_back(Str_e_type(T_SPACE));
+}
+
+// 攻撃方法リスト作成
+void CWinEnemyEditor::read_fight_list()
+{
 }
 
 bool CWinEnemyEditor::onkeypress_left()
@@ -194,9 +237,19 @@ bool CWinEnemyEditor::onkeypress_ok()
 	for ( ; ; )
 	{
 		nw_editvalue = new CWinEditValue;
+
+		// アイテムリスト登録（リスト番号０に登録）
+		nw_editvalue->push_list(&m_itemlist);
+		// 敵キャラリスト登録（リスト番号１に登録）
+		nw_editvalue->push_list(&m_enemylist);
+		// 属性リスト登録（リスト番号２に登録）
+		nw_editvalue->push_list(&m_typelist);
+		// 攻撃方法リスト登録（リスト番号３に登録）
+		nw_editvalue->push_list(&m_fightlist);
+
 		// ポインタセット
 		nw_editvalue->push("名前",		 m_data->m_enemy[m_cur.y].name,		TT_CHR, MAX_ENEMYNAME);
-		nw_editvalue->push("属性",		&m_data->m_enemy[m_cur.y].type,		TT_INT, MAX_INTNUM);
+		nw_editvalue->push("属性",		&m_data->m_enemy[m_cur.y].type,		TT_LST, 2); // リスト番号2を指定
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
 		nw_editvalue->push("体力（最大）",	&m_data->m_enemy[m_cur.y].hp,		TT_INT, MAX_INTNUM);
 		nw_editvalue->push("攻撃力（最大）",	&m_data->m_enemy[m_cur.y].ap,		TT_INT, MAX_INTNUM);
@@ -212,19 +265,19 @@ bool CWinEnemyEditor::onkeypress_ok()
 		nw_editvalue->push("経験値",		&m_data->m_enemy[m_cur.y].exp,		TT_INT, MAX_INTNUM);
 		nw_editvalue->push("所持金",		&m_data->m_enemy[m_cur.y].gold,		TT_INT, MAX_INTNUM);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
-		nw_editvalue->push("所持アイテムID：０",&m_data->m_enemy[m_cur.y].item[0].id,	TT_INT, MAX_INTNUM);
+		nw_editvalue->push("所持アイテム　：０",&m_data->m_enemy[m_cur.y].item[0].id,	TT_LST, 0); // リスト番号0を指定
 		nw_editvalue->push("所持アイテム数：０",&m_data->m_enemy[m_cur.y].item[0].num,	TT_INT, MAX_INTNUM);
 		nw_editvalue->push("所持アイテム率：０",&m_data->m_enemy[m_cur.y].item_r[0],	TT_INT, MAX_INTNUM);
-		nw_editvalue->push("所持アイテムID：１",&m_data->m_enemy[m_cur.y].item[1].id,	TT_INT, MAX_INTNUM);
+		nw_editvalue->push("所持アイテム　：１",&m_data->m_enemy[m_cur.y].item[1].id,	TT_LST, 0);
 		nw_editvalue->push("所持アイテム数：１",&m_data->m_enemy[m_cur.y].item[1].num,	TT_INT, MAX_INTNUM);
 		nw_editvalue->push("所持アイテム率：１",&m_data->m_enemy[m_cur.y].item_r[1],	TT_INT, MAX_INTNUM);
-		nw_editvalue->push("所持アイテムID：２",&m_data->m_enemy[m_cur.y].item[2].id,	TT_INT, MAX_INTNUM);
+		nw_editvalue->push("所持アイテム　：２",&m_data->m_enemy[m_cur.y].item[2].id,	TT_LST, 0);
 		nw_editvalue->push("所持アイテム数：２",&m_data->m_enemy[m_cur.y].item[2].num,	TT_INT, MAX_INTNUM);
 		nw_editvalue->push("所持アイテム率：２",&m_data->m_enemy[m_cur.y].item_r[2],	TT_INT, MAX_INTNUM);
-		nw_editvalue->push("所持アイテムID：３",&m_data->m_enemy[m_cur.y].item[3].id,	TT_INT, MAX_INTNUM);
+		nw_editvalue->push("所持アイテム　：３",&m_data->m_enemy[m_cur.y].item[3].id,	TT_LST, 0);
 		nw_editvalue->push("所持アイテム数：３",&m_data->m_enemy[m_cur.y].item[3].num,	TT_INT, MAX_INTNUM);
 		nw_editvalue->push("所持アイテム率：３",&m_data->m_enemy[m_cur.y].item_r[3],	TT_INT, MAX_INTNUM);
-		nw_editvalue->push("所持アイテムID：４",&m_data->m_enemy[m_cur.y].item[4].id,	TT_INT, MAX_INTNUM);
+		nw_editvalue->push("所持アイテム　：４",&m_data->m_enemy[m_cur.y].item[4].id,	TT_LST, 0);
 		nw_editvalue->push("所持アイテム数：４",&m_data->m_enemy[m_cur.y].item[4].num,	TT_INT, MAX_INTNUM);
 		nw_editvalue->push("所持アイテム率：４",&m_data->m_enemy[m_cur.y].item_r[4],	TT_INT, MAX_INTNUM);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
@@ -251,11 +304,11 @@ bool CWinEnemyEditor::onkeypress_ok()
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
 		nw_editvalue->push("死後フラグ",	&m_data->m_enemy[m_cur.y].flg,		TT_INT, MAX_INTNUM);
 		nw_editvalue->push("死後次の敵ID",	&m_data->m_enemy[m_cur.y].next_enemy,	TT_INT, MAX_INTNUM);
-		nw_editvalue->push("呼ぶ敵ID：０",	&m_data->m_enemy[m_cur.y].call_enemy[0],TT_INT, MAX_INTNUM);
-		nw_editvalue->push("呼ぶ敵ID：１",	&m_data->m_enemy[m_cur.y].call_enemy[1],TT_INT, MAX_INTNUM);
-		nw_editvalue->push("呼ぶ敵ID：２",	&m_data->m_enemy[m_cur.y].call_enemy[2],TT_INT, MAX_INTNUM);
-		nw_editvalue->push("呼ぶ敵ID：３",	&m_data->m_enemy[m_cur.y].call_enemy[3],TT_INT, MAX_INTNUM);
-		nw_editvalue->push("呼ぶ敵ID：４",	&m_data->m_enemy[m_cur.y].call_enemy[4],TT_INT, MAX_INTNUM);
+		nw_editvalue->push("呼ぶ敵ID：０",	&m_data->m_enemy[m_cur.y].call_enemy[0],TT_LST, 1); // リスト番号0を指定
+		nw_editvalue->push("呼ぶ敵ID：１",	&m_data->m_enemy[m_cur.y].call_enemy[1],TT_LST, 1);
+		nw_editvalue->push("呼ぶ敵ID：２",	&m_data->m_enemy[m_cur.y].call_enemy[2],TT_LST, 1);
+		nw_editvalue->push("呼ぶ敵ID：３",	&m_data->m_enemy[m_cur.y].call_enemy[3],TT_LST, 1);
+		nw_editvalue->push("呼ぶ敵ID：４",	&m_data->m_enemy[m_cur.y].call_enemy[4],TT_LST, 1);
 		nw_editvalue->push("--------------",	NULL,	TT_SPC, 1);
 		nw_editvalue->push("プロフィール",	 m_data->m_enemy[m_cur.y].prof,		TT_CHR, MAX_ENEMYPROF);
 

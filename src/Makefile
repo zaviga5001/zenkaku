@@ -104,7 +104,8 @@ am___top_builddir__zenkaku_OBJECTS = main.$(OBJEXT) CDate.$(OBJEXT) \
 	WinSelect1Icon.$(OBJEXT) WinSelect1Item.$(OBJEXT) \
 	WinSelect1Line.$(OBJEXT) WinShopEditor.$(OBJEXT) \
 	WinShowMessage.$(OBJEXT) WinTitle.$(OBJEXT) Windows.$(OBJEXT) \
-	MyStr.$(OBJEXT) Editor.$(OBJEXT)
+	MyStr.$(OBJEXT) Editor.$(OBJEXT) WinWeaponEditor.$(OBJEXT) \
+	WinArmorEditor.$(OBJEXT)
 __top_builddir__zenkaku_OBJECTS =  \
 	$(am___top_builddir__zenkaku_OBJECTS)
 __top_builddir__zenkaku_LDADD = $(LDADD)
@@ -289,7 +290,8 @@ __top_builddir__zenkaku_SOURCES = main.cpp CDate.cpp Config.cpp \
 	WinScenarioEditor.h WinSelect1Icon.h WinSelect1Item.h \
 	WinSelect1Line.h WinShopEditor.h WinShowMessage.h WinTitle.h \
 	Windows.h common.h main.h msg.h win.h MyStr.cpp MyStr.h \
-	Editor.cpp Editor.h
+	Editor.cpp Editor.h WinWeaponEditor.cpp WinWeaponEditor.h \
+	WinArmorEditor.cpp WinArmorEditor.h
 __top_builddir__zenkaku_LDFLAGS = -lncursesw
 all: all-am
 
@@ -390,6 +392,7 @@ include ./$(DEPDIR)/Game.Po
 include ./$(DEPDIR)/Hash.Po
 include ./$(DEPDIR)/MyStr.Po
 include ./$(DEPDIR)/Title.Po
+include ./$(DEPDIR)/WinArmorEditor.Po
 include ./$(DEPDIR)/WinEditValue.Po
 include ./$(DEPDIR)/WinEditValue_Cmask.Po
 include ./$(DEPDIR)/WinEditValue_Event.Po
@@ -413,6 +416,7 @@ include ./$(DEPDIR)/WinSelect1Line.Po
 include ./$(DEPDIR)/WinShopEditor.Po
 include ./$(DEPDIR)/WinShowMessage.Po
 include ./$(DEPDIR)/WinTitle.Po
+include ./$(DEPDIR)/WinWeaponEditor.Po
 include ./$(DEPDIR)/Windows.Po
 include ./$(DEPDIR)/main.Po
 

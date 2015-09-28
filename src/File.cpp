@@ -503,6 +503,112 @@ bool CFile::write_item(CData* data, const int index)
 	}
 }
 
+int CFile::read_weapon(CData* data)
+{
+	return read_weapon(data, 0, 99999999);
+}
+
+int CFile::read_weapon(CData* data, const int index)
+{
+	return read_weapon(data, index, index);
+}
+
+int CFile::read_weapon(CData* data, const int from, const int to)
+{
+	std::string fname = zenkaku_home + "/system/weapon.dat";	// アイテムファイル
+	Weapon tmp_weapon;
+
+	std::fstream ifs(fname.c_str(), std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ifs.fail() )	return(FALSE);
+
+	int count;
+	for (int i = from, count = 0; i <= to; i++, count++)
+	{
+		ifs.seekg(i * WEAPONFILE_BLOCK, std::ios::beg);	// 頭出し
+		ifs.read((char*) &tmp_weapon, sizeof(Weapon));	// 1ブロック読み出し
+		if (ifs.eof())	return count;			// ファイルの最後まで到達
+
+		data->m_weapon.push_back(tmp_weapon);		// data に格納
+	}
+	ifs.close();
+	return count;		// 成功
+}
+
+bool CFile::write_weapon(CData* data, const int index)
+{
+	std::string fname = zenkaku_home + "/system/weapon.dat";	// アイテムファイル
+	std::fstream ofs(fname.c_str(), std::ios::out | std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ofs.fail() )	return(FALSE);
+
+	if(ofs.seekp(index * WEAPONFILE_BLOCK, std::ios::beg))	// 頭出し
+	{
+		ofs.write(reinterpret_cast<char *>(&data->m_weapon[index]), sizeof(Item));
+
+		// 予備用領域書き込み
+		char tmp_char[WEAPONFILE_BLOCK - sizeof(Item)];
+		ofs.write(reinterpret_cast<char *>(tmp_char), WEAPONFILE_BLOCK - sizeof(Item));
+		ofs.close();
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+int CFile::read_armor(CData* data)
+{
+	return read_armor(data, 0, 99999999);
+}
+
+int CFile::read_armor(CData* data, const int index)
+{
+	return read_armor(data, index, index);
+}
+
+int CFile::read_armor(CData* data, const int from, const int to)
+{
+	std::string fname = zenkaku_home + "/system/armor.dat";	// アイテムファイル
+	Armor tmp_armor;
+
+	std::fstream ifs(fname.c_str(), std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ifs.fail() )	return(FALSE);
+
+	int count;
+	for (int i = from, count = 0; i <= to; i++, count++)
+	{
+		ifs.seekg(i * ARMORFILE_BLOCK, std::ios::beg);	// 頭出し
+		ifs.read((char*) &tmp_armor, sizeof(Armor));	// 1ブロック読み出し
+		if (ifs.eof())	return count;			// ファイルの最後まで到達
+
+		data->m_armor.push_back(tmp_armor);		// data に格納
+	}
+	ifs.close();
+	return count;		// 成功
+}
+
+bool CFile::write_armor(CData* data, const int index)
+{
+	std::string fname = zenkaku_home + "/system/armor.dat";	// アイテムファイル
+	std::fstream ofs(fname.c_str(), std::ios::out | std::ios::in | std::ios::binary);	// バイナリファイル
+	if( ofs.fail() )	return(FALSE);
+
+	if(ofs.seekp(index * ARMORFILE_BLOCK, std::ios::beg))	// 頭出し
+	{
+		ofs.write(reinterpret_cast<char *>(&data->m_armor[index]), sizeof(Item));
+
+		// 予備用領域書き込み
+		char tmp_char[ARMORFILE_BLOCK - sizeof(Item)];
+		ofs.write(reinterpret_cast<char *>(tmp_char), ARMORFILE_BLOCK - sizeof(Item));
+		ofs.close();
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
 bool CFile::read_shop(CData* data, const int index)
 {
 	FILE*		fp;

@@ -34,12 +34,12 @@ void CWinEditValue::push(const std::string str, void * ptr, const int chr, const
 }
 void CWinEditValue::push(const std::string str, void * ptr, const int chr, const int num, const int cpair)
 {
-	m_name.push_back(str);
-	m_ptr.push_back(ptr);
-	m_my_tt.push_back(chr);
-	m_size.push_back(num);
-	m_value.push_back(encode(ptr, chr, num));
-	m_cp.push_back(cpair);
+	m_name.push_back(str);				// 項目の名称
+	m_ptr.push_back(ptr);				// 値を格納するポインタ
+	m_my_tt.push_back(chr);				// 値の種類（TT_）
+	m_size.push_back(num);				// 値の桁数
+	m_value.push_back(encode(ptr, chr, num));	// 値の表記
+	m_cp.push_back(cpair);				// 値の色ペア
 }
 
 std::string CWinEditValue::encode(void * ptr, const int chr, const int num)
@@ -61,6 +61,9 @@ std::string CWinEditValue::encode(void * ptr, const int chr, const int num)
 		case TT_INT:	// Int型
 			tmp_buf = mystd::to_string(*(int*)ptr);
 			break;
+		case TT_LST:	// List型
+			tmp_buf = (*m_selectlist[num])[*(int*)ptr];
+			break;
 		default:
 			break;
 	}
@@ -79,9 +82,17 @@ void CWinEditValue::decode(std::string* str, void *ptr, const int chr)
 			break;
 		case TT_INT:
 			*(int*)ptr = atoi(str->c_str());
+		case TT_LST:
+			*(int*)ptr = atoi(str->c_str());
 		default:
 			break;
 	}
+}
+
+// 選択式フィールド用のリスト作成
+void CWinEditValue::push_list(std::vector<std::string> * ptr)
+{
+	m_selectlist.push_back(ptr);
 }
 
 bool CWinEditValue::onkeypress_down()
@@ -110,7 +121,36 @@ bool CWinEditValue::onkeypress_left()
 }
 bool CWinEditValue::onkeypress_ok()
 {
-	if (m_my_tt[m_cur.y] != TT_SPC && m_my_tt[m_cur.y] != TT_VCT)
+	if (m_my_tt[m_cur.y] == TT_VCT)
+	{
+		*(int*)m_ptr[m_cur.y] = 1;
+		return false;	// Vectorを追加するために一旦終了
+	}
+	else if (m_my_tt[m_cur.y] == TT_LST)
+	{
+		CWinSelect1Line*	nw_select1line;
+
+		nw_select1line = new CWinSelect1Line;
+		nw_select1line->settitle(m_name[m_cur.y]);
+		// セレクトリストを作成する
+		for (int i = 0; i < (*m_selectlist[m_size[m_cur.y]]).size(); i++)
+		{
+			nw_select1line->push((*m_selectlist[m_size[m_cur.y]])[i], i);
+		}
+		nw_select1line->setsize(30, 14);
+		nw_select1line->movewin(5, 1);
+		int tmpnum = nw_select1line->startwin(true);
+		if (tmpnum >= 0)
+		{
+			*(int*)m_ptr[m_cur.y] = tmpnum;
+			m_value[m_cur.y] = (*m_selectlist[m_size[m_cur.y]])[tmpnum];
+		}
+		delete(nw_select1line);
+		drawwin();
+		touchwin(m_this);
+		wrefresh(m_this);
+	}
+	else if (m_my_tt[m_cur.y] != TT_SPC)
 	{
 		CWinGetPath*	nw_getpath;
 
@@ -137,11 +177,6 @@ bool CWinEditValue::onkeypress_ok()
 		drawwin();
 		touchwin(m_this);
 		wrefresh(m_this);
-	}
-	else if (m_my_tt[m_cur.y] == TT_VCT)
-	{
-		*(int*)m_ptr[m_cur.y] = 1;
-		return false;	// Vectorを追加するために一旦終了
 	}
 
 	return true;	// キーループ継続

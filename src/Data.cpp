@@ -22,6 +22,12 @@ CData::CData()
 	// アイテム読み込み
 	m_itemnum = 0;
 
+	// 武器読み込み
+	m_weaponnum = 0;
+
+	// 防具読み込み
+	m_armornum = 0;
+
 	// ショップ読み込み
 
 	// メッセージ読み込み

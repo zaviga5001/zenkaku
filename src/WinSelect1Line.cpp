@@ -77,7 +77,7 @@ bool CWinSelect1Line::onkeypress_ok()
 }
 bool CWinSelect1Line::onkeypress_cancel()
 {
-	m_return = 0;
+	m_return = -1;
 	return m_disable_cansel;
 }
 

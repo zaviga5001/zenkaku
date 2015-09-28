@@ -46,7 +46,7 @@ bool CTitle::select_game(CData* data, CConfig* config, CFile* file)
 		// シナリオとシナリオIDをリストアップする
 		std::string path = zenkaku_home + "/scenario/";
 		dir = opendir(path.c_str());
-		for (int i = 1; ; )
+		for (int i = 0; ; )
 		{
 			dent = readdir(dir);
 			if (dent == NULL)	break;
@@ -66,15 +66,17 @@ bool CTitle::select_game(CData* data, CConfig* config, CFile* file)
 	}
 	else
 	{	// Editor
-		nw_select1line->push("マップエディタ", 1);
-		nw_select1line->push("イベントエディタ", 2);
-		nw_select1line->push("マイキャラエディタ", 3);
-		nw_select1line->push("敵キャラエディタ", 4);
-		nw_select1line->push("パーティエディタ", 5);
-		nw_select1line->push("パーティグループエディタ", 6);
-		nw_select1line->push("アイテムエディタ", 7);
-		nw_select1line->push("メッセージエディタ", 8);
-		nw_select1line->push("シナリオエディタ", 9);
+		nw_select1line->push("マップエディタ", 0);
+		nw_select1line->push("イベントエディタ", 1);
+		nw_select1line->push("マイキャラエディタ", 2);
+		nw_select1line->push("敵キャラエディタ", 3);
+		nw_select1line->push("パーティエディタ", 4);
+		nw_select1line->push("パーティグループエディタ", 5);
+		nw_select1line->push("アイテムエディタ", 6);
+		nw_select1line->push("メッセージエディタ", 7);
+		nw_select1line->push("シナリオエディタ", 8);
+		nw_select1line->push("武器エディタ", 9);
+		nw_select1line->push("防具エディタ", 10);
 	}
 
 	nw_select1line->m_disable_cansel = true;
@@ -84,6 +86,9 @@ bool CTitle::select_game(CData* data, CConfig* config, CFile* file)
 		// シナリオ一覧を表示する
 		data->m_scn_index = nw_select1line->startwin(true);
 
+		// キャンセルボタン判定
+		if (data->m_scn_index < 0) continue;
+
 		if (config->m_mode == 0)
 		{	// Game
 			// シナリオの内容を表示する
@@ -91,10 +96,10 @@ bool CTitle::select_game(CData* data, CConfig* config, CFile* file)
 			nw_select1item = new CWinSelect1Item;
 			nw_select1item->setsize(38, 22);
 			nw_select1item->movewin(5, 0);  // 中央
-			nw_select1item->m_msg = m_scnlist[data->m_scn_index - 1].doc;
+			nw_select1item->m_msg = m_scnlist[data->m_scn_index].doc;
 			nw_select1item->m_split = 19;
 			nw_select1item->m_wpos.y = 20;
-			nw_select1item->settitle(m_scnlist[data->m_scn_index - 1].name);
+			nw_select1item->settitle(m_scnlist[data->m_scn_index].name);
 			nw_select1item->push(msg[MY_MSG_SYS_YES].msg, 1);
 			nw_select1item->push(msg[MY_MSG_SYS_NO].msg,  2);
 			int tmp_ret = nw_select1item->startwin(true);

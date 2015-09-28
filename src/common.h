@@ -10,6 +10,7 @@
 
 #include	<vector>
 #include	<string>
+#include	<bitset>
 
 /****************************************/
 /* 定数					*/
@@ -33,12 +34,12 @@ typedef		unsigned char	BYTE;
 #define		MAX_ENEMYNAME	82	// 敵キャラの名前の長さ
 #define		MAX_ENEMYPROF	512	// 敵キャラのプロフィールの長さ
 
-#define		MAX_WEAPON	50	// 武器の所持上限（一人）
+#define		MAX_WEAPON	10	// 武器の所持上限（一人）
 #define		MAX_WEAPONCACHE	1024	// 一度に読み込める最大武器数
 #define		MAX_WEAPONNAME	40	// 武器の名前の長さ
 #define		MAX_WEAPONPROF	128	// 武器の説明文の長さ
 
-#define		MAX_ARMOR	50	// 防具の所持上限（一人）
+#define		MAX_ARMOR	10	// 防具の所持上限（一人）
 #define		MAX_ARMORCACHE	1024	// 一度に読み込める最大防具数
 #define		MAX_ARMORNAME	40	// 防具の名前の長さ
 #define		MAX_ARMORPROF	128	// 防具の説明文の長さ
@@ -60,6 +61,7 @@ typedef		unsigned char	BYTE;
 
 #define		MAX_INTNUM	30	// INT入力時の桁数：10桁（1文字3byteで計算）
 
+#define		STR(var)	#var	//引数にした変数を変数名を示す文字列リテラルとして返すマクロ関数
 
 #define	ZENKAKURC	"/.zenkaku/zenkakurc"
 
@@ -109,10 +111,25 @@ enum e_type {
 		T_WATER	= 0x02,	// 水
 		T_WIND	= 0x04,	// 風
 		T_EARTH	= 0x08,	// 土
-		T_RAY	= 0x10,	// 光
+		T_LIGHT	= 0x10,	// 光
 		T_DARK	= 0x20,	// 闇
 		T_TIME	= 0x40,	// 時
 		T_SPACE	= 0x80	// 空
+};
+struct Str_e_type : public std::string {
+	Str_e_type(e_type e) {
+		switch(e) {
+			break; case T_FIRE : { assign("火"); }
+			break; case T_WATER: { assign("水"); }
+			break; case T_WIND : { assign("風"); }
+			break; case T_EARTH: { assign("地"); }
+			break; case T_LIGHT: { assign("光"); }
+			break; case T_DARK : { assign("闇"); }
+			break; case T_TIME : { assign("時"); }
+			break; case T_SPACE: { assign("空"); }
+			break; default:      { assign("無"); }
+		}
+	}
 };
 
 enum e_gender {
@@ -129,6 +146,15 @@ enum e_command {
 		C_EQUIP,	// 装備
 		C_ESCAPE,	// 逃げる
 		C_SAME		// 前回と同じ
+};
+
+enum e_rare {
+		R_NORMAL,	// ノーマル
+		R_RARE,		// レア
+		R_SRARE,	// Sレア
+		R_SSRARE,	// SSレア
+		R_URARE,	// Uレア
+		R_LEGEND	// SSレア
 };
 
 enum e_weapon {
@@ -149,9 +175,52 @@ enum e_armor {
 		A_MANT,		// マント
 		A_HERMET,	// 兜
 		A_GAUNTLET,	// 篭手
+		A_SHIELD,	// 盾
 		A_BOOTS,	// ブーツ
 		A_RING,		// 指輪
 		A_INNER		// 下着
+};
+
+enum e_m_fire {
+		EM_FIRE0	= 0x0001,	// ファイア
+		EM_FIRE1	= 0x0002,	// ファイア
+		EM_FIRE2	= 0x0004,	// ファイア
+		EM_FIRE3	= 0x0008,	// ファイア
+		EM_FIRE4	= 0x0010,	// ファイア
+		EM_FIRE5	= 0x0020,	// ファイア
+		EM_FIRE6	= 0x0040,	// ファイア
+		EM_FIRE7	= 0x0080,	// ファイア
+		EM_FIRE8	= 0x0100,	// ファイア
+		EM_FIRE9	= 0x0200,	// ファイア
+		EM_FIREA	= 0x0400,	// ファイア
+		EM_FIREB	= 0x0800,	// ファイア
+		EM_FIREC	= 0x1000,	// ファイア
+		EM_FIRED	= 0x2000,	// ファイア
+		EM_FIREE	= 0x4000,	// ファイア
+		EM_FIREF	= 0x8000	// ファイア
+};
+struct Str_e_m_fire : public std::string {
+	Str_e_m_fire(e_m_fire e) {
+		switch(e) {
+			break; case EM_FIRE0 : { assign("ファイア"); }
+			break; case EM_FIRE1 : { assign("照明弾"); }
+			break; case EM_FIRE2 : { assign("フレイム"); }
+			break; case EM_FIRE3 : { assign("ファイアウォール"); }
+			break; case EM_FIRE4 : { assign("命の炎"); }
+			break; case EM_FIRE5 : { assign("メガファイア"); }
+			break; case EM_FIRE6 : { assign(""); }
+			break; case EM_FIRE7 : { assign(""); }
+			break; case EM_FIRE8 : { assign("メガフレイム"); }
+			break; case EM_FIRE9 : { assign("熱消毒"); }
+			break; case EM_FIREA : { assign(""); }
+			break; case EM_FIREB : { assign("ギガファイア"); }
+			break; case EM_FIREC : { assign(""); }
+			break; case EM_FIRED : { assign("ギガフレイム"); }
+			break; case EM_FIREE : { assign(""); }
+			break; case EM_FIREF : { assign("ファイナルエクスプロージョン"); }
+			break; default:      { assign("無"); }
+		}
+	}
 };
 
 enum e_status {
@@ -169,14 +238,27 @@ enum e_status {
 };
 
 enum e_skill {
-		T_ROGUE		= 0x00,	// 盗賊
-		T_HEARL		= 0x01,	// 調合
-		T_THRROW	= 0x02,	// 投げる
-		T_SWIM		= 0x04,	// 泳ぐ
-		T_COOK		= 0x08,	// 料理
-		T_DANCE		= 0x10,	// ダンス
-		T_LUCK		= 0x20,	// 運
-		T_DUMMY		= 0x40	// 予備
+		SK_ROGUE	= 0x00,	// 盗賊
+		SK_HEARL	= 0x01,	// 調合
+		SK_THRROW	= 0x02,	// 投げる
+		SK_SWIM		= 0x04,	// 泳ぐ
+		SK_COOK		= 0x08,	// 料理
+		SK_DANCE	= 0x10,	// ダンス
+		SK_LUCK		= 0x20,	// 運
+		SK_DUMMY	= 0x40	// 予備
+};
+
+enum e_enemyfight {
+		EF_ATTACK,	// 物理攻撃
+		EF_MAGIC,	// 魔法
+		EF_ITEM,	// アイテム攻撃
+		EF_GUARD,	// ガード
+		EF_ESCAPE,	// 逃げる
+		EF_ROGUE,	// 盗む
+		EF_CALL,	// 仲間を呼ぶ
+		EF_TRANSE,	// 変身する
+		EF_CHANGE,	// 属性を変える
+		EF_SUCIDE	// 自爆
 };
 
 enum e_event {

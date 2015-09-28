@@ -48,6 +48,16 @@ public:
 	int	read_item(CData* data, const int from, const int to);
 	bool	write_item(CData* data, const int index);
 
+	int	read_weapon(CData* data);
+	int	read_weapon(CData* data, const int index);
+	int	read_weapon(CData* data, const int from, const int to);
+	bool	write_weapon(CData* data, const int index);
+
+	int	read_armor(CData* data);
+	int	read_armor(CData* data, const int index);
+	int	read_armor(CData* data, const int from, const int to);
+	bool	write_armor(CData* data, const int index);
+
 	bool	read_shop(CData* data, const int index);
 	bool	write_shop(CData* data, const int index);
 

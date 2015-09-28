@@ -1,5 +1,5 @@
-#ifndef CWINENEMYEDITOR_H
-#define CWINENEMYEDITOR_H
+#ifndef CWINARMOREDITOR_H
+#define CWINARMOREDITOR_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -16,22 +16,19 @@
 
 
 
-class CWinEnemyEditor : public CWindows
+class CWinArmorEditor : public CWindows
 {
 public:
-	CWinEnemyEditor(CData* data, CConfig* config, CFile* file);
-	virtual ~CWinEnemyEditor();
+	CWinArmorEditor(CData* data, CConfig* config, CFile* file);
+	virtual ~CWinArmorEditor();
 
 	virtual int	drawwin();
 	void		push(const std::string str, const int id);
 	void		push(const std::string str, const int id, const int cpair);
 	void		change(const std::string str, const int id, const int index);
-	void		read_item_list();	// アイテム一括読み込み
-	void		read_enemy_list();	// 敵キャラ一括読み込み
-	void		read_enemy(int index);	// 敵キャラ読み込み
-	void		write_enemy(int index);	// 敵キャラ書き込み
-	void		read_type_list();	// 属性リスト作成
-	void		read_fight_list();	// 攻撃方法リスト作成
+	void            read_armor_list();       // アイテム名のみ読み込み
+	void		read_armor(int index);	// アイテム読み込み
+	void		write_armor(int index);	// アイテム書き込み
 
 	Pos		m_wpos;			// ウィンドウ上の表示位置
 
@@ -47,24 +44,18 @@ public:
 	CData*		m_data;			// データ
 	CFile*		m_file;			// ファイルハンドラ
 
-	int		m_enemynum;		// 読み込んだ敵キャラ数
-	int		m_itemnum;		// 読み込んだアイテム数
-	int		m_typenum;		// 属性数
-	int		m_fightnum;		// 攻撃方法数
-
+	int             m_armornum;             // 読み込んだアイテム数
 protected:
+	void	warn(enum msg_id tmp_msg);	// 警告ウィンドゥ表示
+
 	std::vector<std::string>	m_list;		// 要素
-	std::vector<int>		m_cp;		// 色
-	std::vector<int>		m_index;	// 値
+	std::vector<int>	m_cp;		// 色
+	std::vector<int>	m_index;	// 値
 	int	m_maxwidth;		// リスト文字列の最大幅
 	Pos	m_cur;			// カーソルの位置
 	Pos	m_dpos;			// リストの表示開始位置（横長対応）
-	std::vector<std::string>	m_enemylist;	// 敵キャラ名リスト
-	std::vector<std::string>	m_itemlist;	// アイテム名リスト
-	std::vector<std::string>	m_typelist;	// 属性リスト
-	std::vector<std::string>	m_fightlist;	// 攻撃方法リスト
 
 private:
 };
 
-#endif // CWINENEMYEDITOR_H
+#endif // CWINARMOREDITOR_H

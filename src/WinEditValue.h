@@ -20,6 +20,7 @@ public:
 	virtual int	drawwin();
 	void		push(const std::string str, void * ptr, const int chr, const int num);
 	void		push(const std::string str, void * ptr, const int chr, const int num, const int cpair);
+	void		push_list(std::vector<std::string> * ptr);
 
 	Pos	m_wpos;			// ウィンドウ上の表示位置
 
@@ -42,6 +43,7 @@ protected:
 	std::vector<int>	m_my_tt;// 変数の型
 	std::vector<int>	m_size;	// 配列の個数
 	std::vector<int>	m_cp;	// 色
+	std::vector<std::vector<std::string>*>	m_selectlist;	// ポインタ
 	Pos	m_cur;			// カーソルの位置
 	Pos	m_dpos;			// リストの表示開始位置（横長対応）
 

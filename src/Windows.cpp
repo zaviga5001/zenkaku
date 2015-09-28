@@ -176,7 +176,7 @@ void CWindows::drawframe()
 
 	if (m_title != "")
 	{	// ウィンドウタイトル表示
-		std::string tmp_str = m_title.substr(0, adjx(m_winw - 2));
+		std::string tmp_str = CMyStr::substr(m_title, 0, m_winw - 2);
 		mvwprintw(m_this, 0, 2,   "%s", tmp_str.c_str());
 	}
 
