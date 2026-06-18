@@ -46,6 +46,12 @@ bool CTitle::select_game(CData* data, CConfig* config, CFile* file)
 		// シナリオとシナリオIDをリストアップする
 		std::string path = zenkaku_home + "/scenario/";
 		dir = opendir(path.c_str());
+		if (dir == NULL)
+		{
+			std::cerr << "ERROR:title001:opendir failure(path=" << path << ")" << std::endl;
+			delete(nw_select1line);
+			return false;
+		}
 		for (int i = 0; ; )
 		{
 			dent = readdir(dir);
